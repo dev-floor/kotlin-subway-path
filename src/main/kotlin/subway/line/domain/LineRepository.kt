@@ -1,9 +1,11 @@
 package subway.line.domain
 
 interface LineRepository {
-    fun lines(): List<Line>
+    fun findAll(): List<Line>
 
-    fun addLine(line: Line)
+    fun save(line: Line)
 
-    fun deleteLineByName(name: String): Boolean
+    fun saveAll(vararg lines: Line)
+
+    fun deleteByName(name: String): Boolean
 }
