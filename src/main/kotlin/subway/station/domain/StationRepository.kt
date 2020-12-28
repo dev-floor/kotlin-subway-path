@@ -1,13 +1,9 @@
 package subway.station.domain
 
-object StationRepository {
-    private val stations = mutableListOf<Station>()
+interface StationRepository {
+    fun stations(): List<Station>
 
-    fun stations() = stations.toList()
+    fun addStation(station: Station)
 
-    fun addStation(station: Station) {
-        stations.add(station)
-    }
-
-    fun deleteStation(name: String) = stations.removeIf { it.name == name }
+    fun deleteStation(name: String): Boolean
 }
