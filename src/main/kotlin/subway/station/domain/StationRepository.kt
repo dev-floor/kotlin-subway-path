@@ -1,4 +1,4 @@
-package subway.domain
+package subway.station.domain
 
 object StationRepository {
     private val stations = mutableListOf<Station>()

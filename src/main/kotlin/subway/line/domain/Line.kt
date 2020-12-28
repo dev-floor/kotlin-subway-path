@@ -1,3 +1,3 @@
-package subway.domain
+package subway.line.domain
 
 class Line(val name: String)
