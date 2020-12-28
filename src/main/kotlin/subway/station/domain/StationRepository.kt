@@ -1,9 +1,11 @@
 package subway.station.domain
 
 interface StationRepository {
-    fun stations(): List<Station>
+    fun findAll(): List<Station>
 
-    fun addStation(station: Station)
+    fun save(station: Station)
 
-    fun deleteStation(name: String): Boolean
+    fun saveAll(vararg stations: Station)
+
+    fun deleteByName(name: String): Boolean
 }
