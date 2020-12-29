@@ -71,15 +71,24 @@ internal class InMemoryStationRepositoryTest {
     }
 
     @Test
-    internal fun `deleteByName_InMemoryStationRepository의 데이터를 역의 이름으로 삭제`() {
+    internal fun `delete_InMemoryStationRepository에서 해당하는 역을 삭제`() {
         // given
-        val name = "테스트역1"
+        val station = Station.from("테스트역1")
 
         // when
-        stationRepository.deleteByName(name)
+        stationRepository.delete(station)
 
         // then
         assertThat(stationRepository.findAll()).hasSize(STATION_FIXTURES.size - 1)
+    }
+
+    @Test
+    internal fun `deleteAll_InMemoryStationRepository의 모든 데이터를 삭제`() {
+        // when
+        stationRepository.deleteAll()
+
+        // then
+        assertThat(stationRepository.findAll()).hasSize(0)
     }
 
     companion object {

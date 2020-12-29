@@ -18,15 +18,6 @@ internal class InMemorySectionRepositoryTest {
     }
 
     @Test
-    internal fun `findAll_InMemorySectionRepository의 모든 데이터를 조회`() {
-        // when
-        val sections = sectionRepository.findAll()
-
-        // then
-        assertThat(sections).hasSize(SECTION_FIXTURES.size)
-    }
-
-    @Test
     internal fun `save_InMemorySectionRepository에 데이터를 저장`() {
         // given
         val section =
@@ -67,6 +58,36 @@ internal class InMemorySectionRepositoryTest {
 
         // then
         assertThat(sectionRepository.findAll()).hasSize(SECTION_FIXTURES.size + 2)
+    }
+
+    @Test
+    internal fun `findAll_InMemorySectionRepository의 모든 데이터를 조회`() {
+        // when
+        val sections = sectionRepository.findAll()
+
+        // then
+        assertThat(sections).hasSize(SECTION_FIXTURES.size)
+    }
+
+    @Test
+    internal fun `existsByStation_InMemorySectionRepository에 입력받은 역이 포함된 구간이 존재하는지 여부`() {
+        // given
+        val station = Station.from("테스트역1")
+
+        // when
+        val actual = sectionRepository.existsByStation(station)
+
+        // then
+        assertThat(actual).isTrue
+    }
+
+    @Test
+    internal fun `deleteAll_InMemorySectionRepository의 모든 데이터를 삭제`() {
+        // when
+        sectionRepository.deleteAll()
+
+        // then
+        assertThat(sectionRepository.findAll()).hasSize(0)
     }
 
     companion object {

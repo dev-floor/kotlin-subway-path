@@ -11,5 +11,7 @@ interface StationRepository {
 
     fun exists(station: Station): Boolean
 
-    fun deleteByName(name: String): Boolean
+    fun delete(station: Station): Boolean
+
+    fun deleteAll()
 }

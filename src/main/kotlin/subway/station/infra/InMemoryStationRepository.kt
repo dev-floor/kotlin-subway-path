@@ -22,5 +22,7 @@ class InMemoryStationRepository : StationRepository {
 
     override fun exists(station: Station) = stations.any { it == station }
 
-    override fun deleteByName(name: String) = stations.removeIf { it.name.match(name) }
+    override fun delete(station: Station) = stations.removeIf { it == station }
+
+    override fun deleteAll() = stations.clear()
 }
