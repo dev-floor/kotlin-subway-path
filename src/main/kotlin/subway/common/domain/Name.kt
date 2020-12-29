@@ -5,6 +5,8 @@ data class Name(val name: String) {
         require(name.length >= MIN_LENGTH) { "이름은 2글자 이상만 가능합니다." }
     }
 
+    fun match(name: String) = this.name == name
+
     companion object {
         private const val MIN_LENGTH = 2
     }

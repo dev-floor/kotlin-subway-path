@@ -20,5 +20,5 @@ class InMemoryLineRepository : LineRepository {
         this.lines.addAll(lines)
     }
 
-    override fun deleteByName(name: String) = lines.removeIf { it.name == name }
+    override fun deleteByName(name: String) = lines.removeIf { it.name.match(name) }
 }

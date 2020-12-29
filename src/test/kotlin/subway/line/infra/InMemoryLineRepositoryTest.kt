@@ -27,7 +27,7 @@ internal class InMemoryLineRepositoryTest {
     @Test
     internal fun `save_InMemoryLineRepository에 데이터를 저장`() {
         // given
-        val line = Line("테스트호선4")
+        val line = Line.from("테스트호선4")
 
         // when
         lineRepository.save(line)
@@ -39,8 +39,8 @@ internal class InMemoryLineRepositoryTest {
     @Test
     internal fun `saveAll_InMemoryLineRepository에 여러 데이터를 저장`() {
         // given
-        val line1 = Line("테스트노선4")
-        val line2 = Line("테스트노선5")
+        val line1 = Line.from("테스트노선4")
+        val line2 = Line.from("테스트노선5")
 
         // when
         lineRepository.saveAll(line1, line2)
@@ -52,7 +52,7 @@ internal class InMemoryLineRepositoryTest {
     @Test
     internal fun `saveAll_InMemoryLineRepository에 리스트로 된 데이터를 저장`() {
         // given
-        val lines = listOf(Line("테스트노선4"), Line("테스트노선5"))
+        val lines = listOf(Line.from("테스트노선4"), Line.from("테스트노선5"))
 
         // when
         lineRepository.saveAll(lines)
@@ -75,9 +75,9 @@ internal class InMemoryLineRepositoryTest {
 
     companion object {
         private val LINE_FIXTURES = listOf(
-            Line("테스트노선1"),
-            Line("테스트노선2"),
-            Line("테스트노선3")
+            Line.from("테스트노선1"),
+            Line.from("테스트노선2"),
+            Line.from("테스트노선3")
         )
     }
 }

@@ -29,7 +29,7 @@ internal class InMemorySectionRepositoryTest {
     @Test
     internal fun `save_InMemorySectionRepository에 데이터를 저장`() {
         // given
-        val section = Section(Line("테스트노선2"), Station("테스트역1"), Station("테스트역3"), 2, 3)
+        val section = Section(Line.from("테스트노선2"), Station("테스트역1"), Station("테스트역3"), 2, 3)
 
         // when
         sectionRepository.save(section)
@@ -41,8 +41,8 @@ internal class InMemorySectionRepositoryTest {
     @Test
     internal fun `saveAll_InMemorySectionRepository에 여러 데이터를 저장`() {
         // given
-        val section1 = Section(Line("테스트노선2"), Station("테스트역1"), Station("테스트역3"), 2, 3)
-        val section2 = Section(Line("테스트노선2"), Station("테스트역3"), Station("테스트역4"), 2, 3)
+        val section1 = Section(Line.from("테스트노선2"), Station("테스트역1"), Station("테스트역3"), 2, 3)
+        val section2 = Section(Line.from("테스트노선2"), Station("테스트역3"), Station("테스트역4"), 2, 3)
 
         // when
         sectionRepository.saveAll(section1, section2)
@@ -55,8 +55,8 @@ internal class InMemorySectionRepositoryTest {
     internal fun `saveAll_InMemorySectionRepository에 리스트로 된 데이터를 저장`() {
         // given
         val sections = listOf(
-            Section(Line("테스트노선2"), Station("테스트역1"), Station("테스트역3"), 2, 3),
-            Section(Line("테스트노선2"), Station("테스트역3"), Station("테스트역4"), 2, 3)
+            Section(Line.from("테스트노선2"), Station("테스트역1"), Station("테스트역3"), 2, 3),
+            Section(Line.from("테스트노선2"), Station("테스트역3"), Station("테스트역4"), 2, 3)
         )
 
         // when
@@ -68,8 +68,8 @@ internal class InMemorySectionRepositoryTest {
 
     companion object {
         private val SECTION_FIXTURES = listOf(
-            Section(Line("테스트노선1"), Station("테스트역1"), Station("테스트역2"), 2, 3),
-            Section(Line("테스트노선1"), Station("테스트역2"), Station("테스트역3"), 2, 3)
+            Section(Line.from("테스트노선1"), Station("테스트역1"), Station("테스트역2"), 2, 3),
+            Section(Line.from("테스트노선1"), Station("테스트역2"), Station("테스트역3"), 2, 3)
         )
     }
 }
