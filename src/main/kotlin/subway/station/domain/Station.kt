@@ -1,3 +1,9 @@
 package subway.station.domain
 
-class Station(val name: String)
+import subway.common.domain.Name
+
+class Station(val name: Name) {
+    companion object {
+        fun from(name: String) = Station(Name(name))
+    }
+}
