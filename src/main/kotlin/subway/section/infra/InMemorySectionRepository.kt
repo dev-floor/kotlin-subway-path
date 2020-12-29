@@ -4,7 +4,7 @@ import subway.section.domain.Section
 import subway.section.domain.SectionRepository
 
 class InMemorySectionRepository : SectionRepository {
-    private val sections = mutableListOf<Section>()
+    private val sections: MutableList<Section> = mutableListOf()
 
     override fun findAll() = sections.toList()
 

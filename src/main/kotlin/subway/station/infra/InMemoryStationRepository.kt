@@ -4,7 +4,7 @@ import subway.station.domain.Station
 import subway.station.domain.StationRepository
 
 class InMemoryStationRepository : StationRepository {
-    private val stations = mutableListOf<Station>()
+    private val stations: MutableList<Station> = mutableListOf()
 
     override fun save(station: Station) {
         stations.add(station)
@@ -20,7 +20,7 @@ class InMemoryStationRepository : StationRepository {
 
     override fun findAll() = stations.toList()
 
-    override fun existsByName(name: String) = stations.any { it.match(name) }
+    override fun exists(station: Station) = stations.any { it == station }
 
     override fun deleteByName(name: String) = stations.removeIf { it.name.match(name) }
 }

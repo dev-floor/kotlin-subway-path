@@ -4,7 +4,7 @@ import subway.line.domain.Line
 import subway.line.domain.LineRepository
 
 class InMemoryLineRepository : LineRepository {
-    private val lines = mutableListOf<Line>()
+    private val lines: MutableList<Line> = mutableListOf()
 
     override fun findAll() = lines.toList()
 

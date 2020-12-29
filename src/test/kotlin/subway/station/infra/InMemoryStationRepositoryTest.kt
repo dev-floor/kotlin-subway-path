@@ -64,7 +64,7 @@ internal class InMemoryStationRepositoryTest {
     @Test
     internal fun `existsByName_InMemoryStationRepository에서 이름에 해당하는 역이 존재하는지 확인`() {
         // when
-        val actual = stationRepository.existsByName("테스트역1")
+        val actual = stationRepository.exists(Station.from("테스트역1"))
 
         // then
         assertThat(actual).isTrue
