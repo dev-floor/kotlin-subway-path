@@ -6,4 +6,6 @@ interface SectionRepository {
     fun save(section: Section)
 
     fun saveAll(vararg sections: Section)
+
+    fun saveAll(sections: List<Section>)
 }

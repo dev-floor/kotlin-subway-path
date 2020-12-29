@@ -4,19 +4,21 @@ import subway.station.domain.Station
 import subway.station.domain.StationRepository
 
 class InMemoryStationRepository : StationRepository {
-    override fun findAll() = STATIONS.toList()
+    private val stations = mutableListOf<Station>()
+
+    override fun findAll() = stations.toList()
 
     override fun save(station: Station) {
-        STATIONS.add(station)
+        stations.add(station)
     }
 
     override fun saveAll(vararg stations: Station) {
-        STATIONS.addAll(stations)
+        this.stations.addAll(stations)
     }
 
-    override fun deleteByName(name: String) = STATIONS.removeIf { it.name == name }
-
-    companion object {
-        private val STATIONS = mutableListOf<Station>()
+    override fun saveAll(stations: List<Station>) {
+        this.stations.addAll(stations)
     }
+
+    override fun deleteByName(name: String) = stations.removeIf { it.name == name }
 }

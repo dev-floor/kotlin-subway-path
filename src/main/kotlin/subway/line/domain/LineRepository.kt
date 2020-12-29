@@ -7,5 +7,7 @@ interface LineRepository {
 
     fun saveAll(vararg lines: Line)
 
+    fun saveAll(lines: List<Line>)
+
     fun deleteByName(name: String): Boolean
 }

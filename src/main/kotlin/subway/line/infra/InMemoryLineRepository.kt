@@ -4,19 +4,21 @@ import subway.line.domain.Line
 import subway.line.domain.LineRepository
 
 class InMemoryLineRepository : LineRepository {
-    override fun findAll() = LINES.toList()
+    private val lines = mutableListOf<Line>()
+
+    override fun findAll() = lines.toList()
 
     override fun save(line: Line) {
-        LINES.add(line)
+        lines.add(line)
     }
 
     override fun saveAll(vararg lines: Line) {
-        LINES.addAll(lines)
+        this.lines.addAll(lines)
     }
 
-    override fun deleteByName(name: String) = LINES.removeIf { it.name == name }
-
-    companion object {
-        private val LINES = mutableListOf<Line>()
+    override fun saveAll(lines: List<Line>) {
+        this.lines.addAll(lines)
     }
+
+    override fun deleteByName(name: String) = lines.removeIf { it.name == name }
 }

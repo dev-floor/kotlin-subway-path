@@ -7,5 +7,7 @@ interface StationRepository {
 
     fun saveAll(vararg stations: Station)
 
+    fun saveAll(stations: List<Station>)
+
     fun deleteByName(name: String): Boolean
 }

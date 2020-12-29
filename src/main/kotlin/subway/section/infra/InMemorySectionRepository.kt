@@ -4,17 +4,19 @@ import subway.section.domain.Section
 import subway.section.domain.SectionRepository
 
 class InMemorySectionRepository : SectionRepository {
-    override fun findAll() = SECTIONS.toList()
+    private val sections = mutableListOf<Section>()
+
+    override fun findAll() = sections.toList()
 
     override fun save(section: Section) {
-        SECTIONS.add(section)
+        sections.add(section)
     }
 
     override fun saveAll(vararg sections: Section) {
-        SECTIONS.addAll(sections)
+        this.sections.addAll(sections)
     }
 
-    companion object {
-        private val SECTIONS = mutableListOf<Section>()
+    override fun saveAll(sections: List<Section>) {
+        this.sections.addAll(sections)
     }
 }
