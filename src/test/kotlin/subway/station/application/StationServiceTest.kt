@@ -33,4 +33,18 @@ internal class StationServiceTest {
         assertThatThrownBy { stationService.register(request) }
             .isInstanceOf(IllegalStationException::class.java)
     }
+
+    @Test
+    internal fun `showAll_저장된 모든 역을 조회`() {
+        // given
+        val stationService = StationService(InMemoryStationRepository())
+        stationService.register(StationRegisterRequest("테스트역1"))
+        stationService.register(StationRegisterRequest("테스트역2"))
+
+        // when
+        val stations = stationService.showAll()
+
+        // then
+        assertThat(stations).hasSize(2)
+    }
 }
