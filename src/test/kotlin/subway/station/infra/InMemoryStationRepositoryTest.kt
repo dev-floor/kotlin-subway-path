@@ -16,15 +16,6 @@ internal class InMemoryStationRepositoryTest {
     }
 
     @Test
-    internal fun `findAll_InMemoryStationRepository의 모든 데이터를 조회`() {
-        // when
-        val stations = stationRepository.findAll()
-
-        // then
-        assertThat(stations).hasSize(STATION_FIXTURES.size)
-    }
-
-    @Test
     internal fun `save_InMemoryStationRepository에 데이터를 저장`() {
         // given
         val station = Station.from("테스트역3")
@@ -62,7 +53,25 @@ internal class InMemoryStationRepositoryTest {
     }
 
     @Test
-    internal fun `InMemoryStationRepository의 데이터를 노선의 이름으로 삭제`() {
+    internal fun `findAll_InMemoryStationRepository의 모든 데이터를 조회`() {
+        // when
+        val stations = stationRepository.findAll()
+
+        // then
+        assertThat(stations).hasSize(STATION_FIXTURES.size)
+    }
+
+    @Test
+    internal fun `existsByName_InMemoryStationRepository에서 이름에 해당하는 역이 존재하는지 확인`() {
+        // when
+        val actual = stationRepository.existsByName("테스트역1")
+
+        // then
+        assertThat(actual).isTrue
+    }
+
+    @Test
+    internal fun `deleteByName_InMemoryStationRepository의 데이터를 역의 이름으로 삭제`() {
         // given
         val name = "테스트역1"
 
