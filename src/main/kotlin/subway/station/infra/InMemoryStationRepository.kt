@@ -20,9 +20,7 @@ class InMemoryStationRepository : StationRepository {
 
     override fun findAll() = stations.toList()
 
-    override fun exists(station: Station) = stations.any { it == station }
+    override fun existsByName(name: String) = stations.any { it.match(name) }
 
     override fun delete(station: Station) = stations.removeIf { it == station }
-
-    override fun deleteAll() = stations.clear()
 }

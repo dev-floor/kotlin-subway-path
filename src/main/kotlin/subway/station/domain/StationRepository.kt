@@ -9,9 +9,7 @@ interface StationRepository {
 
     fun findAll(): List<Station>
 
-    fun exists(station: Station): Boolean
+    fun existsByName(name: String): Boolean
 
     fun delete(station: Station): Boolean
-
-    fun deleteAll()
 }

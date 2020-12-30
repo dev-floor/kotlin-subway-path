@@ -1,13 +1,15 @@
 package subway.common.domain
 
+import subway.common.exception.INVALID_NAME_MESSAGE
+
 data class Name(val name: String) {
     init {
-        require(name.length >= MIN_LENGTH) { "이름은 2글자 이상만 가능합니다." }
+        require(name.length >= MIN_LENGTH) { INVALID_NAME_MESSAGE }
     }
 
     fun match(name: String) = this.name == name
 
     companion object {
-        private const val MIN_LENGTH = 2
+        const val MIN_LENGTH = 2
     }
 }

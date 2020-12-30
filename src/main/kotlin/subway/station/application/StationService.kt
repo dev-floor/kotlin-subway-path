@@ -1,8 +1,10 @@
 package subway.station.application
 
+import subway.common.exception.ALREADY_EXISTS_STATION
+import subway.common.exception.NOT_EXISTS_STATION
+import subway.common.exception.REGISTERED_STATION_ON_SECTION
 import subway.section.domain.SectionRepository
 import subway.station.domain.StationRepository
-import subway.station.exception.IllegalStationException
 import subway.station.presentation.StationRegisterRequest
 import subway.station.presentation.StationRemoveRequest
 
@@ -11,27 +13,19 @@ class StationService(
     private val sectionRepository: SectionRepository,
 ) {
     fun register(request: StationRegisterRequest) {
-        val station = request.toEntity()
+        require(!stationRepository.existsByName(request.stationName)) { ALREADY_EXISTS_STATION }
 
-        if (stationRepository.exists(station)) {
-            throw IllegalStationException("이미 존재하는 역입니다.")
-        }
-
-        stationRepository.save(station)
+        stationRepository.save(request.toStation())
     }
 
     fun showAll() = stationRepository.findAll()
 
     fun remove(request: StationRemoveRequest): Boolean {
-        val station = request.toEntity()
+        val station = request.toStation()
 
-        if (stationRepository.exists(station).not()) {
-            throw IllegalStationException("존재하지 않는 역입니다.")
-        }
-
-        if (sectionRepository.existsByStation(station)) {
-            throw IllegalStationException("구간에 등록되어 있는 역입니다.")
-        }
+        require(stationRepository.existsByName(request.stationName)) { NOT_EXISTS_STATION }
+        require(!sectionRepository.existsByUpStation(station)) { REGISTERED_STATION_ON_SECTION }
+        require(!sectionRepository.existsByDownStation(station)) { REGISTERED_STATION_ON_SECTION }
 
         return stationRepository.delete(station)
     }

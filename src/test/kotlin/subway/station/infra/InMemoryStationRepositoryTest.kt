@@ -64,7 +64,7 @@ internal class InMemoryStationRepositoryTest {
     @Test
     internal fun `existsByName_InMemoryStationRepository에서 이름에 해당하는 역이 존재하는지 확인`() {
         // when
-        val actual = stationRepository.exists(Station.from("테스트역1"))
+        val actual = stationRepository.existsByName("테스트역1")
 
         // then
         assertThat(actual).isTrue
@@ -80,15 +80,6 @@ internal class InMemoryStationRepositoryTest {
 
         // then
         assertThat(stationRepository.findAll()).hasSize(STATION_FIXTURES.size - 1)
-    }
-
-    @Test
-    internal fun `deleteAll_InMemoryStationRepository의 모든 데이터를 삭제`() {
-        // when
-        stationRepository.deleteAll()
-
-        // then
-        assertThat(stationRepository.findAll()).hasSize(0)
     }
 
     companion object {

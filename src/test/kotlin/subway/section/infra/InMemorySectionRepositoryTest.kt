@@ -70,12 +70,24 @@ internal class InMemorySectionRepositoryTest {
     }
 
     @Test
-    internal fun `existsByStation_InMemorySectionRepository에 입력받은 역이 포함된 구간이 존재하는지 여부`() {
+    internal fun `existsByUpStation_입력받은 상행역이 포함된 구간이 존재하는지 여부`() {
         // given
         val station = Station.from("테스트역1")
 
         // when
-        val actual = sectionRepository.existsByStation(station)
+        val actual = sectionRepository.existsByUpStation(station)
+
+        // then
+        assertThat(actual).isTrue
+    }
+
+    @Test
+    internal fun `existsByDownStation_입력받은 하행역이 포함된 구간이 존재하는지 여부`() {
+        // given
+        val station = Station.from("테스트역3")
+
+        // when
+        val actual = sectionRepository.existsByDownStation(station)
 
         // then
         assertThat(actual).isTrue

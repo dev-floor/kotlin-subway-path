@@ -11,7 +11,9 @@ interface SectionRepository {
 
     fun findAll(): List<Section>
 
-    fun existsByStation(station: Station): Boolean
+    fun existsByUpStation(upStation: Station): Boolean
+
+    fun existsByDownStation(downStation: Station): Boolean
 
     fun deleteAll()
 }

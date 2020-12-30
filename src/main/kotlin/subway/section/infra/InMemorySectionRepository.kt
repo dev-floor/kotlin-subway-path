@@ -21,8 +21,10 @@ class InMemorySectionRepository : SectionRepository {
 
     override fun findAll() = sections.toList()
 
-    override fun existsByStation(station: Station) =
-        sections.any { it.upStation == station || it.downStation == station }
+    override fun existsByUpStation(upStation: Station) = sections.any { it.upStation == upStation }
+
+    override fun existsByDownStation(downStation: Station) =
+        sections.any { it.downStation == downStation }
 
     override fun deleteAll() = sections.clear()
 }

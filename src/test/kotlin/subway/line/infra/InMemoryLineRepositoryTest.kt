@@ -16,15 +16,6 @@ internal class InMemoryLineRepositoryTest {
     }
 
     @Test
-    internal fun `findAll_InMemoryLineRepository의 모든 데이터를 조회`() {
-        // when
-        val lines = lineRepository.findAll()
-
-        // then
-        assertThat(lines).hasSize(LINE_FIXTURES.size)
-    }
-
-    @Test
     internal fun `save_InMemoryLineRepository에 데이터를 저장`() {
         // given
         val line = Line.from("테스트호선4")
@@ -62,7 +53,28 @@ internal class InMemoryLineRepositoryTest {
     }
 
     @Test
-    internal fun `InMemoryLineRepository의 데이터를 노선의 이름으로 삭제`() {
+    internal fun `findAll_InMemoryLineRepository의 모든 데이터를 조회`() {
+        // when
+        val lines = lineRepository.findAll()
+
+        // then
+        assertThat(lines).hasSize(LINE_FIXTURES.size)
+    }
+
+    @Test
+    internal fun `existsByName_이름에 해당하는 노선이 존재하는지 여부를 확인`() {
+        // given
+        val name = "테스트노선1"
+
+        // when
+        val actual = lineRepository.existsByName(name)
+
+        // then
+        assertThat(actual).isTrue
+    }
+
+    @Test
+    internal fun `deleteByName_InMemoryLineRepository의 데이터를 노선의 이름으로 삭제`() {
         // given
         val name = "테스트노선1"
 
