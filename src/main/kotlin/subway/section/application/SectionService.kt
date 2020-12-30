@@ -2,6 +2,7 @@ package subway.section.application
 
 import subway.common.exception.ALREADY_EXISTS_SECTION
 import subway.common.exception.INVALID_SECTION_MESSAGE
+import subway.common.exception.INVALID_SECTION_SIZE_MESSAGE
 import subway.common.exception.NOT_EXISTS_LINE
 import subway.common.exception.NOT_EXISTS_SECTION
 import subway.common.exception.NOT_EXISTS_STATION
@@ -97,15 +98,26 @@ class SectionService(
         val (lineName, preStationName, stationName) = request
 
         validateExistingLineAndStations(lineName, preStationName, stationName)
-        require(sectionRepository.existsByLineAndPreStationAndStation(
-            Line.from(lineName),
-            Station.from(preStationName),
-            Station.from(stationName)
-        )) { NOT_EXISTS_SECTION }
+        validateExistingSection(lineName, preStationName, stationName)
 
         modifySectionAssociatedPreStationWhenRemoval(lineName, preStationName, stationName)
         modifySectionAssociatedStationWhenRemoval(lineName, preStationName, stationName)
         return sectionRepository.delete(request.toSection())
+    }
+
+    private fun validateExistingSection(
+        lineName: String,
+        preStationName: String,
+        stationName: String,
+    ) {
+        val line = Line.from(lineName)
+        val preStation = Station.from(preStationName)
+        val station = Station.from(stationName)
+
+        require(sectionRepository.countByLine(line) > MIM_SECTION_SIZE) { INVALID_SECTION_SIZE_MESSAGE }
+        require(sectionRepository.existsByLineAndPreStationAndStation(line, preStation, station)) {
+            NOT_EXISTS_SECTION
+        }
     }
 
     private fun modifySectionAssociatedPreStationWhenRemoval(
@@ -120,5 +132,9 @@ class SectionService(
         preStationName: String,
         stationName: String,
     ) {
+    }
+
+    companion object {
+        private const val MIM_SECTION_SIZE = 1
     }
 }

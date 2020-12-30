@@ -30,6 +30,8 @@ class InMemorySectionRepository : SectionRepository {
 
     override fun findAll() = sections.toList()
 
+    override fun countByLine(line: Line) = sections.count { it.line == line }
+
     override fun existsByPreStation(preStation: Station) =
         sections.any { it.preStation == preStation }
 

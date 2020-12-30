@@ -97,6 +97,18 @@ internal class InMemorySectionRepositoryTest {
     }
 
     @Test
+    internal fun `countByLine() - 해당하는 노선에 해당하는 구간의 개수를 반환`() {
+        // given
+        val line = Line.from("테스트노선1")
+
+        // when
+        val countByLine = sectionRepository.countByLine(line)
+
+        // then
+        assertThat(countByLine).isEqualTo(2)
+    }
+
+    @Test
     internal fun `existsByPreStation() - 해당하는 이전역이 포함된 구간이 존재하는지 여부`() {
         // given
         val station = Station.from("테스트역1")
