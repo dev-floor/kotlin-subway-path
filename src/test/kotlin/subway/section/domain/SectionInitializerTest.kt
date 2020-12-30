@@ -7,7 +7,7 @@ import subway.section.infra.InMemorySectionRepository
 @Suppress("NonAsciiCharacters")
 internal class SectionInitializerTest {
     @Test
-    internal fun `initialize_초기 설정에 필요한 구간을 등록`() {
+    internal fun `initialize() - 초기 설정에 필요한 구간을 등록`() {
         // given
         val repository = InMemorySectionRepository()
 

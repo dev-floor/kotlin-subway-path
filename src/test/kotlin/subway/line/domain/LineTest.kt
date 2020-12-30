@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test
 @Suppress("NonAsciiCharacters")
 internal class LineTest {
     @Test
-    internal fun `match_이름이 동일한지 여부를 확인`() {
+    internal fun `match() - 이름이 동일한지 여부를 확인`() {
         // given
         val name = "테스트노선1"
         val line = Line.from(name)
@@ -19,7 +19,7 @@ internal class LineTest {
     }
 
     @Test
-    internal fun `from_이름을 입력받아 인스턴스 생성`() {
+    internal fun `from() - 이름을 입력받아 인스턴스 생성`() {
         // given
         val name = "테스트노선1"
 

@@ -20,29 +20,27 @@ class InMemorySectionRepository : SectionRepository {
         this.sections.addAll(sections)
     }
 
-    override fun findByLineAndUpStation(line: Line, upStation: Station) =
+    override fun findByLineAndPreStation(line: Line, preStation: Station) =
         sections.filter { it.line == line }
-            .find { it.upStation == upStation }
+            .find { it.preStation == preStation }
 
-    override fun findByLineAndDownStation(line: Line, downStation: Station) =
+    override fun findByLineAndStation(line: Line, station: Station) =
         sections.filter { it.line == line }
-            .find { it.downStation == downStation }
+            .find { it.station == station }
 
     override fun findAll() = sections.toList()
 
-    override fun existsByUpStation(upStation: Station) =
-        sections.any { it.upStation == upStation }
+    override fun existsByPreStation(preStation: Station) =
+        sections.any { it.preStation == preStation }
 
-    override fun existsByDownStation(downStation: Station) =
-        sections.any { it.downStation == downStation }
+    override fun existsByStation(station: Station) =
+        sections.any { it.station == station }
 
-    override fun existsByLineAndUpStationAndDownStation(
+    override fun existsByLineAndPreStationAndStation(
         line: Line,
-        upStation: Station,
-        downStation: Station,
-    ) = sections.any { it.match(line, upStation, downStation) }
+        preStation: Station,
+        station: Station,
+    ) = sections.any { it.match(line, preStation, station) }
 
     override fun delete(section: Section) = sections.removeIf { it == section }
-
-    override fun deleteAll() = sections.clear()
 }

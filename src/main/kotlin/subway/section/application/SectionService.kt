@@ -3,10 +3,11 @@ package subway.section.application
 import subway.common.exception.ALREADY_EXISTS_SECTION
 import subway.common.exception.NOT_EXISTS_LINE
 import subway.common.exception.NOT_EXISTS_STATION
+import subway.line.domain.Line
 import subway.line.domain.LineRepository
 import subway.section.domain.Section
 import subway.section.domain.SectionRepository
-import subway.section.presentation.SectionRegisterRequest
+import subway.station.domain.Station
 import subway.station.domain.StationRepository
 
 class SectionService(
@@ -15,39 +16,58 @@ class SectionService(
     private val sectionRepository: SectionRepository,
 ) {
     fun register(request: SectionRegisterRequest) {
-        require(lineRepository.existsByName(request.lineName)) { NOT_EXISTS_LINE }
-        require(stationRepository.existsByName(request.upStationName)) { NOT_EXISTS_STATION }
-        require(stationRepository.existsByName(request.downStationName)) { NOT_EXISTS_STATION }
-        require(!sectionRepository.existsByLineAndUpStationAndDownStation(
-            request.line,
-            request.upStation,
-            request.downStation
-        )) { ALREADY_EXISTS_SECTION }
+        val (lineName, preStationName, stationName, _, _) = request
 
-        updateAssociatedUpStation(request)
-        updateAssociatedDownStation(request)
+        validate(lineName, preStationName, stationName)
+        modifyRegisteredSectionAssociatedWithPreStation(lineName, preStationName, stationName)
+        modifyRegisteredSectionAssociatedWithStation(lineName, preStationName, stationName)
+
         sectionRepository.save(request.toSection())
     }
 
-    private fun updateAssociatedUpStation(request: SectionRegisterRequest) =
-        sectionRepository.findByLineAndUpStation(request.line, request.upStation)
-            ?.let {
-                sectionRepository.delete(it)
-                sectionRepository.save(it.copy(
-                    upStation = request.downStation,
-                    distance = Section.INITIAL_DISTANCE,
-                    duration = Section.INITIAL_DURATION
-                ))
-            }
+    private fun validate(lineName: String, preStationName: String, stationName: String) {
+        require(lineRepository.existsByName(lineName)) { NOT_EXISTS_LINE }
+        require(stationRepository.existsByName(preStationName)) { NOT_EXISTS_STATION }
+        require(stationRepository.existsByName(stationName)) { NOT_EXISTS_STATION }
+        require(!sectionRepository.existsByLineAndPreStationAndStation(
+            Line.from(lineName),
+            Station.from(preStationName),
+            Station.from(stationName)
+        )) { ALREADY_EXISTS_SECTION }
+    }
 
-    private fun updateAssociatedDownStation(request: SectionRegisterRequest) =
-        sectionRepository.findByLineAndDownStation(request.line, request.downStation)
-            ?.let {
-                sectionRepository.delete(it)
-                sectionRepository.save(it.copy(
-                    downStation = request.upStation,
-                    distance = Section.INITIAL_DISTANCE,
-                    duration = Section.INITIAL_DURATION
-                ))
-            }
+    private fun modifyRegisteredSectionAssociatedWithPreStation(
+        lineName: String,
+        preStationName: String,
+        stationName: String,
+    ) = sectionRepository.findByLineAndPreStation(Line.from(lineName), Station.from(preStationName))
+        ?.let {
+            sectionRepository.delete(it)
+            sectionRepository.save(it.copy(
+                preStation = Station.from(stationName),
+                distance = Section.INITIAL_DISTANCE,
+                duration = Section.INITIAL_DURATION
+            ))
+        }
+
+
+    private fun modifyRegisteredSectionAssociatedWithStation(
+        lineName: String,
+        preStationName: String,
+        stationName: String,
+    ) = sectionRepository.findByLineAndStation(Line.from(lineName), Station.from(stationName))
+        ?.let {
+            sectionRepository.delete(it)
+            sectionRepository.save(it.copy(
+                station = Station.from(preStationName),
+                distance = Section.INITIAL_DISTANCE,
+                duration = Section.INITIAL_DURATION
+            ))
+        }
+
+    fun remove(request: SectionRemoveRequest): Boolean {
+        val (lineName, preStationName, stationName) = request
+
+        validate(lineName, preStationName, stationName)
+    }
 }

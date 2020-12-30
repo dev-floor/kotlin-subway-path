@@ -12,8 +12,6 @@ import subway.section.infra.InMemorySectionRepository
 import subway.station.domain.Station
 import subway.station.domain.StationRepository
 import subway.station.infra.InMemoryStationRepository
-import subway.station.presentation.StationRegisterRequest
-import subway.station.presentation.StationRemoveRequest
 
 @Suppress("NonAsciiCharacters")
 internal class StationServiceTest {
@@ -29,7 +27,7 @@ internal class StationServiceTest {
     }
 
     @Test
-    internal fun `register_역의 이름을 입력받아 역을 생성`() {
+    internal fun `register() - 해당하는 이름의 역을 생성`() {
         // given
         val request = StationRegisterRequest("테스트역1")
 
@@ -41,7 +39,7 @@ internal class StationServiceTest {
     }
 
     @Test
-    internal fun `register_이미 존재하는 역의 경우 예외 생성`() {
+    internal fun `register() - 이미 존재하는 역의 경우 예외 발생`() {
         // given
         val name = "테스트역1"
         stationRepository.save(Station.from(name))
@@ -53,7 +51,7 @@ internal class StationServiceTest {
     }
 
     @Test
-    internal fun `showAll_저장된 모든 역을 조회`() {
+    internal fun `showAll() - 모든 역을 조회`() {
         // given
         stationRepository.save(Station.from("테스트역1"))
         stationRepository.save(Station.from("테스트역2"))
@@ -66,7 +64,7 @@ internal class StationServiceTest {
     }
 
     @Test
-    internal fun `remove_역의 이름에 해당하는 역을 삭제`() {
+    internal fun `remove() - 해당하는 이름의 역을 삭제`() {
         // given
         val name = "테스트역1"
         stationRepository.save(Station.from(name))
@@ -82,7 +80,7 @@ internal class StationServiceTest {
     }
 
     @Test
-    internal fun `remove_역이 존재하지 않는 경우 예외 발생`() {
+    internal fun `remove() - 해당하는 역이 존재하지 않는 경우 예외 발생`() {
         // given
         val name = "테스트역1"
 
@@ -93,7 +91,7 @@ internal class StationServiceTest {
     }
 
     @Test
-    internal fun `remove_역이 구간에 등록되어 있는 경우 예외 발생`() {
+    internal fun `remove() - 역이 구간에 등록되어 있는 경우 예외 발생`() {
         // given
         val name = "테스트역1"
         val section =

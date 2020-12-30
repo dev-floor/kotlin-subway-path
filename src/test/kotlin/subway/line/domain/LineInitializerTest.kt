@@ -7,7 +7,7 @@ import subway.line.infra.InMemoryLineRepository
 @Suppress("NonAsciiCharacters")
 internal class LineInitializerTest {
     @Test
-    internal fun `initialize_초기 설정에 필요한 호선을 등록`() {
+    internal fun `initialize() - 초기 설정에 필요한 노선을 등록`() {
         // given
         val repository = InMemoryLineRepository()
 

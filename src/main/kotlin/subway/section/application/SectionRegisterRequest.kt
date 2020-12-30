@@ -1,4 +1,4 @@
-package subway.section.presentation
+package subway.section.application
 
 import subway.common.domain.Name
 import subway.common.exception.INVALID_DISTANCE_MESSAGE
@@ -16,15 +16,6 @@ data class SectionRegisterRequest(
     val distance: Long,
     val duration: Long,
 ) {
-    val line: Line
-        get() = Line.from(lineName)
-
-    val upStation: Station
-        get() = Station.from(upStationName)
-
-    val downStation: Station
-        get() = Station.from(downStationName)
-
     init {
         require(lineName.length >= Name.MIN_LENGTH) { INVALID_NAME_MESSAGE }
         require(upStationName.length >= Name.MIN_LENGTH) { INVALID_NAME_MESSAGE }
@@ -35,8 +26,8 @@ data class SectionRegisterRequest(
 
     fun toSection() = Section(
         line = Line.from(lineName),
-        upStation = Station.from(upStationName),
-        downStation = Station.from(downStationName),
+        preStation = Station.from(upStationName),
+        station = Station.from(downStationName),
         distance = distance,
         duration = duration
     )

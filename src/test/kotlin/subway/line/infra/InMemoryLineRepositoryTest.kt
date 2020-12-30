@@ -16,7 +16,7 @@ internal class InMemoryLineRepositoryTest {
     }
 
     @Test
-    internal fun `save_InMemoryLineRepository에 데이터를 저장`() {
+    internal fun `save() - 해당 노선을 저장`() {
         // given
         val line = Line.from("테스트호선4")
 
@@ -28,7 +28,7 @@ internal class InMemoryLineRepositoryTest {
     }
 
     @Test
-    internal fun `saveAll_InMemoryLineRepository에 여러 데이터를 저장`() {
+    internal fun `saveAll() - vararg 타입의 여러 노선들을 저장`() {
         // given
         val line1 = Line.from("테스트노선4")
         val line2 = Line.from("테스트노선5")
@@ -41,7 +41,7 @@ internal class InMemoryLineRepositoryTest {
     }
 
     @Test
-    internal fun `saveAll_InMemoryLineRepository에 리스트로 된 데이터를 저장`() {
+    internal fun `saveAll() - list 타입의 여러 노선들을 저장`() {
         // given
         val lines = listOf(Line.from("테스트노선4"), Line.from("테스트노선5"))
 
@@ -53,7 +53,7 @@ internal class InMemoryLineRepositoryTest {
     }
 
     @Test
-    internal fun `findAll_InMemoryLineRepository의 모든 데이터를 조회`() {
+    internal fun `findAll() - 모든 노선들을 조회`() {
         // when
         val lines = lineRepository.findAll()
 
@@ -62,7 +62,7 @@ internal class InMemoryLineRepositoryTest {
     }
 
     @Test
-    internal fun `existsByName_이름에 해당하는 노선이 존재하는지 여부를 확인`() {
+    internal fun `existsByName() - 해당하는 이름의 노선이 존재하는지 여부를 확인`() {
         // given
         val name = "테스트노선1"
 
@@ -74,7 +74,7 @@ internal class InMemoryLineRepositoryTest {
     }
 
     @Test
-    internal fun `deleteByName_InMemoryLineRepository의 데이터를 노선의 이름으로 삭제`() {
+    internal fun `deleteByName() - 해당하는 이름의 노선을 삭제`() {
         // given
         val name = "테스트노선1"
 

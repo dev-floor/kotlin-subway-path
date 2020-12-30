@@ -8,8 +8,8 @@ import subway.station.domain.Station
 
 data class Section(
     val line: Line,
-    val upStation: Station,
-    val downStation: Station,
+    val preStation: Station,
+    val station: Station,
     val distance: Long = INITIAL_DISTANCE,
     val duration: Long = INITIAL_DURATION,
 ) {
@@ -18,8 +18,8 @@ data class Section(
         require(duration.isPositive) { INVALID_DURATION_MESSAGE }
     }
 
-    fun match(line: Line, upStation: Station, downStation: Station) =
-        this.line == line && this.upStation == upStation && this.downStation == downStation
+    fun match(line: Line, preStation: Station, station: Station) =
+        this.line == line && this.preStation == preStation && this.station == station
 
     companion object {
         const val INITIAL_DISTANCE = 2L
@@ -27,14 +27,14 @@ data class Section(
 
         fun from(
             lineName: String,
-            upStationName: String,
-            downStationName: String,
+            preStationName: String,
+            stationName: String,
             distance: Long = INITIAL_DISTANCE,
             duration: Long = INITIAL_DURATION,
         ) = Section(
             line = Line.from(lineName),
-            upStation = Station.from(upStationName),
-            downStation = Station.from(downStationName),
+            preStation = Station.from(preStationName),
+            station = Station.from(stationName),
             distance = distance,
             duration = duration
         )

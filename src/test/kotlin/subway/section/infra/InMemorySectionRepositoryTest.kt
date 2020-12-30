@@ -19,7 +19,7 @@ internal class InMemorySectionRepositoryTest {
     }
 
     @Test
-    internal fun `save_InMemorySectionRepository에 데이터를 저장`() {
+    internal fun `save() - 구간을 저장`() {
         // given
         val section =
             Section(Line.from("테스트노선2"), Station.from("테스트역1"), Station.from("테스트역3"), 2, 3)
@@ -32,7 +32,7 @@ internal class InMemorySectionRepositoryTest {
     }
 
     @Test
-    internal fun `saveAll_InMemorySectionRepository에 여러 데이터를 저장`() {
+    internal fun `saveAll() - vararg 타입의 여러 구간들을 저장`() {
         // given
         val section1 =
             Section(Line.from("테스트노선2"), Station.from("테스트역1"), Station.from("테스트역3"), 2, 3)
@@ -47,7 +47,7 @@ internal class InMemorySectionRepositoryTest {
     }
 
     @Test
-    internal fun `saveAll_InMemorySectionRepository에 리스트로 된 데이터를 저장`() {
+    internal fun `saveAll() - list 타입의 여러 구간들을 저장`() {
         // given
         val sections = listOf(
             Section(Line.from("테스트노선2"), Station.from("테스트역1"), Station.from("테스트역3"), 2, 3),
@@ -62,33 +62,33 @@ internal class InMemorySectionRepositoryTest {
     }
 
     @Test
-    internal fun `findByLineAndUpStation_노선,상행역이 포함된 구간을 조회`() {
+    internal fun `findByLineAndPreStation() - 해당하는 노선,이전역이 포함된 구간을 조회`() {
         // given
         val line = Line.from("테스트노선1")
         val station = Station.from("테스트역1")
 
         // when
-        val actual = sectionRepository.findByLineAndUpStation(line, station)
+        val actual = sectionRepository.findByLineAndPreStation(line, station)
 
         // then
         assertThat(actual).isNotNull
     }
 
     @Test
-    internal fun `findByLineAndDownStation_노선,상행역이 포함된 구간을 조회`() {
+    internal fun `findByLineAndStation() - 해당하는 노선,현재역이 포함된 구간을 조회`() {
         // given
         val line = Line.from("테스트노선1")
         val station = Station.from("테스트역3")
 
         // when
-        val actual = sectionRepository.findByLineAndDownStation(line, station)
+        val actual = sectionRepository.findByLineAndStation(line, station)
 
         // then
         assertThat(actual).isNotNull
     }
 
     @Test
-    internal fun `findAll_InMemorySectionRepository의 모든 데이터를 조회`() {
+    internal fun `findAll() - 모든 구간들을 조회`() {
         // when
         val sections = sectionRepository.findAll()
 
@@ -97,31 +97,31 @@ internal class InMemorySectionRepositoryTest {
     }
 
     @Test
-    internal fun `existsByUpStation_입력받은 상행역이 포함된 구간이 존재하는지 여부`() {
+    internal fun `existsByPreStation() - 해당하는 이전역이 포함된 구간이 존재하는지 여부`() {
         // given
         val station = Station.from("테스트역1")
 
         // when
-        val actual = sectionRepository.existsByUpStation(station)
+        val actual = sectionRepository.existsByPreStation(station)
 
         // then
         assertThat(actual).isTrue
     }
 
     @Test
-    internal fun `existsByDownStation_입력받은 하행역이 포함된 구간이 존재하는지 여부`() {
+    internal fun `existsByStation() - 해당하는 현재역이 포함된 구간이 존재하는지 여부`() {
         // given
         val station = Station.from("테스트역3")
 
         // when
-        val actual = sectionRepository.existsByDownStation(station)
+        val actual = sectionRepository.existsByStation(station)
 
         // then
         assertThat(actual).isTrue
     }
 
     @Test
-    internal fun `existsByLineAndUpStationAndDownStation_노선,상행역,하행역과 일치하는 구간이 존재하는지 여부`() {
+    internal fun `existsByLineAndPreStationAndStation() - 해당하는 노선,이전역,현재역과 일치하는 구간이 존재하는지 여부`() {
         // given
         val line = Line.from("테스트노선1")
         val upStation = Station.from("테스트역1")
@@ -129,14 +129,14 @@ internal class InMemorySectionRepositoryTest {
 
         // when
         val actual =
-            sectionRepository.existsByLineAndUpStationAndDownStation(line, upStation, downStation)
+            sectionRepository.existsByLineAndPreStationAndStation(line, upStation, downStation)
 
         // then
         assertThat(actual).isTrue
     }
 
     @Test
-    internal fun `delete_해당 데이터를 삭제`() {
+    internal fun `delete() - 해당하는 구간을 삭제`() {
         // given
         val section =
             Section(Line.from("테스트노선1"), Station.from("테스트역1"), Station.from("테스트역2"), 2, 3)
@@ -149,15 +149,6 @@ internal class InMemorySectionRepositoryTest {
             { assertThat(actual).isTrue },
             { assertThat(sectionRepository.findAll()).hasSize(SECTION_FIXTURES.size - 1) }
         )
-    }
-
-    @Test
-    internal fun `deleteAll_InMemorySectionRepository의 모든 데이터를 삭제`() {
-        // when
-        sectionRepository.deleteAll()
-
-        // then
-        assertThat(sectionRepository.findAll()).hasSize(0)
     }
 
     companion object {

@@ -1,4 +1,4 @@
-package subway.station.presentation
+package subway.station.application
 
 import subway.common.domain.Name
 import subway.common.exception.INVALID_NAME_MESSAGE

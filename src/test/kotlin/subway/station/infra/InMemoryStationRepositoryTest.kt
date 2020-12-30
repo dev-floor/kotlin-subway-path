@@ -16,7 +16,7 @@ internal class InMemoryStationRepositoryTest {
     }
 
     @Test
-    internal fun `save_InMemoryStationRepository에 데이터를 저장`() {
+    internal fun `save() - 해당하는 역을 저장`() {
         // given
         val station = Station.from("테스트역3")
 
@@ -28,7 +28,7 @@ internal class InMemoryStationRepositoryTest {
     }
 
     @Test
-    internal fun `saveAll_InMemoryStationRepository에 여러 데이터를 저장`() {
+    internal fun `saveAll() - vararg 타입의 여러 역들을 저장`() {
         // given
         val station1 = Station.from("테스트역3")
         val station2 = Station.from("테스트역4")
@@ -41,7 +41,7 @@ internal class InMemoryStationRepositoryTest {
     }
 
     @Test
-    internal fun `saveAll_InMemoryStationRepository에 리스트로 된 데이터를 저장`() {
+    internal fun `saveAll() - list 타입의 여러 역들을 저장`() {
         // given
         val stations = listOf(Station.from("테스트역3"), Station.from("테스트역4"))
 
@@ -53,7 +53,7 @@ internal class InMemoryStationRepositoryTest {
     }
 
     @Test
-    internal fun `findAll_InMemoryStationRepository의 모든 데이터를 조회`() {
+    internal fun `findAll() - 모든 역들을 조회`() {
         // when
         val stations = stationRepository.findAll()
 
@@ -62,7 +62,7 @@ internal class InMemoryStationRepositoryTest {
     }
 
     @Test
-    internal fun `existsByName_InMemoryStationRepository에서 이름에 해당하는 역이 존재하는지 확인`() {
+    internal fun `existsByName() - 해당하는 이름의 역이 존재하는지 확인`() {
         // when
         val actual = stationRepository.existsByName("테스트역1")
 
@@ -71,7 +71,7 @@ internal class InMemoryStationRepositoryTest {
     }
 
     @Test
-    internal fun `delete_InMemoryStationRepository에서 해당하는 역을 삭제`() {
+    internal fun `delete() - 해당하는 역을 삭제`() {
         // given
         val station = Station.from("테스트역1")
 

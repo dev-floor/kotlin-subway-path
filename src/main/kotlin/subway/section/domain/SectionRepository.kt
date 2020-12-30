@@ -10,23 +10,21 @@ interface SectionRepository {
 
     fun saveAll(sections: List<Section>)
 
-    fun findByLineAndUpStation(line: Line, upStation: Station): Section?
+    fun findByLineAndPreStation(line: Line, preStation: Station): Section?
 
-    fun findByLineAndDownStation(line: Line, downStation: Station): Section?
+    fun findByLineAndStation(line: Line, station: Station): Section?
 
     fun findAll(): List<Section>
 
-    fun existsByUpStation(upStation: Station): Boolean
+    fun existsByPreStation(preStation: Station): Boolean
 
-    fun existsByDownStation(downStation: Station): Boolean
+    fun existsByStation(station: Station): Boolean
 
-    fun existsByLineAndUpStationAndDownStation(
+    fun existsByLineAndPreStationAndStation(
         line: Line,
-        upStation: Station,
-        downStation: Station,
+        preStation: Station,
+        station: Station,
     ): Boolean
 
     fun delete(section: Section): Boolean
-
-    fun deleteAll()
 }
