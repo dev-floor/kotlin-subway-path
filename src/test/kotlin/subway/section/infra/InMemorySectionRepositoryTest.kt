@@ -3,6 +3,7 @@ package subway.section.infra
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertAll
 import subway.line.domain.Line
 import subway.section.domain.Section
 import subway.section.domain.SectionRepository
@@ -61,6 +62,32 @@ internal class InMemorySectionRepositoryTest {
     }
 
     @Test
+    internal fun `findByLineAndUpStation_노선,상행역이 포함된 구간을 조회`() {
+        // given
+        val line = Line.from("테스트노선1")
+        val station = Station.from("테스트역1")
+
+        // when
+        val actual = sectionRepository.findByLineAndUpStation(line, station)
+
+        // then
+        assertThat(actual).isNotNull
+    }
+
+    @Test
+    internal fun `findByLineAndDownStation_노선,상행역이 포함된 구간을 조회`() {
+        // given
+        val line = Line.from("테스트노선1")
+        val station = Station.from("테스트역3")
+
+        // when
+        val actual = sectionRepository.findByLineAndDownStation(line, station)
+
+        // then
+        assertThat(actual).isNotNull
+    }
+
+    @Test
     internal fun `findAll_InMemorySectionRepository의 모든 데이터를 조회`() {
         // when
         val sections = sectionRepository.findAll()
@@ -91,6 +118,37 @@ internal class InMemorySectionRepositoryTest {
 
         // then
         assertThat(actual).isTrue
+    }
+
+    @Test
+    internal fun `existsByLineAndUpStationAndDownStation_노선,상행역,하행역과 일치하는 구간이 존재하는지 여부`() {
+        // given
+        val line = Line.from("테스트노선1")
+        val upStation = Station.from("테스트역1")
+        val downStation = Station.from("테스트역2")
+
+        // when
+        val actual =
+            sectionRepository.existsByLineAndUpStationAndDownStation(line, upStation, downStation)
+
+        // then
+        assertThat(actual).isTrue
+    }
+
+    @Test
+    internal fun `delete_해당 데이터를 삭제`() {
+        // given
+        val section =
+            Section(Line.from("테스트노선1"), Station.from("테스트역1"), Station.from("테스트역2"), 2, 3)
+
+        // when
+        val actual = sectionRepository.delete(section)
+
+        // then
+        assertAll(
+            { assertThat(actual).isTrue },
+            { assertThat(sectionRepository.findAll()).hasSize(SECTION_FIXTURES.size - 1) }
+        )
     }
 
     @Test
