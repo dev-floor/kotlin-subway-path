@@ -20,13 +20,13 @@ class InMemorySectionRepository : SectionRepository {
         this.sections.addAll(sections)
     }
 
-    override fun findByLineAndPreStation(line: Line, preStation: Station) =
-        sections.filter { it.line == line }
-            .find { it.preStation == preStation }
+    override fun findByLineAndPreStation(line: Line, preStation: Station) = sections.asSequence()
+        .filter { it.line == line }
+        .find { it.preStation == preStation }
 
-    override fun findByLineAndStation(line: Line, station: Station) =
-        sections.filter { it.line == line }
-            .find { it.station == station }
+    override fun findByLineAndStation(line: Line, station: Station) = sections.asSequence()
+        .filter { it.line == line }
+        .find { it.station == station }
 
     override fun findAll() = sections.toList()
 
@@ -35,6 +35,14 @@ class InMemorySectionRepository : SectionRepository {
 
     override fun existsByStation(station: Station) =
         sections.any { it.station == station }
+
+    override fun existsByLineAndPreStation(line: Line, preStation: Station) = sections.asSequence()
+        .filter { it.line == line }
+        .any { it.preStation == preStation }
+
+    override fun existsByLineAndStation(line: Line, station: Station) = sections.asSequence()
+        .filter { it.line == line }
+        .any { it.station == station }
 
     override fun existsByLineAndPreStationAndStation(
         line: Line,

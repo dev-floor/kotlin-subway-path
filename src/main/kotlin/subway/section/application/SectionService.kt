@@ -1,7 +1,9 @@
 package subway.section.application
 
 import subway.common.exception.ALREADY_EXISTS_SECTION
+import subway.common.exception.INVALID_SECTION_MESSAGE
 import subway.common.exception.NOT_EXISTS_LINE
+import subway.common.exception.NOT_EXISTS_SECTION
 import subway.common.exception.NOT_EXISTS_STATION
 import subway.line.domain.Line
 import subway.line.domain.LineRepository
@@ -18,25 +20,59 @@ class SectionService(
     fun register(request: SectionRegisterRequest) {
         val (lineName, preStationName, stationName, _, _) = request
 
-        validate(lineName, preStationName, stationName)
-        modifyRegisteredSectionAssociatedWithPreStation(lineName, preStationName, stationName)
-        modifyRegisteredSectionAssociatedWithStation(lineName, preStationName, stationName)
+        validateExistingLineAndStations(lineName, preStationName, stationName)
+        validateNotExistingSection(lineName, preStationName, stationName)
+        validateNotCycledSection(lineName, preStationName, stationName)
 
+        modifySectionAssociatedPreStationWhenRegistration(lineName, preStationName, stationName)
+        modifySectionAssociatedStationWhenRegistration(lineName, preStationName, stationName)
         sectionRepository.save(request.toSection())
     }
 
-    private fun validate(lineName: String, preStationName: String, stationName: String) {
+    private fun validateExistingLineAndStations(
+        lineName: String,
+        preStationName: String,
+        stationName: String,
+    ) {
         require(lineRepository.existsByName(lineName)) { NOT_EXISTS_LINE }
         require(stationRepository.existsByName(preStationName)) { NOT_EXISTS_STATION }
         require(stationRepository.existsByName(stationName)) { NOT_EXISTS_STATION }
-        require(!sectionRepository.existsByLineAndPreStationAndStation(
-            Line.from(lineName),
-            Station.from(preStationName),
-            Station.from(stationName)
-        )) { ALREADY_EXISTS_SECTION }
     }
 
-    private fun modifyRegisteredSectionAssociatedWithPreStation(
+    private fun validateNotExistingSection(
+        lineName: String,
+        preStationName: String,
+        stationName: String,
+    ) {
+        val line = Line.from(lineName)
+        val preStation = Station.from(preStationName)
+        val station = Station.from(stationName)
+
+        require(!sectionRepository.existsByLineAndPreStationAndStation(line, preStation, station)) {
+            ALREADY_EXISTS_SECTION
+        }
+        require(!sectionRepository.existsByLineAndPreStation(line, preStation)
+                || !sectionRepository.existsByLineAndStation(line, station)) {
+            INVALID_SECTION_MESSAGE
+        }
+    }
+
+    private fun validateNotCycledSection(
+        lineName: String,
+        preStationName: String,
+        stationName: String,
+    ) {
+        val line = Line.from(lineName)
+        val preStation = Station.from(preStationName)
+        val station = Station.from(stationName)
+
+        require(!sectionRepository.existsByLineAndPreStation(line, station)
+                || !sectionRepository.existsByLineAndStation(line, preStation)) {
+            INVALID_SECTION_MESSAGE
+        }
+    }
+
+    private fun modifySectionAssociatedPreStationWhenRegistration(
         lineName: String,
         preStationName: String,
         stationName: String,
@@ -47,7 +83,7 @@ class SectionService(
         }
 
 
-    private fun modifyRegisteredSectionAssociatedWithStation(
+    private fun modifySectionAssociatedStationWhenRegistration(
         lineName: String,
         preStationName: String,
         stationName: String,
@@ -60,7 +96,29 @@ class SectionService(
     fun remove(request: SectionRemoveRequest): Boolean {
         val (lineName, preStationName, stationName) = request
 
-        validate(lineName, preStationName, stationName)
+        validateExistingLineAndStations(lineName, preStationName, stationName)
+        require(sectionRepository.existsByLineAndPreStationAndStation(
+            Line.from(lineName),
+            Station.from(preStationName),
+            Station.from(stationName)
+        )) { NOT_EXISTS_SECTION }
+
+        modifySectionAssociatedPreStationWhenRemoval(lineName, preStationName, stationName)
+        modifySectionAssociatedStationWhenRemoval(lineName, preStationName, stationName)
         return sectionRepository.delete(request.toSection())
+    }
+
+    private fun modifySectionAssociatedPreStationWhenRemoval(
+        lineName: String,
+        preStationName: String,
+        stationName: String,
+    ) {
+    }
+
+    private fun modifySectionAssociatedStationWhenRemoval(
+        lineName: String,
+        preStationName: String,
+        stationName: String,
+    ) {
     }
 }

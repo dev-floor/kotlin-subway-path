@@ -121,15 +121,41 @@ internal class InMemorySectionRepositoryTest {
     }
 
     @Test
+    internal fun `existsByLineAndPreStation() - 해당하는 노선,이전역과 일치하는 구간이 존재하는지 여부`() {
+        // given
+        val line = Line.from("테스트노선1")
+        val preStation = Station.from("테스트역1")
+
+        // when
+        val actual = sectionRepository.existsByLineAndPreStation(line, preStation)
+
+        // then
+        assertThat(actual).isTrue
+    }
+
+    @Test
+    internal fun `existsByLineAndStation() - 해당하는 노선,현재역과 일치하는 구간이 존재하는지 여부`() {
+        // given
+        val line = Line.from("테스트노선1")
+        val station = Station.from("테스트역2")
+
+        // when
+        val actual = sectionRepository.existsByLineAndStation(line, station)
+
+        // then
+        assertThat(actual).isTrue
+    }
+
+    @Test
     internal fun `existsByLineAndPreStationAndStation() - 해당하는 노선,이전역,현재역과 일치하는 구간이 존재하는지 여부`() {
         // given
         val line = Line.from("테스트노선1")
-        val upStation = Station.from("테스트역1")
-        val downStation = Station.from("테스트역2")
+        val preStation = Station.from("테스트역1")
+        val station = Station.from("테스트역2")
 
         // when
         val actual =
-            sectionRepository.existsByLineAndPreStationAndStation(line, upStation, downStation)
+            sectionRepository.existsByLineAndPreStationAndStation(line, preStation, station)
 
         // then
         assertThat(actual).isTrue

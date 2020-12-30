@@ -20,6 +20,10 @@ interface SectionRepository {
 
     fun existsByStation(station: Station): Boolean
 
+    fun existsByLineAndPreStation(line: Line, preStation: Station): Boolean
+
+    fun existsByLineAndStation(line: Line, station: Station): Boolean
+
     fun existsByLineAndPreStationAndStation(
         line: Line,
         preStation: Station,

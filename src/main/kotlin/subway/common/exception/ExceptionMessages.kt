@@ -6,6 +6,8 @@ const val INVALID_DISTANCE_MESSAGE = "구간 거리는 0보다 큰 수여야 합
 
 const val INVALID_DURATION_MESSAGE = "소요 시간은 0보다 큰 수여야 합니다."
 
+const val INVALID_SECTION_MESSAGE = "등록할 수 없는 구간입니다."
+
 const val NOT_EXISTS_STATION = "해당 역이 존재하지 않습니다."
 
 const val NOT_EXISTS_LINE = "해당 노선이 존재하지 않습니다."
