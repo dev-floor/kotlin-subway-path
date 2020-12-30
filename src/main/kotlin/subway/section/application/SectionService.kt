@@ -43,11 +43,7 @@ class SectionService(
     ) = sectionRepository.findByLineAndPreStation(Line.from(lineName), Station.from(preStationName))
         ?.let {
             sectionRepository.delete(it)
-            sectionRepository.save(it.copy(
-                preStation = Station.from(stationName),
-                distance = Section.INITIAL_DISTANCE,
-                duration = Section.INITIAL_DURATION
-            ))
+            sectionRepository.save(Section(it.line, Station.from(stationName), it.station))
         }
 
 
@@ -58,16 +54,13 @@ class SectionService(
     ) = sectionRepository.findByLineAndStation(Line.from(lineName), Station.from(stationName))
         ?.let {
             sectionRepository.delete(it)
-            sectionRepository.save(it.copy(
-                station = Station.from(preStationName),
-                distance = Section.INITIAL_DISTANCE,
-                duration = Section.INITIAL_DURATION
-            ))
+            sectionRepository.save(Section(it.line, it.preStation, Station.from(preStationName)))
         }
 
     fun remove(request: SectionRemoveRequest): Boolean {
         val (lineName, preStationName, stationName) = request
 
         validate(lineName, preStationName, stationName)
+        return sectionRepository.delete(request.toSection())
     }
 }

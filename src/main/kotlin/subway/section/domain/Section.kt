@@ -6,7 +6,7 @@ import subway.common.utils.isPositive
 import subway.line.domain.Line
 import subway.station.domain.Station
 
-data class Section(
+class Section(
     val line: Line,
     val preStation: Station,
     val station: Station,
@@ -20,6 +20,26 @@ data class Section(
 
     fun match(line: Line, preStation: Station, station: Station) =
         this.line == line && this.preStation == preStation && this.station == station
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (javaClass != other?.javaClass) return false
+
+        other as Section
+
+        if (line != other.line) return false
+        if (preStation != other.preStation) return false
+        if (station != other.station) return false
+
+        return true
+    }
+
+    override fun hashCode(): Int {
+        var result = line.hashCode()
+        result = 31 * result + preStation.hashCode()
+        result = 31 * result + station.hashCode()
+        return result
+    }
 
     companion object {
         const val INITIAL_DISTANCE = 2L
