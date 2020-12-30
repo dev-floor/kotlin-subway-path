@@ -19,18 +19,15 @@ class SectionService(
     private val sectionRepository: SectionRepository,
 ) {
     fun register(request: SectionRegisterRequest) {
-        val (lineName, preStationName, stationName, _, _) = request
+        validateLineAndStations(request.lineName, request.preStationName, request.stationName)
+        validateSectionToRegister(request.line, request.preStation, request.station)
+        validateCycle(request.line, request.preStation, request.station)
 
-        validateExistingLineAndStations(lineName, preStationName, stationName)
-        validateNotExistingSection(lineName, preStationName, stationName)
-        validateNotCycledSection(lineName, preStationName, stationName)
-
-        modifySectionAssociatedPreStationWhenRegistration(lineName, preStationName, stationName)
-        modifySectionAssociatedStationWhenRegistration(lineName, preStationName, stationName)
+        modifySectionAssociatedWithRegistration(request.line, request.preStation, request.station)
         sectionRepository.save(request.toSection())
     }
 
-    private fun validateExistingLineAndStations(
+    private fun validateLineAndStations(
         lineName: String,
         preStationName: String,
         stationName: String,
@@ -40,64 +37,42 @@ class SectionService(
         require(stationRepository.existsByName(stationName)) { NOT_EXISTS_STATION }
     }
 
-    private fun validateNotExistingSection(
-        lineName: String,
-        preStationName: String,
-        stationName: String,
+    private fun validateSectionToRegister(
+        line: Line,
+        preStation: Station,
+        station: Station,
     ) {
-        val line = Line.from(lineName)
-        val preStation = Station.from(preStationName)
-        val station = Station.from(stationName)
-
         require(!sectionRepository.existsByLineAndPreStationAndStation(line, preStation, station)) {
             ALREADY_EXISTS_SECTION
         }
-        require(!sectionRepository.existsByLineAndPreStation(line, preStation)
-                || !sectionRepository.existsByLineAndStation(line, station)) {
+        require(!sectionRepository.existsByLineAndStation(line, station)) {
             INVALID_SECTION_MESSAGE
         }
     }
 
-    private fun validateNotCycledSection(
-        lineName: String,
-        preStationName: String,
-        stationName: String,
-    ) {
-        val line = Line.from(lineName)
-        val preStation = Station.from(preStationName)
-        val station = Station.from(stationName)
-
-        require(!sectionRepository.existsByLineAndPreStation(line, station)
-                || !sectionRepository.existsByLineAndStation(line, preStation)) {
-            INVALID_SECTION_MESSAGE
-        }
+    private fun validateCycle(
+        line: Line,
+        preStation: Station,
+        station: Station,
+    ) = require(!sectionRepository.existsByLineAndPreStation(line, station)
+            || !sectionRepository.existsByLineAndStation(line, preStation)) {
+        INVALID_SECTION_MESSAGE
     }
 
-    private fun modifySectionAssociatedPreStationWhenRegistration(
-        lineName: String,
-        preStationName: String,
-        stationName: String,
-    ) = sectionRepository.findByLineAndPreStation(Line.from(lineName), Station.from(preStationName))
+    private fun modifySectionAssociatedWithRegistration(
+        line: Line,
+        preStation: Station,
+        station: Station,
+    ) = sectionRepository.findByLineAndPreStation(line, preStation)
         ?.let {
             sectionRepository.delete(it)
-            sectionRepository.save(Section(it.line, Station.from(stationName), it.station))
-        }
-
-
-    private fun modifySectionAssociatedStationWhenRegistration(
-        lineName: String,
-        preStationName: String,
-        stationName: String,
-    ) = sectionRepository.findByLineAndStation(Line.from(lineName), Station.from(stationName))
-        ?.let {
-            sectionRepository.delete(it)
-            sectionRepository.save(Section(it.line, it.preStation, Station.from(preStationName)))
+            sectionRepository.save(Section(it.line, station, it.station))
         }
 
     fun remove(request: SectionRemoveRequest): Boolean {
         val (lineName, preStationName, stationName) = request
 
-        validateExistingLineAndStations(lineName, preStationName, stationName)
+        validateLineAndStations(lineName, preStationName, stationName)
         validateExistingSection(lineName, preStationName, stationName)
 
         modifySectionAssociatedPreStationWhenRemoval(lineName, preStationName, stationName)

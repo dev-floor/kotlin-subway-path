@@ -11,23 +11,32 @@ import subway.station.domain.Station
 
 data class SectionRegisterRequest(
     val lineName: String,
-    val upStationName: String,
-    val downStationName: String,
+    val preStationName: String,
+    val stationName: String,
     val distance: Long,
     val duration: Long,
 ) {
+    val line: Line
+        get() = Line.from(lineName)
+
+    val preStation: Station
+        get() = Station.from(preStationName)
+
+    val station: Station
+        get() = Station.from(stationName)
+
     init {
         require(lineName.length >= Name.MIN_LENGTH) { INVALID_NAME_MESSAGE }
-        require(upStationName.length >= Name.MIN_LENGTH) { INVALID_NAME_MESSAGE }
-        require(downStationName.length >= Name.MIN_LENGTH) { INVALID_NAME_MESSAGE }
+        require(preStationName.length >= Name.MIN_LENGTH) { INVALID_NAME_MESSAGE }
+        require(stationName.length >= Name.MIN_LENGTH) { INVALID_NAME_MESSAGE }
         require(distance.isPositive) { INVALID_DISTANCE_MESSAGE }
         require(duration.isPositive) { INVALID_DURATION_MESSAGE }
     }
 
     fun toSection() = Section(
         line = Line.from(lineName),
-        preStation = Station.from(upStationName),
-        station = Station.from(downStationName),
+        preStation = Station.from(preStationName),
+        station = Station.from(stationName),
         distance = distance,
         duration = duration
     )

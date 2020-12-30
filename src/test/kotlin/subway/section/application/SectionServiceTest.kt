@@ -98,6 +98,24 @@ internal class SectionServiceTest {
     }
 
     @Test
+    internal fun `register() - 현재역이 등록된 구간이 존재할 경우 예외 발생`() {
+        // given
+        val line = Line.from("테스트노선1")
+        val station1 = Station.from("테스트역1")
+        val station2 = Station.from("테스트역2")
+        val station3 = Station.from("테스트역3")
+        val request = SectionRegisterRequest("테스트노선1", "테스트역2", "테스트역3", 2, 3)
+
+        lineRepository.save(line)
+        stationRepository.saveAll(station1, station2, station3)
+        sectionRepository.save(Section.from("테스트노선1", "테스트역1", "테스트역3", 2, 3))
+
+        // then
+        assertThatIllegalArgumentException().isThrownBy { sectionService.register(request) }
+            .withMessage(INVALID_SECTION_MESSAGE)
+    }
+
+    @Test
     internal fun `register() - 사이클이 생기는 구간을 등록할 경우 예외 발생`() {
         // given
         lineRepository.save(Line.from("테스트노선1"))
@@ -126,30 +144,6 @@ internal class SectionServiceTest {
         val station2 = Station.from("테스트역2")
         val station3 = Station.from("테스트역3")
         val request = SectionRegisterRequest("테스트노선1", "테스트역1", "테스트역2", 2, 3)
-
-        lineRepository.save(line)
-        stationRepository.saveAll(station1, station2, station3)
-        sectionRepository.save(Section.from("테스트노선1", "테스트역1", "테스트역3", 2, 3))
-
-        // when
-        sectionService.register(request)
-
-        // then
-        assertThat(sectionRepository).satisfies {
-            assertThat(it.findAll()).hasSize(2)
-            assertThat(it.existsByLineAndPreStationAndStation(line, station1, station2)).isTrue
-            assertThat(it.existsByLineAndPreStationAndStation(line, station2, station3)).isTrue
-        }
-    }
-
-    @Test
-    internal fun `register() - 기존에 존재하는 구간의 현재역에 연관된 구간을 추가할 경우`() {
-        // given
-        val line = Line.from("테스트노선1")
-        val station1 = Station.from("테스트역1")
-        val station2 = Station.from("테스트역2")
-        val station3 = Station.from("테스트역3")
-        val request = SectionRegisterRequest("테스트노선1", "테스트역2", "테스트역3", 2, 3)
 
         lineRepository.save(line)
         stationRepository.saveAll(station1, station2, station3)
@@ -201,7 +195,6 @@ internal class SectionServiceTest {
         lineRepository.save(line)
         stationRepository.saveAll(station1, station2)
         sectionRepository.save(Section.from("테스트노선1", "테스트역1", "테스트역2", 2, 3))
-
 
         // then
         assertThatIllegalArgumentException().isThrownBy { sectionService.remove(request) }
