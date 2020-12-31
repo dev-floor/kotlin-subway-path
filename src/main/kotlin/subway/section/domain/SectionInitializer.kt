@@ -14,21 +14,27 @@ import subway.station.domain.StationInitializer.역삼역
 
 @Suppress("NonAsciiCharacters")
 object SectionInitializer : SubwayInitializer<SectionRepository> {
+    private val 이호선_상행종점_교대역 = Section.ofUpwardEnd(이호선, 교대역)
     private val 이호선_교대역_강남역 = Section(이호선, 교대역, 강남역, 2, 3)
     private val 이호선_강남역_역삼역 = Section(이호선, 강남역, 역삼역, 2, 3)
+    private val 삼호선_상행종점_교대역 = Section.ofUpwardEnd(삼호선, 교대역)
     private val 삼호선_교대역_남부터미널역 = Section(삼호선, 교대역, 남부터미널역, 3, 2)
     private val 삼호선_남부터미널역_양재역 = Section(삼호선, 남부터미널역, 양재역, 6, 5)
     private val 삼호선_양재역_매봉역 = Section(삼호선, 양재역, 매봉역, 1, 1)
+    private val 신분당선_상행종점_강남역 = Section.ofUpwardEnd(신분당선, 강남역)
     private val 신분당선_강남역_양재역 = Section(신분당선, 강남역, 양재역, 2, 8)
     private val 신분당선_양재역_양재시민의숲역 = Section(신분당선, 양재역, 양재시민의숲역, 10, 3)
 
     override fun initialize(repository: SectionRepository) =
         repository.saveAll(
+            이호선_상행종점_교대역,
             이호선_교대역_강남역,
             이호선_강남역_역삼역,
+            삼호선_상행종점_교대역,
             삼호선_교대역_남부터미널역,
             삼호선_남부터미널역_양재역,
             삼호선_양재역_매봉역,
+            신분당선_상행종점_강남역,
             신분당선_강남역_양재역,
             신분당선_양재역_양재시민의숲역
         )

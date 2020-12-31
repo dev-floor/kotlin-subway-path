@@ -15,6 +15,6 @@ internal class SectionInitializerTest {
         SectionInitializer.initialize(repository)
 
         // then
-        assertThat(repository.findAll()).hasSize(7)
+        assertThat(repository.findAll()).hasSize(10)
     }
 }

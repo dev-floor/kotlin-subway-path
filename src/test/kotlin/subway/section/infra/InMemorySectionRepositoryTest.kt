@@ -117,7 +117,7 @@ internal class InMemorySectionRepositoryTest {
         val countByLine = sectionRepository.countByLine(line)
 
         // then
-        assertThat(countByLine).isEqualTo(2)
+        assertThat(countByLine).isEqualTo(3)
     }
 
     @Test
@@ -203,6 +203,7 @@ internal class InMemorySectionRepositoryTest {
 
     companion object {
         private val SECTION_FIXTURES = listOf(
+            Section.ofUpwardEnd(Line.from("테스트노선1"), Station.from("테스트역1")),
             Section(Line.from("테스트노선1"), Station.from("테스트역1"), Station.from("테스트역2"), 2, 3),
             Section(Line.from("테스트노선1"), Station.from("테스트역2"), Station.from("테스트역3"), 2, 3)
         )

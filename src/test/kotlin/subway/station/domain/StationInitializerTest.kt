@@ -15,6 +15,6 @@ internal class StationInitializerTest {
         StationInitializer.initialize(repository)
 
         // then
-        assertThat(repository.findAll()).hasSize(7)
+        assertThat(repository.findAll()).hasSize(8)
     }
 }
