@@ -11,6 +11,7 @@ import subway.common.exception.NOT_EXISTS_STATION
 import subway.line.domain.Line
 import subway.line.domain.LineRepository
 import subway.line.infra.InMemoryLineRepository
+import subway.section.domain.Section
 import subway.section.domain.SectionRepository
 import subway.section.infra.InMemorySectionRepository
 import subway.station.domain.Station
@@ -106,5 +107,35 @@ internal class LineServiceTest {
                 Line.from("테스트노선2"),
                 Line.from("테스트노선3"))
             )
+    }
+
+    @Test
+    internal fun `remove() - 해당하는 노선을 삭제`() {
+        // given
+        stationRepository.saveAll(
+            Station.UPWARD_END_STATION,
+            Station.valueOf("테스트역1"),
+            Station.valueOf("테스트역2"),
+            Station.valueOf("테스트역3"),
+        )
+        lineRepository.saveAll(Line.from("테스트노선1"), Line.from("테스트노선2"))
+        sectionRepository.saveAll(
+            Section.ofUpwardEnd("테스트노선1", "테스트역1"),
+            Section.of("테스트노선1", "테스트역1", "테스트역2", 2, 3),
+            Section.of("테스트노선1", "테스트역2", "테스트역3", 2, 3),
+            Section.ofUpwardEnd("테스트노선2", "테스트역2"),
+            Section.of("테스트노선2", "테스트역2", "테스트역3", 2, 3),
+        )
+
+        val request = LineRemoveRequest("테스트노선1")
+
+        // when
+        lineService.remove(request)
+
+        // then
+        assertAll(
+            { assertThat(lineRepository.existsByName("테스트노선1")).isFalse },
+            { assertThat(sectionRepository.findAllByLine(Line.from("테스트노선1"))).hasSize(0) }
+        )
     }
 }

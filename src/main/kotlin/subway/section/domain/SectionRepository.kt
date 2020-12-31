@@ -18,6 +18,8 @@ interface SectionRepository {
 
     fun findAll(): List<Section>
 
+    fun findAllByLine(line: Line): List<Section>
+
     fun countByLine(line: Line): Int
 
     fun existsByPreStation(preStation: Station): Boolean
@@ -35,4 +37,6 @@ interface SectionRepository {
     ): Boolean
 
     fun delete(section: Section): Boolean
+
+    fun deleteByLine(line: Line): Boolean
 }

@@ -1,6 +1,7 @@
 package subway.line.application
 
 import subway.common.exception.ALREADY_EXISTS_LINE
+import subway.common.exception.NOT_EXISTS_LINE
 import subway.common.exception.NOT_EXISTS_STATION
 import subway.line.domain.Line
 import subway.line.domain.LineRepository
@@ -23,4 +24,11 @@ class LineService(
 
     fun showAll() = lineRepository.findAll()
         .sortedWith(Line)
+
+    fun remove(request: LineRemoveRequest) {
+        require(lineRepository.existsByName(request.lineName)) { NOT_EXISTS_LINE }
+
+        sectionRepository.deleteByLine(request.line)
+        lineRepository.deleteByName(request.lineName)
+    }
 }

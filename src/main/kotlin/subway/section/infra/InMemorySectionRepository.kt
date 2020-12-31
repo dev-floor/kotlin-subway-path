@@ -32,6 +32,8 @@ class InMemorySectionRepository : SectionRepository {
 
     override fun findAll() = sections.toList()
 
+    override fun findAllByLine(line: Line) = sections.filter { it.line == line }
+
     override fun countByLine(line: Line) = sections.count { it.line == line }
 
     override fun existsByPreStation(preStation: Station) =
@@ -55,4 +57,6 @@ class InMemorySectionRepository : SectionRepository {
     ) = sections.any { it.match(line, preStation, station) }
 
     override fun delete(section: Section) = sections.removeIf { it == section }
+
+    override fun deleteByLine(line: Line) = sections.removeIf { it.line == line }
 }

@@ -109,6 +109,15 @@ internal class InMemorySectionRepositoryTest {
     }
 
     @Test
+    internal fun `findAllByLine() - 해당하는 노선의 모든 구간들을 조회`() {
+        // when
+        val sections = sectionRepository.findAllByLine(Line.from("테스트노선1"))
+
+        // then
+        assertThat(sections).hasSize(SECTION_FIXTURES.size)
+    }
+
+    @Test
     internal fun `countByLine() - 해당하는 노선에 해당하는 구간의 개수를 반환`() {
         // given
         val line = Line.from("테스트노선1")
@@ -198,6 +207,21 @@ internal class InMemorySectionRepositoryTest {
         assertAll(
             { assertThat(actual).isTrue },
             { assertThat(sectionRepository.findAll()).hasSize(SECTION_FIXTURES.size - 1) }
+        )
+    }
+
+    @Test
+    internal fun `deleteByLine() - 해당하는 노선의 구간을 모두 삭제`() {
+        // given
+        val line = Line.from("테스트노선1")
+
+        // when
+        val actual = sectionRepository.deleteByLine(line)
+
+        // then
+        assertAll(
+            { assertThat(actual).isTrue },
+            { assertThat(sectionRepository.findAllByLine(line)).hasSize(0) }
         )
     }
 
