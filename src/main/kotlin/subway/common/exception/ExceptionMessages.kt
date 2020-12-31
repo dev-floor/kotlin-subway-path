@@ -16,6 +16,8 @@ const val NOT_EXISTS_SECTION = "해당 구간이 존재하지 않습니다."
 
 const val ALREADY_EXISTS_STATION = "이미 존재하는 역입니다."
 
+const val ALREADY_EXISTS_LINE = "이미 존재하는 노선입니다."
+
 const val ALREADY_EXISTS_SECTION = "이미 존재하는 구간입니다."
 
 const val REGISTERED_STATION_ON_SECTION = "구간에 등록되어 있는 역입니다."

@@ -5,6 +5,9 @@ import subway.common.exception.INVALID_DISTANCE_MESSAGE
 import subway.common.exception.INVALID_DURATION_MESSAGE
 import subway.common.exception.INVALID_NAME_MESSAGE
 import subway.common.utils.isPositive
+import subway.line.domain.Line
+import subway.section.domain.Section
+import subway.station.domain.Station
 
 data class LineRegisterRequest(
     val lineName: String,
@@ -13,6 +16,16 @@ data class LineRegisterRequest(
     val distance: Long,
     val duration: Long,
 ) {
+    val line get() = Line.from(lineName)
+
+    val preStation get() = Station.valueOf(preStationName)
+
+    val station get() = Station.valueOf(stationName)
+
+    val upwardSection get() = Section.ofUpwardEnd(lineName, preStationName)
+
+    val section get() = Section.of(lineName, preStationName, stationName, distance, duration)
+
     init {
         require(lineName.length >= Name.MIN_LENGTH) { INVALID_NAME_MESSAGE }
         require(preStationName.length >= Name.MIN_LENGTH) { INVALID_NAME_MESSAGE }

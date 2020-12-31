@@ -8,6 +8,7 @@ import org.junit.jupiter.api.assertAll
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.ValueSource
 import subway.common.exception.NOT_EXISTS_STATION
+import subway.line.domain.Line
 import subway.line.domain.LineRepository
 import subway.line.infra.InMemoryLineRepository
 import subway.section.domain.SectionRepository
@@ -48,7 +49,22 @@ internal class LineServiceTest {
         // then
         assertAll(
             { assertThat(lineRepository.existsByName("테스트노선1")).isTrue },
-            { assertThat(sectionRepository.findAll()).hasSize(2) }
+            {
+                assertThat(sectionRepository
+                    .existsByLineAndPreStationAndStation(
+                        Line.from("테스트노선1"),
+                        Station.UPWARD_END_STATION,
+                        Station.valueOf("테스트역1")))
+                    .isTrue
+            },
+            {
+                assertThat(sectionRepository
+                    .existsByLineAndPreStationAndStation(
+                        Line.from("테스트노선1"),
+                        Station.valueOf("테스트역1"),
+                        Station.valueOf("테스트역2")))
+                    .isTrue
+            }
         )
     }
 
