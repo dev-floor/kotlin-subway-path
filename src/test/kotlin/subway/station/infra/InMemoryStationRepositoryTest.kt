@@ -18,7 +18,7 @@ internal class InMemoryStationRepositoryTest {
     @Test
     internal fun `save() - 해당하는 역을 저장`() {
         // given
-        val station = Station.from("테스트역3")
+        val station = Station.valueOf("테스트역3")
 
         // when
         stationRepository.save(station)
@@ -30,8 +30,8 @@ internal class InMemoryStationRepositoryTest {
     @Test
     internal fun `saveAll() - vararg 타입의 여러 역들을 저장`() {
         // given
-        val station1 = Station.from("테스트역3")
-        val station2 = Station.from("테스트역4")
+        val station1 = Station.valueOf("테스트역3")
+        val station2 = Station.valueOf("테스트역4")
 
         // when
         stationRepository.saveAll(station1, station2)
@@ -43,7 +43,7 @@ internal class InMemoryStationRepositoryTest {
     @Test
     internal fun `saveAll() - list 타입의 여러 역들을 저장`() {
         // given
-        val stations = listOf(Station.from("테스트역3"), Station.from("테스트역4"))
+        val stations = listOf(Station.valueOf("테스트역3"), Station.valueOf("테스트역4"))
 
         // when
         stationRepository.saveAll(stations)
@@ -73,7 +73,7 @@ internal class InMemoryStationRepositoryTest {
     @Test
     internal fun `delete() - 해당하는 역을 삭제`() {
         // given
-        val station = Station.from("테스트역1")
+        val station = Station.valueOf("테스트역1")
 
         // when
         stationRepository.delete(station)
@@ -84,8 +84,8 @@ internal class InMemoryStationRepositoryTest {
 
     companion object {
         private val STATION_FIXTURES = listOf(
-            Station.from("테스트역1"),
-            Station.from("테스트역2"),
+            Station.valueOf("테스트역1"),
+            Station.valueOf("테스트역2"),
         )
     }
 }

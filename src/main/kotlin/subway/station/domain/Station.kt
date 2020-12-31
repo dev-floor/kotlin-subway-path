@@ -25,6 +25,11 @@ class Station private constructor(val name: Name) {
     companion object {
         val UPWARD_END_STATION = Station(Name("UPWARD_END_STATION"))
 
-        fun from(name: String) = Station(Name(name))
+        fun valueOf(name: String): Station {
+            if (name.isBlank()) {
+                return UPWARD_END_STATION
+            }
+            return Station(Name(name))
+        }
     }
 }

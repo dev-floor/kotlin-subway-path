@@ -53,8 +53,8 @@ class Section(
             duration: Long = INITIAL_DURATION,
         ) = Section(
             line = Line.from(lineName),
-            preStation = Station.from(preStationName),
-            station = Station.from(stationName),
+            preStation = Station.valueOf(preStationName),
+            station = Station.valueOf(stationName),
             distance = distance,
             duration = duration
         )
@@ -65,7 +65,7 @@ class Section(
         ) = Section(
             line = Line.from(lineName),
             preStation = Station.UPWARD_END_STATION,
-            station = Station.from(stationName),
+            station = Station.valueOf(stationName),
             distance = 0,
             duration = 0
         )

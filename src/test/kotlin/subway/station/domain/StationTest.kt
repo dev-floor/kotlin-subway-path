@@ -9,7 +9,7 @@ internal class StationTest {
     internal fun `match() - 해당하는 이름과 동일한 이름인지 확인`() {
         // given
         val name = "테스트노선1"
-        val station = Station.from(name)
+        val station = Station.valueOf(name)
 
         // when
         val actual = station.match(name)
@@ -36,7 +36,7 @@ internal class StationTest {
         val name = "테스트노선1"
 
         // when
-        val station = Station.from(name)
+        val station = Station.valueOf(name)
 
         // then
         assertThat(station).satisfies {

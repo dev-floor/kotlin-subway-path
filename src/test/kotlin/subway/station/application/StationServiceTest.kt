@@ -42,7 +42,7 @@ internal class StationServiceTest {
     internal fun `register() - 이미 존재하는 역의 경우 예외 발생`() {
         // given
         val name = "테스트역1"
-        stationRepository.save(Station.from(name))
+        stationRepository.save(Station.valueOf(name))
 
         // then
         assertThatIllegalArgumentException().isThrownBy {
@@ -53,8 +53,8 @@ internal class StationServiceTest {
     @Test
     internal fun `showAll() - 모든 역을 조회`() {
         // given
-        stationRepository.save(Station.from("테스트역1"))
-        stationRepository.save(Station.from("테스트역2"))
+        stationRepository.save(Station.valueOf("테스트역1"))
+        stationRepository.save(Station.valueOf("테스트역2"))
 
         // when
         val stations = stationService.showAll()
@@ -67,7 +67,7 @@ internal class StationServiceTest {
     internal fun `remove() - 해당하는 이름의 역을 삭제`() {
         // given
         val name = "테스트역1"
-        stationRepository.save(Station.from(name))
+        stationRepository.save(Station.valueOf(name))
 
         // when
         val actual = stationService.remove(StationRemoveRequest(name))
@@ -95,8 +95,8 @@ internal class StationServiceTest {
         // given
         val name = "테스트역1"
         val section =
-            Section(Line.from("테스트노선1"), Station.from("테스트역1"), Station.from("테스트역2"), 2, 3)
-        stationRepository.save(Station.from(name))
+            Section(Line.from("테스트노선1"), Station.valueOf("테스트역1"), Station.valueOf("테스트역2"), 2, 3)
+        stationRepository.save(Station.valueOf(name))
         sectionRepository.save(section)
 
         // then

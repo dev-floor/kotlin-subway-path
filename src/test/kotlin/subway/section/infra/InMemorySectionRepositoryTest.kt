@@ -22,7 +22,7 @@ internal class InMemorySectionRepositoryTest {
     internal fun `save() - 구간을 저장`() {
         // given
         val section =
-            Section(Line.from("테스트노선2"), Station.from("테스트역1"), Station.from("테스트역3"), 2, 3)
+            Section(Line.from("테스트노선2"), Station.valueOf("테스트역1"), Station.valueOf("테스트역3"), 2, 3)
 
         // when
         sectionRepository.save(section)
@@ -35,9 +35,9 @@ internal class InMemorySectionRepositoryTest {
     internal fun `saveAll() - vararg 타입의 여러 구간들을 저장`() {
         // given
         val section1 =
-            Section(Line.from("테스트노선2"), Station.from("테스트역1"), Station.from("테스트역3"), 2, 3)
+            Section(Line.from("테스트노선2"), Station.valueOf("테스트역1"), Station.valueOf("테스트역3"), 2, 3)
         val section2 =
-            Section(Line.from("테스트노선2"), Station.from("테스트역3"), Station.from("테스트역4"), 2, 3)
+            Section(Line.from("테스트노선2"), Station.valueOf("테스트역3"), Station.valueOf("테스트역4"), 2, 3)
 
         // when
         sectionRepository.saveAll(section1, section2)
@@ -50,8 +50,8 @@ internal class InMemorySectionRepositoryTest {
     internal fun `saveAll() - list 타입의 여러 구간들을 저장`() {
         // given
         val sections = listOf(
-            Section(Line.from("테스트노선2"), Station.from("테스트역1"), Station.from("테스트역3"), 2, 3),
-            Section(Line.from("테스트노선2"), Station.from("테스트역3"), Station.from("테스트역4"), 2, 3)
+            Section(Line.from("테스트노선2"), Station.valueOf("테스트역1"), Station.valueOf("테스트역3"), 2, 3),
+            Section(Line.from("테스트노선2"), Station.valueOf("테스트역3"), Station.valueOf("테스트역4"), 2, 3)
         )
 
         // when
@@ -77,7 +77,7 @@ internal class InMemorySectionRepositoryTest {
     internal fun `findByLineAndPreStation() - 해당하는 노선,이전역이 포함된 구간을 조회`() {
         // given
         val line = Line.from("테스트노선1")
-        val station = Station.from("테스트역1")
+        val station = Station.valueOf("테스트역1")
 
         // when
         val actual = sectionRepository.findByLineAndPreStation(line, station)
@@ -90,7 +90,7 @@ internal class InMemorySectionRepositoryTest {
     internal fun `findByLineAndStation() - 해당하는 노선,현재역이 포함된 구간을 조회`() {
         // given
         val line = Line.from("테스트노선1")
-        val station = Station.from("테스트역3")
+        val station = Station.valueOf("테스트역3")
 
         // when
         val actual = sectionRepository.findByLineAndStation(line, station)
@@ -123,7 +123,7 @@ internal class InMemorySectionRepositoryTest {
     @Test
     internal fun `existsByPreStation() - 해당하는 이전역이 포함된 구간이 존재하는지 여부`() {
         // given
-        val station = Station.from("테스트역1")
+        val station = Station.valueOf("테스트역1")
 
         // when
         val actual = sectionRepository.existsByPreStation(station)
@@ -135,7 +135,7 @@ internal class InMemorySectionRepositoryTest {
     @Test
     internal fun `existsByStation() - 해당하는 현재역이 포함된 구간이 존재하는지 여부`() {
         // given
-        val station = Station.from("테스트역3")
+        val station = Station.valueOf("테스트역3")
 
         // when
         val actual = sectionRepository.existsByStation(station)
@@ -148,7 +148,7 @@ internal class InMemorySectionRepositoryTest {
     internal fun `existsByLineAndPreStation() - 해당하는 노선,이전역과 일치하는 구간이 존재하는지 여부`() {
         // given
         val line = Line.from("테스트노선1")
-        val preStation = Station.from("테스트역1")
+        val preStation = Station.valueOf("테스트역1")
 
         // when
         val actual = sectionRepository.existsByLineAndPreStation(line, preStation)
@@ -161,7 +161,7 @@ internal class InMemorySectionRepositoryTest {
     internal fun `existsByLineAndStation() - 해당하는 노선,현재역과 일치하는 구간이 존재하는지 여부`() {
         // given
         val line = Line.from("테스트노선1")
-        val station = Station.from("테스트역2")
+        val station = Station.valueOf("테스트역2")
 
         // when
         val actual = sectionRepository.existsByLineAndStation(line, station)
@@ -174,8 +174,8 @@ internal class InMemorySectionRepositoryTest {
     internal fun `existsByLineAndPreStationAndStation() - 해당하는 노선,이전역,현재역과 일치하는 구간이 존재하는지 여부`() {
         // given
         val line = Line.from("테스트노선1")
-        val preStation = Station.from("테스트역1")
-        val station = Station.from("테스트역2")
+        val preStation = Station.valueOf("테스트역1")
+        val station = Station.valueOf("테스트역2")
 
         // when
         val actual =
@@ -189,7 +189,7 @@ internal class InMemorySectionRepositoryTest {
     internal fun `delete() - 해당하는 구간을 삭제`() {
         // given
         val section =
-            Section(Line.from("테스트노선1"), Station.from("테스트역1"), Station.from("테스트역2"), 2, 3)
+            Section(Line.from("테스트노선1"), Station.valueOf("테스트역1"), Station.valueOf("테스트역2"), 2, 3)
 
         // when
         val actual = sectionRepository.delete(section)
@@ -203,9 +203,9 @@ internal class InMemorySectionRepositoryTest {
 
     companion object {
         private val SECTION_FIXTURES = listOf(
-            Section.ofUpwardEnd(Line.from("테스트노선1"), Station.from("테스트역1")),
-            Section(Line.from("테스트노선1"), Station.from("테스트역1"), Station.from("테스트역2"), 2, 3),
-            Section(Line.from("테스트노선1"), Station.from("테스트역2"), Station.from("테스트역3"), 2, 3)
+            Section.ofUpwardEnd(Line.from("테스트노선1"), Station.valueOf("테스트역1")),
+            Section(Line.from("테스트노선1"), Station.valueOf("테스트역1"), Station.valueOf("테스트역2"), 2, 3),
+            Section(Line.from("테스트노선1"), Station.valueOf("테스트역2"), Station.valueOf("테스트역3"), 2, 3)
         )
     }
 }

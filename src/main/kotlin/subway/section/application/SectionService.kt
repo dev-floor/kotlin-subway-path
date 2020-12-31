@@ -33,7 +33,9 @@ class SectionService(
         stationName: String,
     ) {
         require(lineRepository.existsByName(lineName)) { NOT_EXISTS_LINE }
-        require(stationRepository.existsByName(preStationName)) { NOT_EXISTS_STATION }
+        require(preStationName.isBlank() || stationRepository.existsByName(preStationName)) {
+            NOT_EXISTS_STATION
+        }
         require(stationRepository.existsByName(stationName)) { NOT_EXISTS_STATION }
     }
 
@@ -104,7 +106,7 @@ class SectionService(
         associatedSection: Section,
     ): Section {
         if (removalSection.preStation.isUpwardEndStation()) {
-            return Section.ofUpwardEnd(removalSection.line, removalSection.station)
+            return Section.ofUpwardEnd(removalSection.line, associatedSection.station)
         }
         return Section(
             removalSection.line,
