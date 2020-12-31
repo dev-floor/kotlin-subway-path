@@ -22,6 +22,8 @@ interface SectionRepository {
 
     fun countByLine(line: Line): Int
 
+    fun existsByLine(line: Line): Boolean
+
     fun existsByPreStation(preStation: Station): Boolean
 
     fun existsByStation(station: Station): Boolean

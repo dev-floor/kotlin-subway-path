@@ -73,6 +73,39 @@ class SectionService(
             sectionRepository.save(Section(it.line, station, it.station))
         }
 
+    fun showAllByLine(line: Line): List<Section> {
+        require(lineRepository.exists(line)) { NOT_EXISTS_LINE }
+        require(sectionRepository.existsByLine(line)) { NOT_EXISTS_SECTION }
+
+        val lines = sectionRepository.findAllByLine(line)
+        return sortedSectionByLink(lines)
+    }
+
+    private fun sortedSectionByLink(lines: List<Section>): List<Section> {
+        val sortedSections = mutableListOf<Section>()
+        val mutableSections = lines.toMutableList()
+
+        sortedSections.add(mutableSections.removeFirst())
+
+        while (mutableSections.isNotEmpty()) {
+            val section = mutableSections.removeFirst()
+
+            addNextSection(sortedSections, section)
+                ?: addPreSection(sortedSections, section)
+                ?: mutableSections.add(section)
+        }
+
+        return sortedSections.toList()
+    }
+
+    private fun addNextSection(sortedSections: MutableList<Section>, section: Section) =
+        sortedSections.find { it.station == section.preStation }
+            ?.also { sortedSections.add(sortedSections.indexOf(it) + 1, section) }
+
+    private fun addPreSection(sortedSections: MutableList<Section>, section: Section) =
+        sortedSections.find { it.preStation == section.station }
+            ?.also { sortedSections.add(sortedSections.indexOf(it), section) }
+
     fun remove(request: SectionRemoveRequest): Boolean {
         validateLineAndStations(request.lineName, request.preStationName, request.stationName)
         validateSectionToRemove(request.line, request.preStation, request.station)

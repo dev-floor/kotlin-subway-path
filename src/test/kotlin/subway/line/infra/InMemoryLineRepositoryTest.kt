@@ -62,6 +62,18 @@ internal class InMemoryLineRepositoryTest {
     }
 
     @Test
+    internal fun `exists() - 해당하는 노선이 존재하는지 여부를 확인`() {
+        // given
+        val line = Line.from("테스트노선1")
+
+        // when
+        val actual = lineRepository.exists(line)
+
+        // then
+        assertThat(actual).isTrue
+    }
+
+    @Test
     internal fun `existsByName() - 해당하는 이름의 노선이 존재하는지 여부를 확인`() {
         // given
         val name = "테스트노선1"

@@ -36,6 +36,8 @@ class InMemorySectionRepository : SectionRepository {
 
     override fun countByLine(line: Line) = sections.count { it.line == line }
 
+    override fun existsByLine(line: Line) = sections.any { it.line == line }
+
     override fun existsByPreStation(preStation: Station) =
         sections.any { it.preStation == preStation }
 

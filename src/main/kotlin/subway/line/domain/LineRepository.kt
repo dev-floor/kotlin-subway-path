@@ -9,6 +9,8 @@ interface LineRepository {
 
     fun findAll(): List<Line>
 
+    fun exists(line: Line): Boolean
+
     fun existsByName(name: String): Boolean
 
     fun deleteByName(name: String): Boolean

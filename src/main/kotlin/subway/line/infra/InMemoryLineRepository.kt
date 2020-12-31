@@ -20,6 +20,8 @@ class InMemoryLineRepository : LineRepository {
 
     override fun findAll() = lines.toList()
 
+    override fun exists(line: Line) = lines.any { it == line }
+
     override fun existsByName(name: String) = lines.any { it.match(name) }
 
     override fun deleteByName(name: String) = lines.removeIf { it.name.match(name) }

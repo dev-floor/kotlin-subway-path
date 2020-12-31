@@ -130,6 +130,18 @@ internal class InMemorySectionRepositoryTest {
     }
 
     @Test
+    internal fun `existsByLine() - 해당하는 노선의 구간이 존재하는지 여부`() {
+        // given
+        val line = Line.from("테스트노선1")
+
+        // when
+        val actual = sectionRepository.existsByLine(line)
+
+        // then
+        assertThat(actual).isTrue
+    }
+
+    @Test
     internal fun `existsByPreStation() - 해당하는 이전역이 포함된 구간이 존재하는지 여부`() {
         // given
         val station = Station.valueOf("테스트역1")

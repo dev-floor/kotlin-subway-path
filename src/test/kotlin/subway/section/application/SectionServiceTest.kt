@@ -2,6 +2,7 @@ package subway.section.application
 
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.assertThatIllegalArgumentException
+import org.assertj.core.api.Assertions.tuple
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
@@ -158,6 +159,47 @@ internal class SectionServiceTest {
             assertThat(it.existsByLineAndPreStationAndStation(line, station1, station2)).isTrue
             assertThat(it.existsByLineAndPreStationAndStation(line, station2, station3)).isTrue
         }
+    }
+
+    @Test
+    fun `showAllByLine() - 해당하는 노선의 모든 구간을 순서대로 조회`() {
+        // given
+        val line = Line.from("테스트노선1")
+        val station1 = Station.valueOf("테스트역1")
+        val station2 = Station.valueOf("테스트역2")
+        val station3 = Station.valueOf("테스트역3")
+
+        lineRepository.save(line)
+        stationRepository.saveAll(station3, station2, station1)
+        sectionRepository.saveAll(
+            Section.ofUpwardEnd("테스트노선1", "테스트역1"),
+            Section.of("테스트노선1", "테스트역2", "테스트역3", 2, 3),
+            Section.of("테스트노선1", "테스트역1", "테스트역2", 2, 3),
+            Section.ofUpwardEnd("테스트노선2", "테스트역2"),
+            Section.of("테스트노선2", "테스트역2", "테스트역3", 2, 3),
+            Section.of("테스트노선2", "테스트역3", "테스트역1", 2, 3),
+        )
+
+        // when
+        val sections = sectionService.showAllByLine(line)
+
+        // then
+        assertThat(sections).extracting(Section::preStation, Section::station)
+            .containsExactly(
+                tuple(Station.UPWARD_END_STATION, Station.valueOf("테스트역1")),
+                tuple(Station.valueOf("테스트역1"), Station.valueOf("테스트역2")),
+                tuple(Station.valueOf("테스트역2"), Station.valueOf("테스트역3")),
+            )
+    }
+
+    @Test
+    internal fun `showAllByLine() - 해당하는 노선이 존재하지 않을 경우 예외 발생`() {
+        // given
+        val line = Line.from("테스트노선1")
+
+        // then
+        assertThatIllegalArgumentException().isThrownBy { sectionService.showAllByLine(line) }
+            .withMessage(NOT_EXISTS_LINE)
     }
 
     @Test
