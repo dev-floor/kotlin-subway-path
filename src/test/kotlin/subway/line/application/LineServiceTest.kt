@@ -83,4 +83,28 @@ internal class LineServiceTest {
         assertThatIllegalArgumentException().isThrownBy { lineService.register(request) }
             .withMessage(NOT_EXISTS_STATION)
     }
+
+    @Test
+    internal fun `findAll() - 저장된 역을 이름 순서대로 조회`() {
+        // given
+        stationRepository.saveAll(
+            Station.UPWARD_END_STATION,
+            Station.valueOf("테스트역1"),
+            Station.valueOf("테스트역2")
+        )
+        lineService.register(LineRegisterRequest("테스트노선3", "테스트역1", "테스트역2", 2, 3))
+        lineService.register(LineRegisterRequest("테스트노선2", "테스트역1", "테스트역2", 2, 3))
+        lineService.register(LineRegisterRequest("테스트노선1", "테스트역1", "테스트역2", 2, 3))
+
+        // when
+        val lines = lineService.showAll()
+
+        // then
+        assertThat(lines)
+            .isEqualTo(listOf(
+                Line.from("테스트노선1"),
+                Line.from("테스트노선2"),
+                Line.from("테스트노선3"))
+            )
+    }
 }

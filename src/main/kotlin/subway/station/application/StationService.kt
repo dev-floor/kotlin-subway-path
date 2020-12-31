@@ -20,6 +20,7 @@ class StationService(
 
     fun showAll() = stationRepository.findAll()
         .filter { it != Station.UPWARD_END_STATION }
+        .sortedWith(Station)
 
     fun remove(request: StationRemoveRequest): Boolean {
         val station = request.station

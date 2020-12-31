@@ -2,6 +2,7 @@ package subway.line.application
 
 import subway.common.exception.ALREADY_EXISTS_LINE
 import subway.common.exception.NOT_EXISTS_STATION
+import subway.line.domain.Line
 import subway.line.domain.LineRepository
 import subway.section.domain.SectionRepository
 import subway.station.domain.StationRepository
@@ -19,4 +20,7 @@ class LineService(
         lineRepository.save(request.line)
         sectionRepository.saveAll(request.upwardSection, request.section)
     }
+
+    fun showAll() = lineRepository.findAll()
+        .sortedWith(Line)
 }

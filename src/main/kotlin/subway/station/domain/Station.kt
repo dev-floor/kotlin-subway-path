@@ -22,7 +22,7 @@ class Station private constructor(val name: Name) {
         return name.hashCode()
     }
 
-    companion object {
+    companion object : Comparator<Station> {
         val UPWARD_END_STATION = Station(Name("UPWARD_END_STATION"))
 
         fun valueOf(name: String): Station {
@@ -31,5 +31,7 @@ class Station private constructor(val name: Name) {
             }
             return Station(Name(name))
         }
+
+        override fun compare(o1: Station, o2: Station) = o1.name.compareTo(o2.name)
     }
 }

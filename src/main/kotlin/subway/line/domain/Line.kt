@@ -20,7 +20,9 @@ class Line private constructor(val name: Name) {
         return name.hashCode()
     }
 
-    companion object {
+    companion object : Comparator<Line> {
         fun from(name: String) = Line(Name(name))
+
+        override fun compare(o1: Line, o2: Line) = o1.name.compareTo(o2.name)
     }
 }
