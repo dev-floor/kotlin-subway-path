@@ -16,14 +16,20 @@ data class SectionRegisterRequest(
     val distance: Long,
     val duration: Long,
 ) {
-    val line: Line
-        get() = Line.from(lineName)
+    val line get() = Line.from(lineName)
 
-    val preStation: Station
-        get() = Station.valueOf(preStationName)
+    val preStation get() = Station.valueOf(preStationName)
 
-    val station: Station
-        get() = Station.valueOf(stationName)
+    val station get() = Station.valueOf(stationName)
+
+    val section
+        get() = Section(
+            line = Line.from(lineName),
+            preStation = Station.valueOf(preStationName),
+            station = Station.valueOf(stationName),
+            distance = distance,
+            duration = duration
+        )
 
     init {
         require(lineName.length >= Name.MIN_LENGTH) { INVALID_NAME_MESSAGE }
@@ -31,12 +37,4 @@ data class SectionRegisterRequest(
         require(distance.isPositive) { INVALID_DISTANCE_MESSAGE }
         require(duration.isPositive) { INVALID_DURATION_MESSAGE }
     }
-
-    fun toSection() = Section(
-        line = Line.from(lineName),
-        preStation = Station.valueOf(preStationName),
-        station = Station.valueOf(stationName),
-        distance = distance,
-        duration = duration
-    )
 }

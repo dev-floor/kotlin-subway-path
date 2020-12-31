@@ -11,23 +11,21 @@ data class SectionRemoveRequest(
     val preStationName: String,
     val stationName: String,
 ) {
-    val line: Line
-        get() = Line.from(lineName)
+    val line get() = Line.from(lineName)
 
-    val preStation: Station
-        get() = Station.valueOf(preStationName)
+    val preStation get() = Station.valueOf(preStationName)
 
-    val station: Station
-        get() = Station.valueOf(stationName)
+    val station get() = Station.valueOf(stationName)
+
+    val section
+        get() = Section(
+            line = Line.from(lineName),
+            preStation = Station.valueOf(preStationName),
+            station = Station.valueOf(stationName),
+        )
 
     init {
         require(lineName.length >= Name.MIN_LENGTH) { INVALID_NAME_MESSAGE }
         require(stationName.length >= Name.MIN_LENGTH) { INVALID_NAME_MESSAGE }
     }
-
-    fun toSection() = Section(
-        line = Line.from(lineName),
-        preStation = Station.valueOf(preStationName),
-        station = Station.valueOf(stationName),
-    )
 }

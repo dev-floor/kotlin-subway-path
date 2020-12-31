@@ -9,5 +9,5 @@ data class StationRegisterRequest(val stationName: String) {
         require(stationName.length >= Name.MIN_LENGTH) { INVALID_NAME_MESSAGE }
     }
 
-    fun toStation() = Station.valueOf(stationName)
+    val station get() = Station.valueOf(stationName)
 }

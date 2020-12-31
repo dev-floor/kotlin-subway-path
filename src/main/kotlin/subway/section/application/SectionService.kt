@@ -24,7 +24,7 @@ class SectionService(
         validateCycle(request.line, request.preStation, request.station)
 
         modifySectionAssociatedWithRegistration(request.line, request.preStation, request.station)
-        sectionRepository.save(request.toSection())
+        sectionRepository.save(request.section)
     }
 
     private fun validateLineAndStations(
@@ -58,7 +58,7 @@ class SectionService(
         station: Station,
     ) = require(
         !sectionRepository.existsByLineAndPreStation(line, station) ||
-            !sectionRepository.existsByLineAndStation(line, preStation)
+                !sectionRepository.existsByLineAndStation(line, preStation)
     ) {
         INVALID_SECTION_MESSAGE
     }
@@ -79,7 +79,7 @@ class SectionService(
 
         modifySectionAssociatedWithRemoval(request)
 
-        return sectionRepository.delete(request.toSection())
+        return sectionRepository.delete(request.section)
     }
 
     private fun validateSectionToRemove(
@@ -94,7 +94,7 @@ class SectionService(
     }
 
     private fun modifySectionAssociatedWithRemoval(request: SectionRemoveRequest) {
-        val removalSection = sectionRepository.find(request.toSection()) ?: throw AssertionError()
+        val removalSection = sectionRepository.find(request.section) ?: throw AssertionError()
 
         sectionRepository.findByLineAndPreStation(request.line, request.station)
             ?.let {

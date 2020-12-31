@@ -15,14 +15,14 @@ class StationService(
     fun register(request: StationRegisterRequest) {
         require(!stationRepository.existsByName(request.stationName)) { ALREADY_EXISTS_STATION }
 
-        stationRepository.save(request.toStation())
+        stationRepository.save(request.station)
     }
 
     fun showAll() = stationRepository.findAll()
         .filter { it != Station.UPWARD_END_STATION }
 
     fun remove(request: StationRemoveRequest): Boolean {
-        val station = request.toStation()
+        val station = request.station
 
         require(stationRepository.existsByName(request.stationName)) { NOT_EXISTS_STATION }
         require(!sectionRepository.existsByPreStation(station)) { REGISTERED_STATION_ON_SECTION }
