@@ -2,7 +2,7 @@ package subway.line.domain
 
 import subway.common.domain.Name
 
-class Line(val name: Name) {
+class Line private constructor(val name: Name) {
     fun match(name: String) = this.name.match(name)
 
     override fun equals(other: Any?): Boolean {

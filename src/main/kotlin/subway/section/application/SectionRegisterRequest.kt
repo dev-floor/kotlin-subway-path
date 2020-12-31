@@ -27,7 +27,6 @@ data class SectionRegisterRequest(
 
     init {
         require(lineName.length >= Name.MIN_LENGTH) { INVALID_NAME_MESSAGE }
-        require(preStationName.length >= Name.MIN_LENGTH) { INVALID_NAME_MESSAGE }
         require(stationName.length >= Name.MIN_LENGTH) { INVALID_NAME_MESSAGE }
         require(distance.isPositive) { INVALID_DISTANCE_MESSAGE }
         require(duration.isPositive) { INVALID_DURATION_MESSAGE }

@@ -45,7 +45,7 @@ class Section(
         const val INITIAL_DISTANCE = 2L
         const val INITIAL_DURATION = 2L
 
-        fun from(
+        fun of(
             lineName: String,
             preStationName: String,
             stationName: String,
@@ -57,6 +57,28 @@ class Section(
             station = Station.from(stationName),
             distance = distance,
             duration = duration
+        )
+
+        fun ofUpwardEnd(
+            lineName: String,
+            stationName: String,
+        ) = Section(
+            line = Line.from(lineName),
+            preStation = Station.UPWARD_END_STATION,
+            station = Station.from(stationName),
+            distance = 0,
+            duration = 0
+        )
+
+        fun ofUpwardEnd(
+            line: Line,
+            station: Station,
+        ) = Section(
+            line = line,
+            preStation = Station.UPWARD_END_STATION,
+            station = station,
+            distance = 0,
+            duration = 0
         )
     }
 }

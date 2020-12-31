@@ -13,5 +13,5 @@ object StationInitializer : SubwayInitializer<StationRepository> {
     val 매봉역 = Station.from("매봉역")
 
     override fun initialize(repository: StationRepository) =
-        repository.saveAll(교대역, 강남역, 역삼역, 남부터미널역, 양재역, 양재시민의숲역, 매봉역)
+        repository.saveAll(Station.UPWARD_END_STATION, 교대역, 강남역, 역삼역, 남부터미널역, 양재역, 양재시민의숲역, 매봉역)
 }

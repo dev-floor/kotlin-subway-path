@@ -20,4 +20,6 @@ const val ALREADY_EXISTS_SECTION = "이미 존재하는 구간입니다."
 
 const val REGISTERED_STATION_ON_SECTION = "구간에 등록되어 있는 역입니다."
 
-const val INVALID_SECTION_SIZE_MESSAGE = "노선에는 적어도 1개 이상의 구간이 등록되어 있어야 합니다."
+const val INVALID_SECTION_SIZE_MESSAGE = "노선에는 적어도 2개 이상의 구간이 등록되어 있어야 합니다."
+
+const val DELETION_NOT_POSSIBLE_STATION_MESSAGE = "삭제할 수 없는 역입니다."

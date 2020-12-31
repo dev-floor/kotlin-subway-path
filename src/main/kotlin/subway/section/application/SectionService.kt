@@ -70,46 +70,52 @@ class SectionService(
         }
 
     fun remove(request: SectionRemoveRequest): Boolean {
-        val (lineName, preStationName, stationName) = request
+        validateLineAndStations(request.lineName, request.preStationName, request.stationName)
+        validateSectionToRemove(request.line, request.preStation, request.station)
 
-        validateLineAndStations(lineName, preStationName, stationName)
-        validateExistingSection(lineName, preStationName, stationName)
+        modifySectionAssociatedWithRemoval(request)
 
-        modifySectionAssociatedPreStationWhenRemoval(lineName, preStationName, stationName)
-        modifySectionAssociatedStationWhenRemoval(lineName, preStationName, stationName)
         return sectionRepository.delete(request.toSection())
     }
 
-    private fun validateExistingSection(
-        lineName: String,
-        preStationName: String,
-        stationName: String,
+    private fun validateSectionToRemove(
+        line: Line,
+        preStation: Station,
+        station: Station,
     ) {
-        val line = Line.from(lineName)
-        val preStation = Station.from(preStationName)
-        val station = Station.from(stationName)
-
         require(sectionRepository.countByLine(line) > MIM_SECTION_SIZE) { INVALID_SECTION_SIZE_MESSAGE }
         require(sectionRepository.existsByLineAndPreStationAndStation(line, preStation, station)) {
             NOT_EXISTS_SECTION
         }
     }
 
-    private fun modifySectionAssociatedPreStationWhenRemoval(
-        lineName: String,
-        preStationName: String,
-        stationName: String,
-    ) {
+    private fun modifySectionAssociatedWithRemoval(request: SectionRemoveRequest) {
+        val removalSection = sectionRepository.find(request.toSection()) ?: throw AssertionError()
+
+        sectionRepository.findByLineAndPreStation(request.line, request.station)
+            ?.let {
+                sectionRepository.delete(it)
+                sectionRepository.save(setUpRegisteringSection(removalSection, it))
+            }
     }
 
-    private fun modifySectionAssociatedStationWhenRemoval(
-        lineName: String,
-        preStationName: String,
-        stationName: String,
-    ) {
+    private fun setUpRegisteringSection(
+        removalSection: Section,
+        associatedSection: Section,
+    ): Section {
+        if (removalSection.preStation.isUpwardEndStation()) {
+            return Section.ofUpwardEnd(removalSection.line, removalSection.station)
+        }
+        return Section(
+            removalSection.line,
+            removalSection.preStation,
+            associatedSection.station,
+            removalSection.distance + associatedSection.distance,
+            removalSection.duration + associatedSection.duration
+        )
     }
 
     companion object {
-        private const val MIM_SECTION_SIZE = 1
+        private const val MIM_SECTION_SIZE = 2
     }
 }

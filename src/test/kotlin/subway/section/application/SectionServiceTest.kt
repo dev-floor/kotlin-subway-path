@@ -86,8 +86,8 @@ internal class SectionServiceTest {
             Station.from("테스트역3")
         )
         sectionRepository.saveAll(
-            Section.from("테스트노선1", "테스트역1", "테스트역2", 2, 3),
-            Section.from("테스트노선1", "테스트역2", "테스트역3", 2, 3),
+            Section.of("테스트노선1", "테스트역1", "테스트역2", 2, 3),
+            Section.of("테스트노선1", "테스트역2", "테스트역3", 2, 3),
         )
 
         val request = SectionRegisterRequest("테스트노선1", "테스트역1", "테스트역3", 2, 3)
@@ -108,7 +108,7 @@ internal class SectionServiceTest {
 
         lineRepository.save(line)
         stationRepository.saveAll(station1, station2, station3)
-        sectionRepository.save(Section.from("테스트노선1", "테스트역1", "테스트역3", 2, 3))
+        sectionRepository.save(Section.of("테스트노선1", "테스트역1", "테스트역3", 2, 3))
 
         // then
         assertThatIllegalArgumentException().isThrownBy { sectionService.register(request) }
@@ -125,8 +125,8 @@ internal class SectionServiceTest {
             Station.from("테스트역3")
         )
         sectionRepository.saveAll(
-            Section.from("테스트노선1", "테스트역1", "테스트역2", 2, 3),
-            Section.from("테스트노선1", "테스트역2", "테스트역3", 2, 3),
+            Section.of("테스트노선1", "테스트역1", "테스트역2", 2, 3),
+            Section.of("테스트노선1", "테스트역2", "테스트역3", 2, 3),
         )
 
         val request = SectionRegisterRequest("테스트노선1", "테스트역3", "테스트역1", 2, 3)
@@ -147,7 +147,7 @@ internal class SectionServiceTest {
 
         lineRepository.save(line)
         stationRepository.saveAll(station1, station2, station3)
-        sectionRepository.save(Section.from("테스트노선1", "테스트역1", "테스트역3", 2, 3))
+        sectionRepository.save(Section.of("테스트노선1", "테스트역1", "테스트역3", 2, 3))
 
         // when
         sectionService.register(request)
@@ -172,8 +172,9 @@ internal class SectionServiceTest {
         lineRepository.save(line)
         stationRepository.saveAll(station1, station2, station3)
         sectionRepository.saveAll(
-            Section.from("테스트노선1", "테스트역1", "테스트역2", 2, 3),
-            Section.from("테스트노선1", "테스트역2", "테스트역3", 2, 3),
+            Section.ofUpwardEnd("테스트노선1", "테스트역1"),
+            Section.of("테스트노선1", "테스트역1", "테스트역2", 2, 3),
+            Section.of("테스트노선1", "테스트역2", "테스트역3", 2, 3),
         )
 
         // when
@@ -185,7 +186,7 @@ internal class SectionServiceTest {
     }
 
     @Test
-    internal fun `remove() - 해당하는 노선에 구간이 1개 밖에 없을 경우 예외 발생`() {
+    internal fun `remove() - 해당하는 노선에 구간이 2개 밖에 없을 경우 예외 발생`() {
         // given
         val line = Line.from("테스트노선1")
         val station1 = Station.from("테스트역1")
@@ -194,7 +195,10 @@ internal class SectionServiceTest {
 
         lineRepository.save(line)
         stationRepository.saveAll(station1, station2)
-        sectionRepository.save(Section.from("테스트노선1", "테스트역1", "테스트역2", 2, 3))
+        sectionRepository.saveAll(
+            Section.ofUpwardEnd("테스트노선1", "테스트역1"),
+            Section.of("테스트노선1", "테스트역1", "테스트역2", 2, 3)
+        )
 
         // then
         assertThatIllegalArgumentException().isThrownBy { sectionService.remove(request) }
@@ -213,8 +217,9 @@ internal class SectionServiceTest {
         lineRepository.save(line)
         stationRepository.saveAll(station1, station2, station3)
         sectionRepository.saveAll(
-            Section.from("테스트노선1", "테스트역1", "테스트역2", 2, 3),
-            Section.from("테스트노선1", "테스트역2", "테스트역3", 4, 5)
+            Section.ofUpwardEnd("테스트노선1", "테스트역1"),
+            Section.of("테스트노선1", "테스트역1", "테스트역2", 2, 3),
+            Section.of("테스트노선1", "테스트역2", "테스트역3", 4, 5)
         )
 
         // when

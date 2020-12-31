@@ -2,8 +2,11 @@ package subway.station.domain
 
 import subway.common.domain.Name
 
-class Station(val name: Name) {
+class Station private constructor(val name: Name) {
     fun match(name: String) = this.name.match(name)
+
+    fun isUpwardEndStation() = this == UPWARD_END_STATION
+
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (javaClass != other?.javaClass) return false
@@ -20,6 +23,8 @@ class Station(val name: Name) {
     }
 
     companion object {
+        val UPWARD_END_STATION = Station(Name("UPWARD_END_STATION"))
+
         fun from(name: String) = Station(Name(name))
     }
 }

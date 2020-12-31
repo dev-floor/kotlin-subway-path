@@ -22,7 +22,6 @@ data class SectionRemoveRequest(
 
     init {
         require(lineName.length >= Name.MIN_LENGTH) { INVALID_NAME_MESSAGE }
-        require(preStationName.length >= Name.MIN_LENGTH) { INVALID_NAME_MESSAGE }
         require(stationName.length >= Name.MIN_LENGTH) { INVALID_NAME_MESSAGE }
     }
 

@@ -62,6 +62,18 @@ internal class InMemorySectionRepositoryTest {
     }
 
     @Test
+    internal fun `find() - 해당하는 구간을 조회`() {
+        // given
+        val section = Section.of("테스트노선1", "테스트역1", "테스트역2", 0, 0)
+
+        // when
+        val actual = sectionRepository.find(section)
+
+        // then
+        assertThat(actual).isNotNull
+    }
+
+    @Test
     internal fun `findByLineAndPreStation() - 해당하는 노선,이전역이 포함된 구간을 조회`() {
         // given
         val line = Line.from("테스트노선1")

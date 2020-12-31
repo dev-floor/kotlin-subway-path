@@ -28,6 +28,8 @@ class InMemorySectionRepository : SectionRepository {
         .filter { it.line == line }
         .find { it.station == station }
 
+    override fun find(section: Section) = sections.find { it == section }
+
     override fun findAll() = sections.toList()
 
     override fun countByLine(line: Line) = sections.count { it.line == line }

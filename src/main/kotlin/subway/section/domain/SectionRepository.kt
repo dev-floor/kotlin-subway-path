@@ -14,6 +14,8 @@ interface SectionRepository {
 
     fun findByLineAndStation(line: Line, station: Station): Section?
 
+    fun find(section: Section): Section?
+
     fun findAll(): List<Section>
 
     fun countByLine(line: Line): Int
