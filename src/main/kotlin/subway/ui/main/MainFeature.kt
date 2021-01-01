@@ -29,7 +29,7 @@ enum class MainFeature(
     fun navigate() = ViewNavigation.navigate(featureView)
 
     companion object {
-        fun of(command: String) =
+        fun from(command: String) =
             values()
                 .find { it.command == command }
                 ?: throw IllegalArgumentException(INVALID_COMMAND_MESSAGE)

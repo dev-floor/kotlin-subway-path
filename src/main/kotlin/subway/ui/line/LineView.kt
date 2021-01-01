@@ -13,7 +13,7 @@ class LineView : View {
 
         val command = readLine()?.trim() ?: throw IllegalArgumentException()
 
-        LineFeature.of(command)
+        LineFeature.from(command)
             .navigate()
     }
 }

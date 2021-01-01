@@ -13,7 +13,7 @@ class StationView : View {
 
         val command = readLine()?.trim() ?: throw IllegalArgumentException()
 
-        StationFeature.of(command)
+        StationFeature.from(command)
             .navigate()
     }
 }

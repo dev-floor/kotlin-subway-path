@@ -19,10 +19,10 @@ class LineRegisterView : View {
         println("\n## 등록할 노선의 하행 종점역 이름을 입력하세요.")
         val stationName = readLine()?.trim() ?: throw AssertionError()
 
-        println("\n## 등록할 노선의 구간 거리을 입력하세요(단위는 km입니다).")
+        println("\n## 등록할 노선의 구간 거리을 입력하세요(단위는 km).")
         val distance = readLine()?.trim() ?: throw AssertionError()
 
-        println("\n## 등록할 노선의 소요 시간을 입력하세요(단위는 분입니다).")
+        println("\n## 등록할 노선의 소요 시간을 입력하세요(단위는 분).")
         val duration = readLine()?.trim() ?: throw AssertionError()
 
         val request = LineRegisterRequest.of(

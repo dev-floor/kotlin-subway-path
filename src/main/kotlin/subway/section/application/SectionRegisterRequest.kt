@@ -37,4 +37,20 @@ data class SectionRegisterRequest(
         require(distance.isPositive) { INVALID_DISTANCE_MESSAGE }
         require(duration.isPositive) { INVALID_DURATION_MESSAGE }
     }
+
+    companion object {
+        fun of(
+            lineName: String,
+            preStationName: String,
+            stationName: String,
+            distance: String,
+            duration: String,
+        ) = SectionRegisterRequest(
+            lineName = lineName,
+            preStationName = preStationName,
+            stationName = stationName,
+            distance = distance.toLong(),
+            duration = duration.toLong()
+        )
+    }
 }

@@ -12,7 +12,7 @@ class MainView : View {
 
         val command = readLine()?.trim() ?: throw AssertionError()
 
-        MainFeature.of(command)
+        MainFeature.from(command)
             .navigate()
     }
 }
