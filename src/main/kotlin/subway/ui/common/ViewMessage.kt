@@ -6,6 +6,8 @@ const val MAIN_SCREEN_TITLE = "\n## 메인 화면"
 
 const val SELECT_FEATURE = "\n### 원하는 기능을 선택하세요."
 
+const val SEPARATE_LINE = "[INFO] ---"
+
 fun generateScreenTitle(feature: MainFeature) =
     "\n## ${feature.category} ${feature.featureType.type} 화면"
 
