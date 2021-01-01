@@ -44,7 +44,7 @@ class SectionService(
         preStation: Station,
         station: Station,
     ) {
-        require(!sectionRepository.existsByLineAndPreStationAndStation(line, preStation, station)) {
+        require(!sectionRepository.existsByPreStationAndStation(preStation, station)) {
             ALREADY_EXISTS_SECTION
         }
         require(!sectionRepository.existsByLineAndStation(line, station)) {

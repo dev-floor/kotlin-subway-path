@@ -52,6 +52,11 @@ class InMemorySectionRepository : SectionRepository {
         .filter { it.line == line }
         .any { it.station == station }
 
+    override fun existsByPreStationAndStation(preStation: Station, station: Station) =
+        sections.asSequence()
+            .filter { it.preStation == preStation }
+            .any { it.station == station }
+
     override fun existsByLineAndPreStationAndStation(
         line: Line,
         preStation: Station,

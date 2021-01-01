@@ -3,15 +3,12 @@ package subway.path.domain
 import subway.common.exception.INVALID_PATH_TYPE_MESSAGE
 import subway.section.domain.Section
 
-enum class PathType(
-    private val weight: (Section) -> Long,
-    private val subweight: (Section) -> Long,
-) {
-    DISTANCE(Section::distance, Section::duration),
-    DURATION(Section::duration, Section::distance);
+enum class PathType(val weight: (Section) -> Double, val subweight: (Section) -> Double) {
+    DISTANCE({ it.distance.toDouble() }, { it.duration.toDouble() }),
+    DURATION({ it.duration.toDouble() }, { it.distance.toDouble() });
 
     companion object {
-        fun of(type: String) = values().find { it.name == type }
+        fun from(type: String) = values().find { it.name == type }
             ?: throw IllegalArgumentException(INVALID_PATH_TYPE_MESSAGE)
     }
 }

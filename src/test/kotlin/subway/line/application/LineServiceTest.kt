@@ -107,7 +107,8 @@ internal class LineServiceTest {
         val lines = lineService.showAll()
 
         // then
-        assertThat(lines).isEqualTo(listOf("테스트노선1", "테스트노선2", "테스트노선3"))
+        assertThat(lines).extracting("name", LineResponse::class.java)
+            .isEqualTo(listOf("테스트노선1", "테스트노선2", "테스트노선3"))
     }
 
     @Test
