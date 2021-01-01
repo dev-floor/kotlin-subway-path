@@ -13,10 +13,10 @@ class SectionRemoveView : View {
         println("\n## 삭제할 구간의 노선 이름을 입력하세요.")
         val lineName = readLine()?.trim() ?: throw AssertionError()
 
-        println("\n## 등록할 구간의 이전(상행)역 이름을 입력하세요.")
+        println("\n## 삭제할 구간의 이전(상행)역 이름을 입력하세요.")
         val preStationName = readLine()?.trim() ?: throw AssertionError()
 
-        println("\n## 등록할 구간의 현재(하행)역 이름을 입력하세요.")
+        println("\n## 삭제할 구간의 현재(하행)역 이름을 입력하세요.")
         val stationName = readLine()?.trim() ?: throw AssertionError()
 
         val request = SectionRemoveRequest(
