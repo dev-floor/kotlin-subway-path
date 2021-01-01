@@ -58,7 +58,7 @@ class SectionService(
         station: Station,
     ) = require(
         !sectionRepository.existsByLineAndPreStation(line, station) ||
-                !sectionRepository.existsByLineAndStation(line, preStation)
+            !sectionRepository.existsByLineAndStation(line, preStation)
     ) {
         INVALID_SECTION_MESSAGE
     }
@@ -77,8 +77,7 @@ class SectionService(
         require(lineRepository.exists(line)) { NOT_EXISTS_LINE }
         require(sectionRepository.existsByLine(line)) { NOT_EXISTS_SECTION }
 
-        val lines = sectionRepository.findAllByLine(line)
-        return sortedSectionByLink(lines)
+        return sortedSectionByLink(sectionRepository.findAllByLine(line))
     }
 
     private fun sortedSectionByLink(lines: List<Section>): List<Section> {

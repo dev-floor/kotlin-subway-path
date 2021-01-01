@@ -51,19 +51,25 @@ internal class LineServiceTest {
         assertAll(
             { assertThat(lineRepository.existsByName("테스트노선1")).isTrue },
             {
-                assertThat(sectionRepository
-                    .existsByLineAndPreStationAndStation(
-                        Line.from("테스트노선1"),
-                        Station.UPWARD_END_STATION,
-                        Station.valueOf("테스트역1")))
+                assertThat(
+                    sectionRepository
+                        .existsByLineAndPreStationAndStation(
+                            Line.from("테스트노선1"),
+                            Station.UPWARD_END_STATION,
+                            Station.valueOf("테스트역1")
+                        )
+                )
                     .isTrue
             },
             {
-                assertThat(sectionRepository
-                    .existsByLineAndPreStationAndStation(
-                        Line.from("테스트노선1"),
-                        Station.valueOf("테스트역1"),
-                        Station.valueOf("테스트역2")))
+                assertThat(
+                    sectionRepository
+                        .existsByLineAndPreStationAndStation(
+                            Line.from("테스트노선1"),
+                            Station.valueOf("테스트역1"),
+                            Station.valueOf("테스트역2")
+                        )
+                )
                     .isTrue
             }
         )
@@ -102,10 +108,12 @@ internal class LineServiceTest {
 
         // then
         assertThat(lines)
-            .isEqualTo(listOf(
-                Line.from("테스트노선1"),
-                Line.from("테스트노선2"),
-                Line.from("테스트노선3"))
+            .isEqualTo(
+                listOf(
+                    Line.from("테스트노선1"),
+                    Line.from("테스트노선2"),
+                    Line.from("테스트노선3")
+                )
             )
     }
 
