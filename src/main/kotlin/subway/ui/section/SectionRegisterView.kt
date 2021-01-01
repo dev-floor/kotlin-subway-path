@@ -30,7 +30,8 @@ class SectionRegisterView : View {
             preStationName = preStationName,
             stationName = stationName,
             distance = distance,
-            duration = duration)
+            duration = duration
+        )
         SECTION_SERVICE.register(request)
         println(generateSuccessMessage(SECTION.category, REGISTER))
 

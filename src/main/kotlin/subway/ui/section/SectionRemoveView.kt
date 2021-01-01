@@ -22,7 +22,8 @@ class SectionRemoveView : View {
         val request = SectionRemoveRequest(
             lineName = lineName,
             preStationName = preStationName,
-            stationName = stationName)
+            stationName = stationName
+        )
         SECTION_SERVICE.remove(request)
         println(generateSuccessMessage(SECTION.category, REMOVE))
 

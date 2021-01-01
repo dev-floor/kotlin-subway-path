@@ -30,7 +30,8 @@ class LineRegisterView : View {
             preStationName = preStationName,
             stationName = stationName,
             distance = distance,
-            duration = duration)
+            duration = duration
+        )
         ServiceHandler.LINE_SERVICE.register(request)
         println(generateSuccessMessage(LINE.category, REGISTER))
 

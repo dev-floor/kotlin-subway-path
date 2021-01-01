@@ -58,7 +58,7 @@ class SectionService(
         station: Station,
     ) = require(
         !sectionRepository.existsByLineAndPreStation(line, station) ||
-                !sectionRepository.existsByLineAndStation(line, preStation)
+            !sectionRepository.existsByLineAndStation(line, preStation)
     ) {
         INVALID_SECTION_MESSAGE
     }
