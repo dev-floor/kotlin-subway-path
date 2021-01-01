@@ -9,7 +9,7 @@ class StationShowView : View {
     override fun render() {
         println("\n## 역 목록")
 
-        STATION_SERVICE.showAll().forEach { println(generateInfoMessage(it.name.name)) }
+        STATION_SERVICE.showAll().forEach { println(generateInfoMessage(it.name)) }
 
         ViewNavigation.goToFirst()
     }

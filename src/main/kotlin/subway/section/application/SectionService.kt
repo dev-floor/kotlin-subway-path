@@ -58,7 +58,7 @@ class SectionService(
         station: Station,
     ) = require(
         !sectionRepository.existsByLineAndPreStation(line, station) ||
-            !sectionRepository.existsByLineAndStation(line, preStation)
+                !sectionRepository.existsByLineAndStation(line, preStation)
     ) {
         INVALID_SECTION_MESSAGE
     }
@@ -73,14 +73,14 @@ class SectionService(
             sectionRepository.save(Section(it.line, station, it.station))
         }
 
-    fun showAllByLine(line: Line): List<Section> {
+    fun showAllByLine(line: Line): List<SectionResponse> {
         require(lineRepository.exists(line)) { NOT_EXISTS_LINE }
         require(sectionRepository.existsByLine(line)) { NOT_EXISTS_SECTION }
 
         return sortedSectionByLink(sectionRepository.findAllByLine(line))
     }
 
-    private fun sortedSectionByLink(lines: List<Section>): List<Section> {
+    private fun sortedSectionByLink(lines: List<Section>): List<SectionResponse> {
         val sortedSections = mutableListOf<Section>()
         val mutableSections = lines.toMutableList()
 
@@ -94,7 +94,7 @@ class SectionService(
                 ?: mutableSections.add(section)
         }
 
-        return sortedSections.toList()
+        return sortedSections.map { SectionResponse.from(it) }
     }
 
     private fun addNextSection(sortedSections: MutableList<Section>, section: Section) =

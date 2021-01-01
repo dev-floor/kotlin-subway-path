@@ -24,6 +24,7 @@ class LineService(
 
     fun showAll() = lineRepository.findAll()
         .sortedWith(Line)
+        .map { LineResponse.from(it) }
 
     fun remove(request: LineRemoveRequest) {
         require(lineRepository.existsByName(request.lineName)) { NOT_EXISTS_LINE }

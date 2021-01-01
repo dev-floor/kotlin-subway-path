@@ -184,11 +184,11 @@ internal class SectionServiceTest {
         val sections = sectionService.showAllByLine(line)
 
         // then
-        assertThat(sections).extracting(Section::preStation, Section::station)
+        assertThat(sections).extracting(SectionResponse::preStation, SectionResponse::station)
             .containsExactly(
-                tuple(Station.UPWARD_END_STATION, Station.valueOf("테스트역1")),
-                tuple(Station.valueOf("테스트역1"), Station.valueOf("테스트역2")),
-                tuple(Station.valueOf("테스트역2"), Station.valueOf("테스트역3")),
+                tuple("UPWARD_END_STATION", "테스트역1"),
+                tuple("테스트역1", "테스트역2"),
+                tuple("테스트역2", "테스트역3"),
             )
     }
 

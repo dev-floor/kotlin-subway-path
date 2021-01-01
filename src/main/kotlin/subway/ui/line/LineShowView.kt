@@ -9,7 +9,7 @@ class LineShowView : View {
     override fun render() {
         println("\n## 노선 목록")
 
-        LINE_SERVICE.showAll().forEach { println(generateInfoMessage(it.name.name)) }
+        LINE_SERVICE.showAll().forEach { println(generateInfoMessage(it.name)) }
 
         ViewNavigation.goToFirst()
     }
