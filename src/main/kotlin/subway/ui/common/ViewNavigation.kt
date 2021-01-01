@@ -10,9 +10,9 @@ object ViewNavigation {
         navigation.push(view)
     }
 
-    fun run() = navigation.pushAndRender(navigation.pop())
+    fun run() = navigation.peekAndRender()
 
-    fun navigate(view: View?) = view?.let { navigation.push(it) } ?: goBack()
+    fun navigate(view: View?) = view?.let { navigation.pushAndRender(it) } ?: goBack()
 
     fun navigateWithHandlingException(view: View?) = try {
         navigate(view)

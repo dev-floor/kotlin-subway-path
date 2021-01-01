@@ -1,23 +1,23 @@
-package subway.ui.station
+package subway.ui.line
 
 import subway.ui.common.FeatureType
 import subway.ui.common.INVALID_COMMAND_MESSAGE
 import subway.ui.common.View
 import subway.ui.common.ViewNavigation
-import subway.ui.main.MainFeature.STATION
+import subway.ui.main.MainFeature.LINE
 
-enum class StationFeature(
+enum class LineFeature(
     val command: String,
-    private val featureType: FeatureType,
+    val featureType: FeatureType,
     private val featureView: View? = null,
 ) {
-    REGISTER("1", FeatureType.REGISTER, StationRegisterView()),
-    REMOVE("2", FeatureType.REMOVE, StationRemoveView()),
-    SHOW("3", FeatureType.SHOW, StationShowView()),
+    REGISTER("1", FeatureType.REGISTER, LineRegisterView()),
+    REMOVE("2", FeatureType.REMOVE, LineRemoveView()),
+    SHOW("3", FeatureType.SHOW, LineShowView()),
     BACK("B", FeatureType.BACK);
 
     val featureInfo
-        get() = "$command. ${if (this == BACK) "" else "${STATION.category} "}${featureType.type}"
+        get() = "$command. ${if (this == BACK) "" else "${LINE.category} "}${featureType.type}"
 
     fun navigate() = ViewNavigation.navigateWithHandlingException(featureView)
 
