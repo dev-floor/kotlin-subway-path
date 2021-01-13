@@ -1,4 +1,6 @@
-package subway.domain
+package subway.repository
+
+import subway.domain.Station
 
 object StationRepository {
     private val stations = mutableListOf<Station>()
@@ -9,5 +11,5 @@ object StationRepository {
         stations.add(station)
     }
 
-    fun deleteStation(name: String) = stations.removeIf { it.name == name }
+    fun deleteStationByName(name: String) = stations.removeIf { it.name == name }
 }

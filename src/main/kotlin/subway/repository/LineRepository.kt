@@ -1,4 +1,6 @@
-package subway.domain
+package subway.repository
+
+import subway.domain.Line
 
 object LineRepository {
     private val lines = mutableListOf<Line>()
