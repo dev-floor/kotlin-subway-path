@@ -1,9 +1,9 @@
 package subway
 
+import subway.app.startApp
 import subway.init.init
-import subway.view.mainPage
 
 fun main() {
     init()
-    mainPage()
+    startApp()
 }
