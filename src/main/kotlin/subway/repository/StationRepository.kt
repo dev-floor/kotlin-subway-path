@@ -3,12 +3,12 @@ package subway.repository
 import subway.domain.Station
 
 object StationRepository {
-    private val stations = mutableListOf<Station>()
+    val stations = mutableListOf<Station>()
 
     fun stations() = stations.toList()
 
     fun addStation(station: Station) {
-        stations.add(station)
+        if(stations().none { it.name === station.name }) stations.add(station)
     }
 
     fun deleteStationByName(name: String) = stations.removeIf { it.name == name }

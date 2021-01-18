@@ -10,10 +10,10 @@ import subway.repository.StationRepository
 const val GYODAE = "교대역"
 const val GANGNAM = "강남역"
 const val YEOKSAM = "역삼역"
-const val YANGJAE = "양재역"
-const val MAEBONG = "매봉역"
 const val NAMBU_BUS_TERMINAL = "남부터미널역"
+const val YANGJAE = "양재역"
 const val YANGJAE_CITIZENS_FOREST = "양재시민의숲역"
+const val MAEBONG = "매봉역"
 
 const val LINE_NUMBER_TWO = "2호선"
 const val LINE_NUMBER_THREE = "3호선"
@@ -38,10 +38,10 @@ fun initStation() {
     StationRepository.addStation(Station(GYODAE))
     StationRepository.addStation(Station(GANGNAM))
     StationRepository.addStation(Station(YEOKSAM))
-    StationRepository.addStation(Station(YANGJAE))
-    StationRepository.addStation(Station(MAEBONG))
     StationRepository.addStation(Station(NAMBU_BUS_TERMINAL))
+    StationRepository.addStation(Station(YANGJAE))
     StationRepository.addStation(Station(YANGJAE_CITIZENS_FOREST))
+    StationRepository.addStation(Station(MAEBONG))
 }
 
 fun initLine() {

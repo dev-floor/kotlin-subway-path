@@ -1,15 +1,12 @@
 package subway.domain
 
-import subway.repository.LineRepository
-import subway.repository.StationRepository
-
 class Station(val name: String) {
 
-    fun addStation() = StationRepository.addStation(Station(this.name))
-
-    fun deleteStation() {
-
-        StationRepository.deleteStationByName(this.name)
+    init {
+        require(NAME_MAX_LENGTH <= name.length)
     }
 
+    companion object{
+        const val NAME_MAX_LENGTH = 2
+    }
 }

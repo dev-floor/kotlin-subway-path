@@ -1,10 +1,7 @@
 package subway.app
 
 import subway.init.*
-import subway.domain.Station
-import subway.view.getStationName
-import subway.view.selectMenu
-import subway.view.showAdminStation
+import subway.view.selectMessage
 import subway.view.showMainPage
 
 const val QUIT = "Q"
@@ -18,7 +15,7 @@ fun startApp() {
 fun mainPage() {
     while(true){
         showMainPage()
-        select = selectMenu()
+        select = selectMessage()
         if(select !== QUIT){
             when(select.toInt()) {
                 ONE -> adminStation()
@@ -30,19 +27,6 @@ fun mainPage() {
             continue
         }
         break
-    }
-}
-
-fun adminStation() {
-    showAdminStation()
-    select = selectMenu()
-    if(select !== BACK){
-
-        when(select.toInt()){
-            ONE -> Station(getStationName()).addStation()
-            TWO -> Station(getStationName()).deleteStation()
-//            THREE ->
-        }
     }
 }
 
