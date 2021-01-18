@@ -2,27 +2,25 @@ package subway.app
 
 import subway.domain.Line
 import subway.domain.Section
-import subway.domain.Station
 import subway.init.ONE
 import subway.init.THREE
 import subway.init.TWO
 import subway.repository.LineRepository
-import subway.repository.StationRepository
 import subway.view.*
 
 fun adminLine() {
     showAdminStation()
     select = selectMessage()
-    if(select !== BACK){
-        when(select.toInt()){
-            ONE -> registerLine()
-            TWO -> deleteLine()
-            THREE -> showAllLines()
-        }
+    if(select !== BACK) return
+
+    when(select.toInt()){
+        ONE -> registerLine()
+        TWO -> deleteLine()
+        THREE -> showAllLines()
     }
 }
 
-fun showAllLines() {
+fun registerLine() {
     val line = Line(getRegisterLineName())
     val section = Section(getUpwardStationName(), getDownwardStationName(), getDistance(), getTime())
 
@@ -42,8 +40,3 @@ fun deleteLine() {
     succeedDeleteLine()
 }
 
-fun registerLine() {
-    TODO("Not yet implemented")
-}
-
-fun getLine(): Line = Line(getRegisterLineName())

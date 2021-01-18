@@ -1,5 +1,7 @@
 package subway.view
 
+import subway.repository.LineRepository
+
 fun getRegisterLineName(): String {
     println("\n## 등록할 노선 이름을 입력하세요.")
     return readLine()!!
@@ -13,3 +15,12 @@ fun getDeleteLineName(): String{
 }
 
 fun succeedDeleteLine() = println("지하철 역이 삭제되었습니다.")
+
+fun showAllLines() {
+    print("\n## 노선 목")
+
+    LineRepository.lines().map{
+        infoMessage()
+        print(it.name)
+    }
+}

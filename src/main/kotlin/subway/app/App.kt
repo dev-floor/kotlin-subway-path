@@ -9,24 +9,18 @@ const val BACK = "B"
 var select: String = ""
 
 fun startApp() {
-    mainPage()
-}
-
-fun mainPage() {
     while(true){
         showMainPage()
         select = selectMessage()
-        if(select !== QUIT){
-            when(select.toInt()) {
-                ONE -> adminStation()
-                TWO -> adminLine()
-                THREE -> adminSection()
-                FOUR -> showWholeTrainRoute()
-                FIVE -> checkRoute()
-            }
-            continue
+        if(select === QUIT) break
+
+        when(select.toInt()) {
+            ONE -> adminStation()
+            TWO -> adminLine()
+            THREE -> adminSection()
+            FOUR -> showWholeTrainRoute()
+            FIVE -> checkRoute()
         }
-        break
     }
 }
 

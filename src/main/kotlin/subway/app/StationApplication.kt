@@ -10,23 +10,13 @@ import subway.view.*
 fun adminStation() {
     showAdminStation()
     select = selectMessage()
-    if(select !== BACK){
+    if(select === BACK) return
 
-        when(select.toInt()){
-            ONE -> registerStation()
-            TWO -> deleteStation()
-            THREE -> showAllStations()
-        }
+    when(select.toInt()){
+        ONE -> registerStation()
+        TWO -> deleteStation()
+        THREE -> showAllStations()
     }
-}
-
-fun showAllStations() {
-    getStationNames()
-    StationRepository.stations.map {
-        infoMessage()
-        getStationName(it.name)
-    }
-    newLine()
 }
 
 fun registerStation() {
