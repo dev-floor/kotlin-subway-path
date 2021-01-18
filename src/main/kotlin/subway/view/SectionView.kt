@@ -1,5 +1,7 @@
 package subway.view
 
+fun showAdminSection() = println("\n## 구간 관리 화면\n1. 구간 등록\n2. 구간 삭제\nB. 돌아가기")
+
 fun getUpwardStationName(): String {
     println("\n## 등록할 노선의 상행 종점역 이름을 입력하세요.")
     return readLine()!!

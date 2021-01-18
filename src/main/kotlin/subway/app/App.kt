@@ -9,12 +9,13 @@ const val BACK = "B"
 var select: String = ""
 
 fun startApp() {
-    while(true){
+    while (true) {
         showMainPage()
         select = selectMessage()
-        if(select === QUIT) break
 
-        when(select.toInt()) {
+        if (select == QUIT) break
+
+        when (select.toInt()) {
             ONE -> adminStation()
             TWO -> adminLine()
             THREE -> adminSection()
@@ -22,12 +23,6 @@ fun startApp() {
             FIVE -> checkRoute()
         }
     }
-}
-
-
-
-fun adminSection() {
-    TODO("Not yet implemented")
 }
 
 fun showWholeTrainRoute() {

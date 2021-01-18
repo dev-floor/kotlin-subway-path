@@ -51,11 +51,11 @@ fun initLine() {
 }
 
 fun initSection() {
-    SectionRepository.addSection(Section(GYODAE, GANGNAM, THREE, TWO))
-    SectionRepository.addSection(Section(GANGNAM, YEOKSAM, THREE, TWO))
-    SectionRepository.addSection(Section(GYODAE, NAMBU_BUS_TERMINAL, TWO, THREE))
-    SectionRepository.addSection(Section(NAMBU_BUS_TERMINAL, YANGJAE, FIVE, SIX))
-    SectionRepository.addSection(Section(YANGJAE, MAEBONG, ONE, ONE))
-    SectionRepository.addSection(Section(GANGNAM, YANGJAE, EIGHT, TWO))
-    SectionRepository.addSection(Section(YANGJAE, YANGJAE_CITIZENS_FOREST, THREE, TEN))
+    SectionRepository.addSection(Section(Station(GYODAE), Station(GANGNAM), THREE, TWO))
+    SectionRepository.addSection(Section(Station(GANGNAM), Station(YEOKSAM), THREE, TWO))
+    SectionRepository.addSection(Section(Station(GYODAE), Station(NAMBU_BUS_TERMINAL), TWO, THREE))
+    SectionRepository.addSection(Section(Station(NAMBU_BUS_TERMINAL), Station(YANGJAE), FIVE, SIX))
+    SectionRepository.addSection(Section(Station(YANGJAE), Station(MAEBONG), ONE, ONE))
+    SectionRepository.addSection(Section(Station(GANGNAM), Station(YANGJAE), EIGHT, TWO))
+    SectionRepository.addSection(Section(Station(YANGJAE), Station(YANGJAE_CITIZENS_FOREST), THREE, TEN))
 }

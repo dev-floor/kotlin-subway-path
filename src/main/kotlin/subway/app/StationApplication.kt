@@ -10,9 +10,9 @@ import subway.view.*
 fun adminStation() {
     showAdminStation()
     select = selectMessage()
-    if(select === BACK) return
+    if (select == BACK) return
 
-    when(select.toInt()){
+    when (select.toInt()) {
         ONE -> registerStation()
         TWO -> deleteStation()
         THREE -> showAllStations()
@@ -22,8 +22,7 @@ fun adminStation() {
 fun registerStation() {
     val station = Station(getRegisterStationName())
 
-    if(StationRepository.stations().none { it.name === station.name })
-        StationRepository.addStation(station)
+    StationRepository.addStation(station)
 
     infoMessage()
     succeedRegisterStation()

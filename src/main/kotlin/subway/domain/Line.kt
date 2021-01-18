@@ -1,12 +1,15 @@
 package subway.domain
 
-class Line(val name: String){
+import subway.repository.LineRepository
 
-    init{
+class Line(val name: String) {
+
+    init {
         require(LINE_NAME_MAX_LENGTH <= name.length)
+        require(LineRepository.lines().none { it.name === this.name })
     }
 
-    companion object{
+    companion object {
         const val LINE_NAME_MAX_LENGTH = 2
     }
 }
