@@ -9,14 +9,14 @@ fun getRegisterStationName(): String {
     return readLine()!!
 }
 
-fun succeedRegisterStationName() = println("지하철 역이 등록되었습니다.")
+fun succeedRegisterStation() = println("지하철 역이 등록되었습니다.")
 
 fun getDeleteStationName(): String{
     println("\n## 삭제할 역 이름을 입력하세요.")
     return readLine()!!
 }
 
-fun succeedDeleteStationName() = println("지하철 역이 삭제되었습니다.")
+fun succeedDeleteStation() = println("지하철 역이 삭제되었습니다.")
 
 fun getStationNames() = print("\n## 역 목록")
 

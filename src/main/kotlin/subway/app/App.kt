@@ -30,9 +30,7 @@ fun mainPage() {
     }
 }
 
-fun adminLine() {
-    TODO("Not yet implemented")
-}
+
 
 fun adminSection() {
     TODO("Not yet implemented")

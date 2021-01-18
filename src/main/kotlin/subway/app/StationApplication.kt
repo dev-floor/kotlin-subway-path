@@ -15,12 +15,12 @@ fun adminStation() {
         when(select.toInt()){
             ONE -> registerStation()
             TWO -> deleteStation()
-            THREE -> showStations()
+            THREE -> showAllStations()
         }
     }
 }
 
-fun showStations() {
+fun showAllStations() {
     getStationNames()
     StationRepository.stations.map {
         infoMessage()
@@ -36,7 +36,7 @@ fun registerStation() {
         StationRepository.addStation(station)
 
     infoMessage()
-    succeedRegisterStationName()
+    succeedRegisterStation()
 }
 
 fun deleteStation() {
@@ -45,5 +45,5 @@ fun deleteStation() {
     StationRepository.deleteStationByName(name)
 
     infoMessage()
-    succeedDeleteStationName()
+    succeedDeleteStation()
 }

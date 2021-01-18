@@ -1,3 +1,8 @@
 package subway.domain
 
-class Section(upwardStation: String, downwardStation: String, time: Int, distance: Int)
+import subway.view.getUpwardStationName
+
+class Section(upwardStation: String, downwardStation: String, time: Int, distance: Int){
+
+
+}
