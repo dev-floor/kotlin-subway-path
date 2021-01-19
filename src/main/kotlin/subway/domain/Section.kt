@@ -9,4 +9,5 @@ class Section(val upwardStation: Station, val downwardStation: Station, val time
     fun upExist() = SectionRepository.existUpwardByName(upwardStation.name)
 
     fun validSectionToRegister() = !(downExist() && upExist())
+
 }

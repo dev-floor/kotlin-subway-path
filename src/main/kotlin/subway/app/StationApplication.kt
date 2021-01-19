@@ -1,23 +1,25 @@
 package subway.app
 
 import subway.domain.Station
-import subway.repository.StationRepository
 import subway.view.*
 
 fun registerStation() {
-    val station = Station(getRegisterStationName())
+    val name = getStationNameToRegister()
+    val station = Station(name)
 
-    StationRepository.addStation(station)
+    station.addStation()
 
     infoMessage()
     succeedRegisterStation()
 }
 
 fun deleteStation() {
-    val name = getDeleteStationName()
+    val name = getStationNameToDelete()
+    val station = Station(name)
 
-    StationRepository.deleteStationByName(name)
+    station.deleteStation()
 
     infoMessage()
     succeedDeleteStation()
 }
+

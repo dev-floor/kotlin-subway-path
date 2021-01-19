@@ -15,7 +15,7 @@ var select: String = ""
 fun startApp() {
     while (true) {
         showMainPage()
-        select = selectMessage()
+        select = selectNumber()
 
         if (select == QUIT) break
 
@@ -31,7 +31,7 @@ fun startApp() {
 
 fun adminStation() {
     showAdminStation()
-    select = selectMessage()
+    select = selectNumber()
     if (select == BACK) return
 
     when (select.toInt()) {
@@ -43,7 +43,7 @@ fun adminStation() {
 
 fun adminLine() {
     showAdminLine()
-    select = selectMessage()
+    select = selectNumber()
     if (select == BACK) return
 
     when (select.toInt()) {
@@ -55,7 +55,7 @@ fun adminLine() {
 
 fun adminSection() {
     showAdminSection()
-    select = selectMessage()
+    select = selectNumber()
     if (select == BACK) return
 
     when (select.toInt()) {

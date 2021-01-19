@@ -1,6 +1,7 @@
 package subway.repository
 
 import subway.domain.Section
+import subway.domain.Station
 
 object SectionRepository {
     private val sections = mutableListOf<Section>()
@@ -24,6 +25,9 @@ object SectionRepository {
         .filter { it.upwardStation.name == name }
         .map { it -> it.downwardStation.name }
         .toString()
+
+    fun existStationInLine(station: Station) = sections()
+                .any{ it.downwardStation.name == station.name || it.upwardStation.name == station.name }
 
 //    fun deleteSectionByName(name: String) = sections.removeIf { it.name == name }
 }

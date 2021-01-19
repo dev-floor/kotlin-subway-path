@@ -6,7 +6,7 @@ fun infoMessage() = print("\n[INFO] ")
 
 fun errorMessage() = print("\n[ERROR] ")
 
-fun selectMessage(): String {
+fun selectNumber(): String {
     println("\n## 원하는 기능을 선택하세요.")
     return readLine()!!
 }

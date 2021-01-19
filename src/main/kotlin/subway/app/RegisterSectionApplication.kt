@@ -11,7 +11,7 @@ const val DEFAULT_TIME = 3
 const val DEFAULT_DISTANCE = 2
 
 fun registerSection() {
-    val line = Line(getRegisterLineName())
+    val line = Line(getLineNameToRegister())
 
     val upwardStation = Station(getUpwardStationName())
     val downwardStation = Station(getDownwardStationName())
@@ -27,7 +27,8 @@ fun registerSection() {
             val upperStation = StationRepository.findStationByName(upperStationName)
             val additionalSection = Section(upperStation, upwardStation, DEFAULT_TIME, DEFAULT_DISTANCE)
             SectionRepository.addSection(additionalSection)
-        } else if (section.upExist()) {
+        }
+        if (section.upExist()) {
             val downerStationName = SectionRepository.getDownwardStationByUpwardName(upwardStation.name)
             val downerStation = StationRepository.findStationByName(downerStationName)
             val additionalSection = Section(downwardStation, downerStation, DEFAULT_TIME, DEFAULT_DISTANCE)

@@ -6,9 +6,8 @@ import subway.domain.Station
 import subway.repository.LineRepository
 import subway.view.*
 
-
 fun registerLine() {
-    val line = Line(getRegisterLineName())
+    val line = Line(getLineNameToRegister())
 
     val upwardStation = Station(getUpwardStationName())
     val downwardStation = Station(getDownwardStationName())
@@ -17,14 +16,14 @@ fun registerLine() {
 
     val section = Section(upwardStation, downwardStation, distance, time)
 
-    LineRepository.addLine(line)
+    line.addLine()
 
     infoMessage()
     succeedRegisterLine()
 }
 
 fun deleteLine() {
-    val name = getDeleteLineName()
+    val name = getLineNameToDelete()
 
     LineRepository.deleteLineByName(name)
 
