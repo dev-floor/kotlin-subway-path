@@ -3,7 +3,7 @@ package subway.repository
 import subway.domain.Station
 
 object StationRepository {
-    val stations = mutableListOf<Station>()
+    private val stations = mutableListOf<Station>()
 
     fun stations() = stations.toList()
 

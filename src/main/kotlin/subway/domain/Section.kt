@@ -2,7 +2,7 @@ package subway.domain
 
 import subway.repository.SectionRepository
 
-class Section(val upwardStation: Station, val downwardStation: Station, val time: Int, val distance: Int) {
+class Section(val line: Line, val upwardStation: Station, val downwardStation: Station, val time: Int, val distance: Int) {
 
     fun downExist() = SectionRepository.existDownwardByName(downwardStation.name)
 

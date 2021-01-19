@@ -20,7 +20,7 @@ fun succeedDeleteStation() = println("지하철 역이 삭제되었습니다.")
 
 fun showAllStations() {
     print("\n## 역 목록")
-    StationRepository.stations.map {
+    StationRepository.stations().map {
         infoMessage()
         print(it.name)
     }

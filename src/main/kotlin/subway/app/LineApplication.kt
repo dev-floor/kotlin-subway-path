@@ -16,7 +16,7 @@ fun registerLine() {
     val downwardStationName = getDownwardStationName()
     val distance = getDistance()
     val time = getTime()
-    val section = Section(Station(upwardStationName), Station(downwardStationName), distance, time)
+    val section = Section(line, Station(upwardStationName), Station(downwardStationName), distance, time)
 
     require(line.validLineToRegister()) { errorMessage() }
     require(StationRepository.existStationByName(upwardStationName))// { errorMessage() }
