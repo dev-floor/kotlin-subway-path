@@ -11,5 +11,11 @@ object StationRepository {
 
     fun findStationByName(name: String): Station = stations().first { it.name == name }
 
-    fun deleteStationByName(name: String) = stations.removeIf { it.name == name }
+    fun existStationByName(name: String): Boolean = stations().any { it.name == name }
+
+    fun validStationToDelete(name: String) = !SectionRepository.existStationInLine(name)
+
+    fun deleteStationByName(name: String) = stations
+            .removeIf { it.name == name && this.validStationToDelete(it.name) }
+
 }

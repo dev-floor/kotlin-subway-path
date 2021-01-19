@@ -1,13 +1,15 @@
 package subway.app
 
 import subway.domain.Station
+import subway.repository.StationRepository
 import subway.view.*
 
 fun registerStation() {
     val name = getStationNameToRegister()
     val station = Station(name)
 
-    station.addStation()
+    require(station.validStationToRegister())
+    StationRepository.addStation(station)
 
     infoMessage()
     succeedRegisterStation()
@@ -15,9 +17,9 @@ fun registerStation() {
 
 fun deleteStation() {
     val name = getStationNameToDelete()
-    val station = Station(name)
 
-    station.deleteStation()
+    require(StationRepository.validStationToDelete(name))
+    StationRepository.deleteStationByName(name)
 
     infoMessage()
     succeedDeleteStation()

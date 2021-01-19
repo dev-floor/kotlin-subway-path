@@ -16,18 +16,18 @@ object SectionRepository {
 
     fun existUpwardByName(name: String): Boolean = sections().any { it.upwardStation.name == name }
 
-    fun getUpwardStationByDownwardName(name: String): String = sections()
+    fun findUpwardNameByDownwardName(name: String): String = sections
         .filter { it.downwardStation.name == name }
         .map { it -> it.upwardStation.name }
         .toString()
 
-    fun getDownwardStationByUpwardName(name: String): String = sections()
+    fun findDownwardNameByUpwardName(name: String): String = sections
         .filter { it.upwardStation.name == name }
         .map { it -> it.downwardStation.name }
         .toString()
 
-    fun existStationInLine(station: Station) = sections()
-                .any{ it.downwardStation.name == station.name || it.upwardStation.name == station.name }
+    fun existStationInLine(name: String) = sections()
+                .any{ it.downwardStation.name == name || it.upwardStation.name == name }
 
 //    fun deleteSectionByName(name: String) = sections.removeIf { it.name == name }
 }

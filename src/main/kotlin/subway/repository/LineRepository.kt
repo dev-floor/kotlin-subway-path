@@ -7,9 +7,9 @@ object LineRepository {
 
     fun lines() = lines.toList()
 
-    fun addLine(line: Line) {
-        lines.add(line)
-    }
+    fun addLine(line: Line) = lines.add(line)
 
     fun deleteLineByName(name: String) = lines.removeIf { it.name == name }
+
+    fun existLineByName(name: String): Boolean = lines().any { it.name == name }
 }

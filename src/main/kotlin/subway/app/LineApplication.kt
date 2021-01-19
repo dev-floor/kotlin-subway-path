@@ -4,19 +4,26 @@ import subway.domain.Line
 import subway.domain.Section
 import subway.domain.Station
 import subway.repository.LineRepository
+import subway.repository.SectionRepository
+import subway.repository.StationRepository
 import subway.view.*
 
 fun registerLine() {
-    val line = Line(getLineNameToRegister())
+    val lineName = getLineNameToRegister()
+    val line = Line(lineName)
 
-    val upwardStation = Station(getUpwardStationName())
-    val downwardStation = Station(getDownwardStationName())
+    val upwardStationName = getUpwardStationName()
+    val downwardStationName = getDownwardStationName()
     val distance = getDistance()
     val time = getTime()
+    val section = Section(Station(upwardStationName), Station(downwardStationName), distance, time)
 
-    val section = Section(upwardStation, downwardStation, distance, time)
+    require(line.validLineToRegister()) { errorMessage() }
+    require(StationRepository.existStationByName(upwardStationName))// { errorMessage() }
+    require(StationRepository.existStationByName(downwardStationName)) //{ errorMessage() }
 
-    line.addLine()
+    LineRepository.addLine(line)
+    SectionRepository.addSection(section)
 
     infoMessage()
     succeedRegisterLine()

@@ -1,8 +1,8 @@
 package subway.app
 
-import subway.domain.Line
 import subway.domain.Section
 import subway.domain.Station
+import subway.repository.LineRepository
 import subway.repository.SectionRepository
 import subway.repository.StationRepository
 import subway.view.*
@@ -11,31 +11,49 @@ const val DEFAULT_TIME = 3
 const val DEFAULT_DISTANCE = 2
 
 fun registerSection() {
-    val line = Line(getLineNameToRegister())
+    val lineName = getLineNameOfSectionToRegister()
 
-    val upwardStation = Station(getUpwardStationName())
-    val downwardStation = Station(getDownwardStationName())
-    val distance = getDistance()
-    val time = getTime()
+    val upwardStationName = getUpwardNameOfSectionToRegister()
+    val downwardStationName = getDownwardNameOfSectionToRegister()
+    val distance = getSectionDistance()
+    val time = getSectionTime()
+    val section = Section(Station(upwardStationName), Station(downwardStationName), distance, time)
 
-    val section = Section(upwardStation, downwardStation, distance, time)
+    require(StationRepository.existStationByName(upwardStationName))
+    require(StationRepository.existStationByName(downwardStationName))
+    require(LineRepository.existLineByName(lineName))
+    require(section.validSectionToRegister())
 
-    if (section.validSectionToRegister()) {
-        SectionRepository.addSection(section)
-        if (section.downExist()) {
-            val upperStationName = SectionRepository.getUpwardStationByDownwardName(downwardStation.name)
-            val upperStation = StationRepository.findStationByName(upperStationName)
-            val additionalSection = Section(upperStation, upwardStation, DEFAULT_TIME, DEFAULT_DISTANCE)
-            SectionRepository.addSection(additionalSection)
-        }
-        if (section.upExist()) {
-            val downerStationName = SectionRepository.getDownwardStationByUpwardName(upwardStation.name)
-            val downerStation = StationRepository.findStationByName(downerStationName)
-            val additionalSection = Section(downwardStation, downerStation, DEFAULT_TIME, DEFAULT_DISTANCE)
-            SectionRepository.addSection(additionalSection)
-        }
-    }
+    SectionRepository.addSection(section)
+
+    checkAdditionalSection(section)
 
     infoMessage()
     succeedRegisterStation()
 }
+
+fun checkAdditionalSection(section: Section) {
+    // 상행역에 존재
+    if (section.downExist()) registerAdditionalDownSection(section)
+    // 하행역에 존재
+    if (section.upExist()) registerAdditionalUpSection(section)
+}
+
+fun registerAdditionalDownSection(section: Section) {
+    val downerStationName = SectionRepository.findDownwardNameByUpwardName(section.upwardStation.name)
+    val downerStation = StationRepository.findStationByName(downerStationName)
+    val additionalSection = Section(section.downwardStation, downerStation, DEFAULT_TIME, DEFAULT_DISTANCE)
+    SectionRepository.addSection(additionalSection)
+}
+
+fun registerAdditionalUpSection(section: Section) {
+    val upperStationName = SectionRepository.findUpwardNameByDownwardName(section.downwardStation.name)
+    val upperStation = StationRepository.findStationByName(upperStationName)
+    val additionalSection = Section(upperStation, section.upwardStation, DEFAULT_TIME, DEFAULT_DISTANCE)
+    SectionRepository.addSection(additionalSection)
+}
+
+
+
+
+
