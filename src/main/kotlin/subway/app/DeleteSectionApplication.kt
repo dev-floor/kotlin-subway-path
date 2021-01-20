@@ -33,4 +33,5 @@ fun checkTerminalStation(upwardStationName: String, downwardStationName: String)
 }
 
 fun applyTime(upwardStationName: String, downwardStationName: String) {
+    TODO()
 }

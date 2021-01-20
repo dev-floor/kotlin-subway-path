@@ -20,10 +20,8 @@ fun selectNumber(): String {
 fun showWholeTrack() {
     val wholeTrack = LineRepository.wholeLineInformation()
     print("\n ## 지하철 노선도")
-    wholeTrack.map {
-        if (it !== SEPARATOR_EACH_LINE) {
-            print(INFO_MESSAGE)
-        }
-        print(it)
-    }
+    wholeTrack
+        .filter { it !== SEPARATOR_EACH_LINE }
+        .map{ print(INFO_MESSAGE)
+            print(it) }
 }

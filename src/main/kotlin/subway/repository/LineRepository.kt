@@ -2,7 +2,7 @@ package subway.repository
 
 import subway.domain.Line
 
-const val SEPARATOR_LINE_AND_STATION = "---"
+const val SEPARATOR_LINE_WITH_STATION = "---"
 
 const val SEPARATOR_EACH_LINE = "\n"
 
@@ -21,8 +21,8 @@ object LineRepository {
         val wholeTrack = mutableListOf<String>()
         lines().forEach { it ->
             wholeTrack.add(it.name)
-            wholeTrack.add(SEPARATOR_LINE_AND_STATION)
-            val wholeTrackInLine = SectionRepository.wholeStationsInSection(it.name)
+            wholeTrack.add(SEPARATOR_LINE_WITH_STATION)
+            val wholeTrackInLine = SectionRepository.wholeStationsInSection(it.name, mutableListOf())
             wholeTrackInLine.forEach { wholeTrack.add(it) }
             wholeTrack.add(SEPARATOR_EACH_LINE)
         }

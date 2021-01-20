@@ -40,9 +40,8 @@ fun succeedDeleteLine() = println("지하철 노선이 삭제되었습니다.")
 
 fun showAllLines() {
     print("\n## 노선 목록")
-    LineRepository.lines().map {
-        infoMessage()
-        print(it.name)
-    }
+    LineRepository.lines()
+        .map { infoMessage()
+            print(it.name) }
     println()
 }
