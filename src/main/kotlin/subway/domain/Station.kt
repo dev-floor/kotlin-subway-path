@@ -1,7 +1,5 @@
 package subway.domain
 
-import subway.repository.SectionRepository
-import subway.repository.StationRepository
 import subway.repository.StationRepository.existStationByName
 
 class Station(val name: String) {
@@ -10,7 +8,7 @@ class Station(val name: String) {
         require(STATION_NAME_MAX_LENGTH <= name.length)
     }
 
-    val upwardTerminal = false
+    var upwardTerminal = false
     var downwardTerminal = false
 
     fun validStationToRegister() = !existStationByName(this.name)

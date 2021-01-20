@@ -16,6 +16,5 @@ object StationRepository {
     fun validStationToDelete(name: String) = !SectionRepository.existStationInLine(name)
 
     fun deleteStationByName(name: String) = stations
-            .removeIf { it.name == name && this.validStationToDelete(it.name) }
-
+        .removeIf { it.name == name && this.validStationToDelete(it.name) }
 }

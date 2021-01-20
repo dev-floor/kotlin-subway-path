@@ -24,4 +24,3 @@ fun deleteStation() {
     infoMessage()
     succeedDeleteStation()
 }
-

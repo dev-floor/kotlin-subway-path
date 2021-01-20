@@ -19,11 +19,11 @@ object LineRepository {
 
     fun wholeLineInformation(): List<String> {
         val wholeTrack = mutableListOf<String>()
-        lines().forEach{ it ->
+        lines().forEach { it ->
             wholeTrack.add(it.name)
             wholeTrack.add(SEPARATOR_LINE_AND_STATION)
             val wholeTrackInLine = SectionRepository.wholeStationsInSection(it.name)
-            wholeTrackInLine.forEach{ wholeTrack.add(it) }
+            wholeTrackInLine.forEach { wholeTrack.add(it) }
             wholeTrack.add(SEPARATOR_EACH_LINE)
         }
         return wholeTrack

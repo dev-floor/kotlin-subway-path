@@ -29,17 +29,10 @@ fun registerSection() {
     additionalSection(section)
     SectionRepository.addSection(section)
 
-    changeTerminalStation(section)
+    SectionRepository.changeTerminalStation(section)
 
     infoMessage()
     succeedRegisterStation()
-}
-
-fun changeTerminalStation(section: Section) {
-    if(section.upwardStation.downwardTerminal){
-        section.upwardStation.downwardTerminal = false
-        section.downwardStation.downwardTerminal = true
-    }
 }
 
 fun additionalSection(section: Section) {
