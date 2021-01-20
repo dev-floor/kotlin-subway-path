@@ -22,6 +22,7 @@ fun showAllStations() {
     print("\n## 역 목록")
     StationRepository.stations().map {
         infoMessage()
+
         print(it.name)
     }
     println()

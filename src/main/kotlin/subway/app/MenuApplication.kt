@@ -24,7 +24,7 @@ fun startApp() {
             MENU_ONE -> adminStation()
             MENU_TWO -> adminLine()
             MENU_THREE -> adminSection()
-            MENU_FOUR -> showWholeTrainRoute()
+            MENU_FOUR -> showWholeTrack()
             MENU_FIVE -> checkRoute()
         }
     }
@@ -63,10 +63,6 @@ fun adminSection() {
         MENU_ONE -> registerSection()
         MENU_TWO -> deleteSection()
     }
-}
-
-fun showWholeTrainRoute() {
-    TODO("Not yet implemented")
 }
 
 fun checkRoute() {
