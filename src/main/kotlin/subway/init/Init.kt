@@ -38,3 +38,8 @@ fun initSection() {
     SectionRepository.addSection(Section(Line("신분당선"), Station("강남역"), Station("양재역"), 8, 2))
     SectionRepository.addSection(Section(Line("신분당선"), Station("양재역"), Station("양재시민의숲역"), 3, 10))
 }
+
+fun initTerminal() {
+    SectionRepository.sections()
+        .map{ }
+}

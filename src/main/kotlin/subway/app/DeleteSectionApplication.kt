@@ -25,13 +25,14 @@ fun deleteSection() {
 fun checkTerminalStation(upwardStationName: String, downwardStationName: String) {
     val upwardStation = StationRepository.findStationByName(upwardStationName)
     val downwardStation = StationRepository.findStationByName(downwardStationName)
-
-    if(upwardStation.upwardTerminal){
-        upwardStation.changeTerminalStation()
-    }
+//
+//    if(upwardStation.upwardTerminal){
+//        upwardStation.changeTerminalStation()
+//    }
 
     if(downwardStation.downwardTerminal) {
-        downwardStation.changeTerminalStation()
+        downwardStation.downwardTerminal = false
+        upwardStation.downwardTerminal = true
     }
 }
 

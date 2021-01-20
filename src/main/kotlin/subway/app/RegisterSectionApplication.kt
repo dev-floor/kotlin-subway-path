@@ -26,36 +26,29 @@ fun registerSection() {
     require(LineRepository.existLineByName(lineName))
     require(section.validSectionToRegister())
 
+    additionalSection(section)
     SectionRepository.addSection(section)
 
-    checkAdditionalSection(section)
+    changeTerminalStation(section)
 
     infoMessage()
     succeedRegisterStation()
 }
 
-fun checkAdditionalSection(section: Section) {
-    // 상행역에 존재
-    if (section.downExist()) registerAdditionalDownSection(section)
-    // 하행역에 존재
-    if (section.upExist()) registerAdditionalUpSection(section)
+fun changeTerminalStation(section: Section) {
+    if(section.upwardStation.downwardTerminal){
+        section.upwardStation.downwardTerminal = false
+        section.downwardStation.downwardTerminal = true
+    }
 }
 
-fun registerAdditionalDownSection(section: Section) {
-    val downerStationName = SectionRepository.findDownwardNameByUpwardName(section.upwardStation.name)
-    val downerStation = StationRepository.findStationByName(downerStationName)
-    val additionalSection = Section(section.line, section.downwardStation, downerStation, DEFAULT_TIME, DEFAULT_DISTANCE)
+fun additionalSection(section: Section) {
+    if (section.downExist()) registerAdditionalSection(section)
+}
+
+fun registerAdditionalSection(section: Section) {
+    val downwardStationName = SectionRepository.findDownwardNameByUpwardName(section.upwardStation.name)
+    val downwardStation = StationRepository.findStationByName(downwardStationName)
+    val additionalSection = Section(section.line, section.downwardStation, downwardStation, DEFAULT_TIME, DEFAULT_DISTANCE)
     SectionRepository.addSection(additionalSection)
 }
-
-fun registerAdditionalUpSection(section: Section) {
-    val upperStationName = SectionRepository.findUpwardNameByDownwardName(section.downwardStation.name)
-    val upperStation = StationRepository.findStationByName(upperStationName)
-    val additionalSection = Section(section.line, upperStation, section.upwardStation, DEFAULT_TIME, DEFAULT_DISTANCE)
-    SectionRepository.addSection(additionalSection)
-}
-
-
-
-
-
