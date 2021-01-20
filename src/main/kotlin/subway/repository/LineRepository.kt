@@ -2,10 +2,6 @@ package subway.repository
 
 import subway.domain.Line
 
-const val SEPARATOR_LINE_AND_STATION = "---"
-
-const val SEPARATOR_EACH_LINE = "\n"
-
 object LineRepository {
     private val lines = mutableListOf<Line>()
 
@@ -16,16 +12,4 @@ object LineRepository {
     fun deleteLineByName(name: String) = lines.removeIf { it.name == name }
 
     fun existLineByName(name: String): Boolean = lines().any { it.name == name }
-
-    fun wholeLineInformation(): List<String> {
-        val wholeTrack = mutableListOf<String>()
-        lines().forEach{ it ->
-            wholeTrack.add(it.name)
-            wholeTrack.add(SEPARATOR_LINE_AND_STATION)
-            val wholeTrackInLine = SectionRepository.wholeStationsInSection(it.name)
-            wholeTrackInLine.forEach{ wholeTrack.add(it) }
-            wholeTrack.add(SEPARATOR_EACH_LINE)
-        }
-        return wholeTrack
-    }
 }
