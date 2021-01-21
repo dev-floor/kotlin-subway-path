@@ -6,7 +6,7 @@ class Section(val line: Line, val upwardStation: Station, val downwardStation: S
 
     fun downExist() = SectionRepository.existDownwardByName(line.name, downwardStation.name)
 
-    private fun upExist() = SectionRepository.existUpwardByName(line.name, upwardStation.name)
+    fun upExist() = SectionRepository.existUpwardByName(line.name, upwardStation.name)
 
     fun validSectionToRegister() = !(downExist() && upExist())
 }

@@ -27,6 +27,7 @@ fun registerSection() {
     require(section.validSectionToRegister())
 
     additionalSection(section)
+
     SectionRepository.addSection(section)
 
     SectionRepository.changeTerminalStation(section)
@@ -36,12 +37,13 @@ fun registerSection() {
 }
 
 fun additionalSection(section: Section) {
-    if (section.downExist()) registerAdditionalSection(section)
+    if (section.upExist()) registerAdditionalSection(section)
 }
 
 fun registerAdditionalSection(section: Section) {
     val downwardStationName = SectionRepository.findDownwardNameByUpwardName(section.upwardStation.name)
     val downwardStation = StationRepository.findStationByName(downwardStationName)
+    SectionRepository.deleteSection(section.line.name, section.upwardStation.name, downwardStationName)
     val additionalSection = Section(section.line, section.downwardStation, downwardStation, DEFAULT_TIME, DEFAULT_DISTANCE)
     SectionRepository.addSection(additionalSection)
 }

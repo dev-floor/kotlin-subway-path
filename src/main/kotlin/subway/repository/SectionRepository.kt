@@ -58,8 +58,8 @@ object SectionRepository {
 
     fun findDownwardNameByUpwardName(name: String): String = sections()
         .filter { it.upwardStation.name == name }
-        .map { it.downwardStation.name }
-        .toString()
+        .map { it.downwardStation.name }.first()
+//        .toString()
 
     fun existStationInLine(name: String) = sections()
         .any { it.downwardStation.name == name || it.upwardStation.name == name }
