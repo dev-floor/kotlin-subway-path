@@ -45,8 +45,6 @@ object SectionRepository {
                 && it.downwardStation.name == stationName
                 && it.downwardStation.downwardTerminal }
 
-//    fun firstLineInSection(name: String): Boolean = sections.none { it.line.name == name }
-
     fun existDownwardByName(lineName: String, stationName: String): Boolean = sections()
         .any { it.downwardStation.name == stationName && it.line.name == lineName }
 
@@ -59,7 +57,6 @@ object SectionRepository {
     fun findDownwardNameByUpwardName(name: String): String = sections()
         .filter { it.upwardStation.name == name }
         .map { it.downwardStation.name }.first()
-//        .toString()
 
     fun existStationInLine(name: String) = sections()
         .any { it.downwardStation.name == name || it.upwardStation.name == name }
@@ -80,7 +77,7 @@ object SectionRepository {
             wholeTrackInLine.add(section.upwardStation.name)
             wholeTrackInLine.add(distanceAndTime(section))
             if (!existUpwardByName(section.line.name, section.downwardStation.name)) break
-            section = findUpwardByName(section.line.name, section.downwardStation.name)
+            section = findSectionByUpwardName(section.line.name, section.downwardStation.name)
         }
         wholeTrackInLine.add(section.downwardStation.name)
         return wholeTrackInLine
@@ -89,6 +86,17 @@ object SectionRepository {
     private fun distanceAndTime(section: Section): String =
         section.distance.toString() + KILOMETER + SEPARATOR_DISTANCE_AND_TIME + section.time.toString() + MINUTE
 
-    private fun findUpwardByName(lineName: String, stationName: String): Section = sections()
+    fun findSectionByUpwardName(lineName: String, stationName: String): Section = sections()
         .first { it.line.name == lineName && it.upwardStation.name == stationName }
+
+    fun findSectionByDownwardName(lineName: String, stationName: String): Section = sections()
+            .first { it.line.name == lineName && it.downwardStation.name == stationName }
+
+    fun distanceByUpwardName(lineName: String, stationName: String) = sections()
+            .first{ it.line.name == lineName && it.upwardStation.name == stationName }
+            .distance
+
+    fun timeByUpwardName(lineName: String, stationName: String) = sections()
+            .first { it.line.name == lineName && it.upwardStation.name == stationName }
+            .time
 }

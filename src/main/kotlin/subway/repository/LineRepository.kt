@@ -28,4 +28,6 @@ object LineRepository {
         }
         return wholeTrack
     }
+
+    fun findLineByName(name: String) = lines().first { it.name == name }
 }

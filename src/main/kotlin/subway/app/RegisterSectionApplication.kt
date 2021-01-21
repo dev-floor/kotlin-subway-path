@@ -33,7 +33,7 @@ fun registerSection() {
     SectionRepository.changeTerminalStation(section)
 
     infoMessage()
-    succeedRegisterStation()
+    succeedRegisterSection()
 }
 
 fun additionalSection(section: Section) {

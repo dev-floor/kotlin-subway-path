@@ -14,3 +14,5 @@ fun getDownwardNameOfSectionToDelete(): String {
     println("\n## 삭제할 구간의 하행역을 입력하세요.")
     return readLine()!!
 }
+
+fun succeedDeleteSection() = println("구간이 삭제되었습니다.")
