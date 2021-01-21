@@ -12,7 +12,7 @@ object SectionRepository {
 
     private val sections = mutableListOf<Section>()
 
-    fun sections() = sections.toList()
+    private fun sections() = sections.toList()
 
     fun addSection(section: Section) {
         changeTerminalStation(section)
@@ -22,10 +22,11 @@ object SectionRepository {
     }
 
     private fun firstSection(section: Section) {
-        if (!existDownwardByName(section.line.name, section.downwardStation.name)
-            && !existUpwardByName(section.line.name, section.upwardStation.name)
-            && !existDownwardByName(section.line.name, section.upwardStation.name)
-            && !existUpwardByName(section.line.name, section.downwardStation.name)) {
+        if (!existDownwardByName(section.line.name, section.downwardStation.name) &&
+            !existUpwardByName(section.line.name, section.upwardStation.name) &&
+            !existDownwardByName(section.line.name, section.upwardStation.name) &&
+            !existUpwardByName(section.line.name, section.downwardStation.name)
+        ) {
             section.upwardStation.upwardTerminal = true
             section.downwardStation.downwardTerminal = true
         }
@@ -33,17 +34,21 @@ object SectionRepository {
 
     fun changeTerminalStation(section: Section) {
         if (downwardTerminal(section.line.name, section.upwardStation.name)) {
-            sections().filter { it.line.name == section.line.name
-                        && it.downwardStation.name == section.upwardStation.name }
+            sections().filter {
+                it.line.name == section.line.name &&
+                    it.downwardStation.name == section.upwardStation.name
+            }
                 .map { it.downwardStation.downwardTerminal = false }
             section.downwardStation.downwardTerminal = true
         }
     }
 
-    fun downwardTerminal(lineName: String, stationName: String): Boolean = sections()
-        .any { it.line.name == lineName
-                && it.downwardStation.name == stationName
-                && it.downwardStation.downwardTerminal }
+    private fun downwardTerminal(lineName: String, stationName: String): Boolean = sections()
+        .any {
+            it.line.name == lineName &&
+                it.downwardStation.name == stationName &&
+                it.downwardStation.downwardTerminal
+        }
 
     fun existDownwardByName(lineName: String, stationName: String): Boolean = sections()
         .any { it.downwardStation.name == stationName && it.line.name == lineName }
@@ -51,7 +56,7 @@ object SectionRepository {
     fun existUpwardByName(lineName: String, stationName: String): Boolean = sections()
         .any { it.upwardStation.name == stationName && it.line.name == lineName }
 
-    fun findUpwardTerminalSectionByName(lineName: String): Section = sections()
+    private fun findUpwardTerminalSection(lineName: String): Section = sections()
         .first { it.line.name == lineName && it.upwardStation.upwardTerminal }
 
     fun findDownwardNameByUpwardName(name: String): String = sections()
@@ -62,9 +67,11 @@ object SectionRepository {
         .any { it.downwardStation.name == name || it.upwardStation.name == name }
 
     fun deleteSection(lineName: String, upwardName: String, downwardName: String) = sections
-        .removeIf { it.line.name == lineName
-                    && it.upwardStation.name == upwardName
-                    && it.downwardStation.name == downwardName }
+        .removeIf {
+            it.line.name == lineName &&
+                it.upwardStation.name == upwardName &&
+                it.downwardStation.name == downwardName
+        }
 
     fun stationCountInSection(name: String) = sections().count { it.line.name == name }
 
@@ -72,7 +79,7 @@ object SectionRepository {
         .any { it.downwardStation.name == downwardName && it.upwardStation.name == upwardName }
 
     fun wholeStationsInSection(name: String, wholeTrackInLine: MutableList<String>): List<String> {
-        var section = findUpwardTerminalSectionByName(name)
+        var section = findUpwardTerminalSection(name)
         while (true) {
             wholeTrackInLine.add(section.upwardStation.name)
             wholeTrackInLine.add(distanceAndTime(section))
@@ -86,17 +93,17 @@ object SectionRepository {
     private fun distanceAndTime(section: Section): String =
         section.distance.toString() + KILOMETER + SEPARATOR_DISTANCE_AND_TIME + section.time.toString() + MINUTE
 
-    fun findSectionByUpwardName(lineName: String, stationName: String): Section = sections()
+    private fun findSectionByUpwardName(lineName: String, stationName: String): Section = sections()
         .first { it.line.name == lineName && it.upwardStation.name == stationName }
 
     fun findSectionByDownwardName(lineName: String, stationName: String): Section = sections()
-            .first { it.line.name == lineName && it.downwardStation.name == stationName }
+        .first { it.line.name == lineName && it.downwardStation.name == stationName }
 
     fun distanceByUpwardName(lineName: String, stationName: String) = sections()
-            .first{ it.line.name == lineName && it.upwardStation.name == stationName }
-            .distance
+        .first { it.line.name == lineName && it.upwardStation.name == stationName }
+        .distance
 
     fun timeByUpwardName(lineName: String, stationName: String) = sections()
-            .first { it.line.name == lineName && it.upwardStation.name == stationName }
-            .time
+        .first { it.line.name == lineName && it.upwardStation.name == stationName }
+        .time
 }

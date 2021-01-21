@@ -2,7 +2,11 @@ package subway.app
 
 import subway.domain.Station
 import subway.repository.StationRepository
-import subway.view.*
+import subway.view.getStationNameToDelete
+import subway.view.getStationNameToRegister
+import subway.view.infoMessage
+import subway.view.succeedDeleteStation
+import subway.view.succeedRegisterStation
 
 fun registerStation() {
     val name = getStationNameToRegister()

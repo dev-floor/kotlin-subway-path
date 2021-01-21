@@ -6,7 +6,13 @@ import subway.domain.Station
 import subway.repository.LineRepository
 import subway.repository.SectionRepository
 import subway.repository.StationRepository
-import subway.view.*
+import subway.view.getDownwardNameOfSectionToRegister
+import subway.view.getLineNameOfSectionToRegister
+import subway.view.getSectionDistance
+import subway.view.getSectionTime
+import subway.view.getUpwardNameOfSectionToRegister
+import subway.view.infoMessage
+import subway.view.succeedRegisterSection
 
 const val DEFAULT_TIME = 3
 const val DEFAULT_DISTANCE = 2

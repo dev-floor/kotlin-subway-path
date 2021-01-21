@@ -7,7 +7,11 @@ import subway.repository.SectionRepository.distanceByUpwardName
 import subway.repository.SectionRepository.existUpwardByName
 import subway.repository.SectionRepository.timeByUpwardName
 import subway.repository.StationRepository
-import subway.view.*
+import subway.view.getDownwardNameOfSectionToDelete
+import subway.view.getLineNameOfSectionToDelete
+import subway.view.getUpwardNameOfSectionToDelete
+import subway.view.infoMessage
+import subway.view.succeedDeleteSection
 
 const val MIN_STATION_COUNT_IN_SECTION = 1
 
@@ -30,7 +34,7 @@ fun deleteSection() {
 }
 
 fun biConnectedSection(upwardStationName: String, downwardStationName: String, lineName: String) {
-    if(existUpwardByName(lineName, downwardStationName)){
+    if (existUpwardByName(lineName, downwardStationName)) {
         val newLine = LineRepository.findLineByName(lineName)
         val newUpwardStation = StationRepository.findStationByName(upwardStationName)
         val newDownwardStationName = SectionRepository.findDownwardNameByUpwardName(downwardStationName)
@@ -52,8 +56,8 @@ fun checkTerminalStation(upwardStationName: String, downwardStationName: String,
     }
 }
 
-fun getDistanceSum(upwardStationName: String, downwardStationName: String, lineName: String)
-    = distanceByUpwardName(lineName, upwardStationName) + distanceByUpwardName(lineName, downwardStationName)
+fun getDistanceSum(upwardStationName: String, downwardStationName: String, lineName: String) =
+    distanceByUpwardName(lineName, upwardStationName) + distanceByUpwardName(lineName, downwardStationName)
 
-fun getTimeSum(upwardStationName: String, downwardStationName: String, lineName: String): Int
-        = timeByUpwardName(lineName, upwardStationName) + timeByUpwardName(lineName, downwardStationName)
+fun getTimeSum(upwardStationName: String, downwardStationName: String, lineName: String): Int =
+    timeByUpwardName(lineName, upwardStationName) + timeByUpwardName(lineName, downwardStationName)

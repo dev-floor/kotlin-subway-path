@@ -1,6 +1,13 @@
 package subway.app
 
-import subway.view.*
+import subway.view.selectNumber
+import subway.view.showAdminLine
+import subway.view.showAdminSection
+import subway.view.showAdminStation
+import subway.view.showAllLines
+import subway.view.showAllStations
+import subway.view.showMainPage
+import subway.view.showWholeTrack
 
 const val MENU_ONE = 1
 const val MENU_TWO = 2

@@ -6,7 +6,16 @@ import subway.domain.Station
 import subway.repository.LineRepository
 import subway.repository.SectionRepository
 import subway.repository.StationRepository
-import subway.view.*
+import subway.view.errorMessage
+import subway.view.getDistance
+import subway.view.getDownwardStationName
+import subway.view.getLineNameToDelete
+import subway.view.getLineNameToRegister
+import subway.view.getTime
+import subway.view.getUpwardStationName
+import subway.view.infoMessage
+import subway.view.succeedDeleteLine
+import subway.view.succeedRegisterLine
 
 fun registerLine() {
     val lineName = getLineNameToRegister()

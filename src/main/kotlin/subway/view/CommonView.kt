@@ -21,8 +21,8 @@ fun showWholeTrack() {
     val wholeTrack = LineRepository.wholeLineInformation()
     print("\n ## 지하철 노선도")
     wholeTrack
-        .forEach{
-            if(it !== SEPARATOR_EACH_LINE)
+        .forEach {
+            if (it !== SEPARATOR_EACH_LINE)
                 print(INFO_MESSAGE)
             print(it)
         }
