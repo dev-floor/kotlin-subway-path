@@ -7,14 +7,11 @@ object StationRepository {
 
     fun stations() = stations.toList()
 
-    fun addStation(station: Station) = stations.add(station)
+    fun add(station: Station) = stations.add(station)
 
-    fun findStationByName(name: String): Station = stations().first { it.name == name }
+    fun findByName(name: String): Station = stations().first { it.name == name }
 
-    fun existStationByName(name: String): Boolean = stations().any { it.name == name }
+    fun existsByName(name: String): Boolean = stations().any { it.name == name }
 
-    fun validStationToDelete(name: String) = !SectionRepository.existStationInLine(name)
-
-    fun deleteStationByName(name: String) = stations
-        .removeIf { it.name == name && this.validStationToDelete(it.name) }
+    fun deleteByName(name: String) = stations.removeIf { it.name == name }
 }

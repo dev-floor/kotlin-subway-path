@@ -14,19 +14,19 @@ fun init() {
 }
 
 fun initStation() {
-    StationRepository.addStation(Station("교대역"))
-    StationRepository.addStation(Station("강남역"))
-    StationRepository.addStation(Station("역삼역"))
-    StationRepository.addStation(Station("남부터미널역"))
-    StationRepository.addStation(Station("양재역"))
-    StationRepository.addStation(Station("양재시민의숲역"))
-    StationRepository.addStation(Station("매봉역"))
+    StationRepository.add(Station("교대역"))
+    StationRepository.add(Station("강남역"))
+    StationRepository.add(Station("역삼역"))
+    StationRepository.add(Station("남부터미널역"))
+    StationRepository.add(Station("양재역"))
+    StationRepository.add(Station("양재시민의숲역"))
+    StationRepository.add(Station("매봉역"))
 }
 
 fun initLine() {
-    LineRepository.addLine(Line("2호선"))
-    LineRepository.addLine(Line("3호선"))
-    LineRepository.addLine(Line("신분당선"))
+    LineRepository.add(Line("2호선"))
+    LineRepository.add(Line("3호선"))
+    LineRepository.add(Line("신분당선"))
 }
 
 fun initSection() {

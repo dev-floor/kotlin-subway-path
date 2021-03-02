@@ -18,7 +18,7 @@ fun selectNumber(): String {
 }
 
 fun showWholeTrack() {
-    val wholeTrack = LineRepository.wholeLineInformation()
+    val wholeTrack = LineRepository.allLinesInfo()
     print("\n ## 지하철 노선도")
     wholeTrack
         .forEach {

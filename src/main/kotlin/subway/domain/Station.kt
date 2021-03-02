@@ -1,6 +1,6 @@
 package subway.domain
 
-import subway.repository.StationRepository.existStationByName
+import subway.repository.StationRepository.existsByName
 
 class Station(val name: String) {
 
@@ -11,7 +11,7 @@ class Station(val name: String) {
     var upwardTerminal = false
     var downwardTerminal = false
 
-    fun validStationToRegister() = !existStationByName(this.name)
+    fun validStationToRegister() = !existsByName(this.name)
 
     companion object {
         const val STATION_NAME_MAX_LENGTH = 2

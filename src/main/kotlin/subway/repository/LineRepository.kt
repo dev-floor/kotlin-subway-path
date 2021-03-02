@@ -11,23 +11,23 @@ object LineRepository {
 
     fun lines() = lines.toList()
 
-    fun addLine(line: Line) = lines.add(line)
+    fun add(line: Line) = lines.add(line)
 
-    fun deleteLineByName(name: String) = lines.removeIf { it.name == name }
+    fun deleteByName(name: String) = lines.removeIf { it.name == name }
 
-    fun existLineByName(name: String): Boolean = lines().any { it.name == name }
+    fun existsByName(name: String): Boolean = lines().any { it.name == name }
 
-    fun wholeLineInformation(): List<String> {
-        val wholeTrack = mutableListOf<String>()
+    fun findByName(name: String) = lines().first { it.name == name }
+
+    fun allLinesInfo(): List<String> {
+        val printMessage = mutableListOf<String>()
         lines().forEach { it ->
-            wholeTrack.add(it.name)
-            wholeTrack.add(SEPARATOR_LINE_WITH_STATION)
-            val wholeTrackInLine = SectionRepository.wholeStationsInSection(it.name, mutableListOf())
-            wholeTrackInLine.forEach { wholeTrack.add(it) }
-            wholeTrack.add(SEPARATOR_EACH_LINE)
+            printMessage.add(it.name)
+            printMessage.add(SEPARATOR_LINE_WITH_STATION)
+            SectionRepository.allSectionsInLine(it.name, mutableListOf())
+                .forEach { printMessage.add(it) }
+            printMessage.add(SEPARATOR_EACH_LINE)
         }
-        return wholeTrack
+        return printMessage
     }
-
-    fun findLineByName(name: String) = lines().first { it.name == name }
 }

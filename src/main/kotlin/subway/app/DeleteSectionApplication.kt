@@ -35,10 +35,10 @@ fun deleteSection() {
 
 fun biConnectedSection(upwardStationName: String, downwardStationName: String, lineName: String) {
     if (existUpwardByName(lineName, downwardStationName)) {
-        val newLine = LineRepository.findLineByName(lineName)
-        val newUpwardStation = StationRepository.findStationByName(upwardStationName)
+        val newLine = LineRepository.findByName(lineName)
+        val newUpwardStation = StationRepository.findByName(upwardStationName)
         val newDownwardStationName = SectionRepository.findDownwardNameByUpwardName(downwardStationName)
-        val newDownwardStation = StationRepository.findStationByName(newDownwardStationName)
+        val newDownwardStation = StationRepository.findByName(newDownwardStationName)
         val distanceSum = getDistanceSum(upwardStationName, downwardStationName, lineName)
         val timeSum = getTimeSum(upwardStationName, downwardStationName, lineName)
         val section = Section(newLine, newUpwardStation, newDownwardStation, timeSum, distanceSum)
@@ -47,7 +47,7 @@ fun biConnectedSection(upwardStationName: String, downwardStationName: String, l
 }
 
 fun checkTerminalStation(upwardStationName: String, downwardStationName: String, lineName: String) {
-    val downwardStation = StationRepository.findStationByName(downwardStationName)
+    val downwardStation = StationRepository.findByName(downwardStationName)
     val upwardSection = SectionRepository.findSectionByDownwardName(lineName, upwardStationName)
 
     if (downwardStation.downwardTerminal) {

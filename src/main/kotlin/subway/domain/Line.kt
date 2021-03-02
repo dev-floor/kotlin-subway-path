@@ -1,6 +1,6 @@
 package subway.domain
 
-import subway.repository.LineRepository.existLineByName
+import subway.repository.LineRepository.existsByName
 
 class Line(val name: String) {
 
@@ -8,7 +8,7 @@ class Line(val name: String) {
         require(LINE_NAME_MAX_LENGTH <= name.length)
     }
 
-    fun validLineToRegister() = !existLineByName(this.name)
+    fun validLineToRegister() = !existsByName(this.name)
 
     companion object {
         const val LINE_NAME_MAX_LENGTH = 2

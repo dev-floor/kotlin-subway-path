@@ -28,10 +28,10 @@ fun registerLine() {
     val section = Section(line, Station(upwardStationName), Station(downwardStationName), distance, time)
 
     require(line.validLineToRegister()) { errorMessage() }
-    require(StationRepository.existStationByName(upwardStationName)) // { errorMessage() }
-    require(StationRepository.existStationByName(downwardStationName)) // { errorMessage() }
+    require(StationRepository.existsByName(upwardStationName)) // { errorMessage() }
+    require(StationRepository.existsByName(downwardStationName)) // { errorMessage() }
 
-    LineRepository.addLine(line)
+    LineRepository.add(line)
     SectionRepository.addSection(section)
 
     infoMessage()
@@ -41,7 +41,7 @@ fun registerLine() {
 fun deleteLine() {
     val name = getLineNameToDelete()
 
-    LineRepository.deleteLineByName(name)
+    LineRepository.deleteByName(name)
 
     infoMessage()
     succeedDeleteLine()

@@ -12,8 +12,8 @@ import subway.view.showShortestPathResult
 fun shortestPath() {
     val graph = WeightedMultigraph<String, DefaultWeightedEdge>(DefaultWeightedEdge::class.java)
 
-    val departure = StationRepository.findStationByName(getDeparture())
-    val destination = StationRepository.findStationByName(getDestination())
+    val departure = StationRepository.findByName(getDeparture())
+    val destination = StationRepository.findByName(getDestination())
 
     val stations = StationRepository.stations()
     val sections = SectionRepository.sections()

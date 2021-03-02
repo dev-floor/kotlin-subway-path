@@ -1,6 +1,7 @@
 package subway.repository
 
 import subway.domain.Section
+import subway.domain.Station
 
 const val KILOMETER = "km"
 
@@ -50,6 +51,13 @@ object SectionRepository {
                 it.downwardStation.downwardTerminal
         }
 
+    fun existsByDownward(lineName: String, station: Station): Boolean =
+        sections().any { it.downwardStation.name == station.name && it.line.name == lineName }
+
+    fun existsByUpward(lineName: String, station: Station): Boolean =
+        sections().any { it.upwardStation.name == station.name && it.line.name == lineName }
+
+
     fun existDownwardByName(lineName: String, stationName: String): Boolean = sections()
         .any { it.downwardStation.name == stationName && it.line.name == lineName }
 
@@ -63,7 +71,7 @@ object SectionRepository {
         .filter { it.upwardStation.name == name }
         .map { it.downwardStation.name }.first()
 
-    fun existStationInLine(name: String) = sections()
+    fun existStationInSection(name: String) = sections()
         .any { it.downwardStation.name == name || it.upwardStation.name == name }
 
     fun deleteSection(lineName: String, upwardName: String, downwardName: String) = sections
@@ -78,23 +86,23 @@ object SectionRepository {
     fun continuousStation(upwardName: String, downwardName: String) = sections()
         .any { it.downwardStation.name == downwardName && it.upwardStation.name == upwardName }
 
-    fun wholeStationsInSection(name: String, wholeTrackInLine: MutableList<String>): List<String> {
+    fun allSectionsInLine(name: String, printMessage: MutableList<String>): List<String> {
         var section = findUpwardTerminalSection(name)
         while (true) {
-            wholeTrackInLine.add(section.upwardStation.name)
-            wholeTrackInLine.add(distanceAndTime(section))
+            printMessage.add(section.upwardStation.name)
+            printMessage.add(distanceAndTime(section))
             if (!existUpwardByName(section.line.name, section.downwardStation.name)) break
-            section = findSectionByUpwardName(section.line.name, section.downwardStation.name)
+            section = findByUpwardStation(section.line.name, section.downwardStation)
         }
-        wholeTrackInLine.add(section.downwardStation.name)
-        return wholeTrackInLine
+        printMessage.add(section.downwardStation.name)
+        return printMessage
     }
 
     private fun distanceAndTime(section: Section): String =
         section.distance.toString() + KILOMETER + SEPARATOR_DISTANCE_AND_TIME + section.time.toString() + MINUTE
 
-    private fun findSectionByUpwardName(lineName: String, stationName: String): Section = sections()
-        .first { it.line.name == lineName && it.upwardStation.name == stationName }
+    private fun findByUpwardStation(lineName: String, station: Station): Section = sections()
+        .first { it.line.name == lineName && it.upwardStation.name == station.name }
 
     fun findSectionByDownwardName(lineName: String, stationName: String): Section = sections()
         .first { it.line.name == lineName && it.downwardStation.name == stationName }
