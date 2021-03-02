@@ -12,7 +12,7 @@ object SectionRepository {
 
     private val sections = mutableListOf<Section>()
 
-    private fun sections() = sections.toList()
+    fun sections() = sections.toList()
 
     fun addSection(section: Section) {
         changeTerminalStation(section)
