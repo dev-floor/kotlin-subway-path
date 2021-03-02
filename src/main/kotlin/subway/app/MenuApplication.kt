@@ -6,6 +6,7 @@ import subway.view.showAdminSection
 import subway.view.showAdminStation
 import subway.view.showAllLines
 import subway.view.showAllStations
+import subway.view.showCheckPath
 import subway.view.showMainPage
 import subway.view.showWholeTrack
 
@@ -32,7 +33,7 @@ fun startApp() {
             MENU_TWO -> adminLine()
             MENU_THREE -> adminSection()
             MENU_FOUR -> showWholeTrack()
-            MENU_FIVE -> checkRoute()
+            MENU_FIVE -> checkPath()
         }
     }
 }
@@ -73,6 +74,13 @@ fun adminSection() {
     }
 }
 
-fun checkRoute() {
-    TODO("Not yet implemented")
+fun checkPath() {
+    showCheckPath()
+    select = selectNumber()
+    if (select == BACK) return
+
+    when (select.toInt()) {
+        MENU_ONE -> shortestPath()
+        MENU_TWO -> minimumTime()
+    }
 }
