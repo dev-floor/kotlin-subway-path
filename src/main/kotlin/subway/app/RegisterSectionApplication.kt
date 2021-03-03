@@ -37,17 +37,17 @@ class RegisterSection(
             changeTerminalStation(section)
     }
 
-    private fun registerAdditionalSection(section: Section) {
-        val upwardSection = repository.findByUpward(section.upwardStation)
-        repository.delete(section.line, section.upwardStation, upwardSection.downwardStation)
-        repository.add(
-            Section(
-                line = section.line,
-                upwardStation = section.downwardStation,
-                downwardStation = upwardSection.downwardStation
+    private fun registerAdditionalSection(section: Section) =
+        repository.findByUpward(section.line, section.upwardStation).let {
+            repository.delete(section.line, section.upwardStation, it.downwardStation)
+            repository.add(
+                Section(
+                    line = section.line,
+                    upwardStation = section.downwardStation,
+                    downwardStation = it.downwardStation
+                )
             )
-        )
-    }
+        }
 
     private fun changeTerminalStation(section: Section) =
         repository.findAll()

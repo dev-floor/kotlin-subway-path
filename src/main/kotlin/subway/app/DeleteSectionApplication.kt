@@ -1,12 +1,11 @@
 package subway.app
 
+import subway.domain.Line
 import subway.domain.Section
+import subway.domain.Station
 import subway.repository.LineRepository
 import subway.repository.SectionRepository
-import subway.repository.SectionRepository.distanceByUpwardName
-import subway.repository.SectionRepository.existUpwardByName
-import subway.repository.SectionRepository.timeByUpwardName
-import subway.repository.StationRepository
+import subway.repository.SectionRepository.existsByUpward
 import subway.view.getDownwardNameOfSectionToDelete
 import subway.view.getLineNameOfSectionToDelete
 import subway.view.getUpwardNameOfSectionToDelete
@@ -16,48 +15,36 @@ import subway.view.succeedDeleteSection
 const val MIN_STATION_COUNT_IN_SECTION = 1
 
 fun deleteSection() {
-    val lineName = getLineNameOfSectionToDelete()
-    val upwardStationName = getUpwardNameOfSectionToDelete()
-    val downwardStationName = getDownwardNameOfSectionToDelete()
+    val line = Line(getLineNameOfSectionToDelete())
+    val upwardStation = Station(getUpwardNameOfSectionToDelete())
+    val downwardStation = Station(getDownwardNameOfSectionToDelete())
 
-    require(SectionRepository.stationCountInSection(lineName) > MIN_STATION_COUNT_IN_SECTION)
-    require(SectionRepository.continuousStation(upwardStationName, downwardStationName))
+    require(SectionRepository.findAll().count { it.line.name == line.name } > MIN_STATION_COUNT_IN_SECTION)
+    require(SectionRepository.continuousStation(upwardStation.name, downwardStation.name))
 
-    biConnectedSection(upwardStationName, downwardStationName, lineName)
+    if (existsByUpward(line, downwardStation))
+        biConnectedSection(upwardStation, downwardStation, line)
 
-    checkTerminalStation(upwardStationName, downwardStationName, lineName)
+    if(downwardStation.isDownwardTerminal) {
+        downwardStation.isDownwardTerminal = false
+        SectionRepository.findByDownward(line, upwardStation)
+            .downwardStation.isDownwardTerminal = true
+    }
 
-    SectionRepository.deleteSection(lineName, upwardStationName, downwardStationName)
+    SectionRepository.delete(line, upwardStation, downwardStation)
 
     infoMessage()
     succeedDeleteSection()
 }
 
-fun biConnectedSection(upwardStationName: String, downwardStationName: String, lineName: String) {
-    if (existUpwardByName(lineName, downwardStationName)) {
-        val newLine = LineRepository.findByName(lineName)
-        val newUpwardStation = StationRepository.findByName(upwardStationName)
-        val newDownwardStationName = SectionRepository.findDownwardNameByUpwardName(downwardStationName)
-        val newDownwardStation = StationRepository.findByName(newDownwardStationName)
-        val distanceSum = getDistanceSum(upwardStationName, downwardStationName, lineName)
-        val timeSum = getTimeSum(upwardStationName, downwardStationName, lineName)
-        val section = Section(newLine, newUpwardStation, newDownwardStation, timeSum, distanceSum)
-        SectionRepository.add(section)
-    }
+fun biConnectedSection(upwardStation: Station, downwardStation: Station, line: Line) {
+    val downwardSection = SectionRepository.findByUpward(line, downwardStation)
+    val upwardSection = SectionRepository.findByDownward(line, downwardStation)
+    SectionRepository.add(Section(
+        line = LineRepository.findByName(line.name),
+        upwardStation = upwardStation,
+        downwardStation = SectionRepository.findByUpward(line, upwardStation).downwardStation,
+        distance = downwardSection.distance!! + upwardSection.distance!!,
+        time = downwardSection.time!! + upwardSection.time!!
+    ))
 }
-
-fun checkTerminalStation(upwardStationName: String, downwardStationName: String, lineName: String) {
-    val downwardStation = StationRepository.findByName(downwardStationName)
-    val upwardSection = SectionRepository.findSectionByDownwardName(lineName, upwardStationName)
-
-    if (downwardStation.isDownwardTerminal) {
-        downwardStation.isDownwardTerminal = false
-        upwardSection.downwardStation.isDownwardTerminal = true
-    }
-}
-
-fun getDistanceSum(upwardStationName: String, downwardStationName: String, lineName: String) =
-    distanceByUpwardName(lineName, upwardStationName) + distanceByUpwardName(lineName, downwardStationName)
-
-fun getTimeSum(upwardStationName: String, downwardStationName: String, lineName: String): Int =
-    timeByUpwardName(lineName, upwardStationName) + timeByUpwardName(lineName, downwardStationName)

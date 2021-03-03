@@ -35,7 +35,11 @@ object SectionRepository {
 
     fun findAll() = sections()
 
-    fun findByUpward(station: Station) = sections().first { it.upwardStation.name == station.name }
+    fun findByUpward(line: Line, station: Station) =
+        sections().first { it.upwardStation.name == station.name && it.line.name == line.name  }
+
+    fun findByDownward(line: Line, station: Station) =
+        sections().first { it.downwardStation.name == station.name && it.line.name == line.name  }
 
     fun existsByDownward(line: Line, station: Station): Boolean =
         sections().any { it.downwardStation.name == station.name && it.line.name == line.name }
@@ -52,9 +56,6 @@ object SectionRepository {
     private fun findUpwardTerminalSection(lineName: String): Section = sections()
         .first { it.line.name == lineName && it.upwardStation.isUpwardTerminal }
 
-    fun findDownwardNameByUpwardName(name: String): String = sections()
-        .filter { it.upwardStation.name == name }
-        .map { it.downwardStation.name }.first()
 
     fun existStationInSection(name: String) = sections()
         .any { it.downwardStation.name == name || it.upwardStation.name == name }
@@ -65,15 +66,6 @@ object SectionRepository {
                 it.upwardStation.name == upward.name &&
                 it.downwardStation.name == downward.name
         }
-
-    fun deleteSection(lineName: String, upwardName: String, downwardName: String) = sections
-        .removeIf {
-            it.line.name == lineName &&
-                it.upwardStation.name == upwardName &&
-                it.downwardStation.name == downwardName
-        }
-
-    fun stationCountInSection(name: String) = sections().count { it.line.name == name }
 
     fun continuousStation(upwardName: String, downwardName: String) = sections()
         .any { it.downwardStation.name == downwardName && it.upwardStation.name == upwardName }
@@ -96,14 +88,4 @@ object SectionRepository {
     private fun findByUpwardStation(lineName: String, station: Station): Section = sections()
         .first { it.line.name == lineName && it.upwardStation.name == station.name }
 
-    fun findSectionByDownwardName(lineName: String, stationName: String): Section = sections()
-        .first { it.line.name == lineName && it.downwardStation.name == stationName }
-
-    fun distanceByUpwardName(lineName: String, stationName: String) = sections()
-        .first { it.line.name == lineName && it.upwardStation.name == stationName }
-        .distance
-
-    fun timeByUpwardName(lineName: String, stationName: String) = sections()
-        .first { it.line.name == lineName && it.upwardStation.name == stationName }
-        .time
 }
