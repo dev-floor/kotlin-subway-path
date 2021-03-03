@@ -1,25 +1,46 @@
 package subway.app
 
 import subway.domain.Section
+import subway.repository.LineRepository
 import subway.repository.SectionRepository
+import subway.repository.StationRepository
 
-class RegisterSection(val section: Section) {
+class RegisterSection(
+    val section: Section,
+    val repository: SectionRepository = SectionRepository
+) {
+    init {
+        require(StationRepository.existsByName(section.upwardStation.name))
+        require(StationRepository.existsByName(section.downwardStation.name))
+        require(LineRepository.existsByName(section.line.name))
+        require(
+            SectionRepository.existsByUpward(section.line, section.upwardStation) &&
+                    SectionRepository.existsByDownward(section.line, section.downwardStation)
+        )
+    }
+
     fun register() {
         // Additional section
-        if (SectionRepository.existsByUpward(section.line, section.upwardStation))
+        if (repository.existsByUpward(section.line, section.upwardStation))
             registerAdditionalSection(section)
 
-        SectionRepository.add(section)
+        repository.add(section)
 
         // terminal change
-        if (isDownwardTerminal(section.line.name, section.upwardStation.name))
+        if (repository.findAll()
+            .any {
+                it.line.name == section.line.name &&
+                    it.downwardStation.name == section.upwardStation.name &&
+                    it.downwardStation.isDownwardTerminal
+            }
+        )
             changeTerminalStation(section)
     }
 
     private fun registerAdditionalSection(section: Section) {
-        val upwardSection = SectionRepository.findByUpward(section.upwardStation)
-        SectionRepository.delete(section.line, section.upwardStation, upwardSection.downwardStation)
-        SectionRepository.add(
+        val upwardSection = repository.findByUpward(section.upwardStation)
+        repository.delete(section.line, section.upwardStation, upwardSection.downwardStation)
+        repository.add(
             Section(
                 line = section.line,
                 upwardStation = section.downwardStation,
@@ -29,19 +50,13 @@ class RegisterSection(val section: Section) {
     }
 
     private fun changeTerminalStation(section: Section) =
-        SectionRepository.findAll().filter {
-            it.line.name == section.line.name &&
-                it.downwardStation.name == section.upwardStation.name
-        }
+        repository.findAll()
+            .filter {
+                it.line.name == section.line.name &&
+                    it.downwardStation.name == section.upwardStation.name
+            }
             .map {
                 it.downwardStation.isDownwardTerminal = false
                 section.downwardStation.isDownwardTerminal = true
             }
-
-    private fun isDownwardTerminal(lineName: String, stationName: String): Boolean =
-        SectionRepository.findAll().any {
-            it.line.name == lineName &&
-                it.downwardStation.name == stationName &&
-                it.downwardStation.isDownwardTerminal
-        }
 }
