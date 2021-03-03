@@ -14,42 +14,55 @@ import subway.view.getUpwardNameOfSectionToRegister
 import subway.view.infoMessage
 import subway.view.succeedRegisterSection
 
-const val DEFAULT_TIME = 3
-const val DEFAULT_DISTANCE = 2
-
 fun registerSection() {
-    val lineName = getLineNameOfSectionToRegister()
-    val line = Line(lineName)
-
+    val line = Line(getLineNameOfSectionToRegister())
     val upwardStationName = getUpwardNameOfSectionToRegister()
     val downwardStationName = getDownwardNameOfSectionToRegister()
     val distance = getSectionDistance()
     val time = getSectionTime()
+
     val section = Section(line, Station(upwardStationName), Station(downwardStationName), distance, time)
 
     require(StationRepository.existsByName(upwardStationName))
     require(StationRepository.existsByName(downwardStationName))
-    require(LineRepository.existsByName(lineName))
+    require(LineRepository.existsByName(line.name))
     require(section.validSectionToRegister())
 
-    additionalSection(section)
+    // Additional section
+    if(SectionRepository.existsByUpward(line, section.upwardStation))
+        registerAdditionalSection(section)
 
-    SectionRepository.addSection(section)
+    SectionRepository.add(section)
 
-    SectionRepository.changeTerminalStation(section)
+    // terminal change
+    if (isDownwardTerminal(section.line.name, section.upwardStation.name))
+        changeTerminalStation(section)
 
     infoMessage()
     succeedRegisterSection()
 }
 
-fun additionalSection(section: Section) {
-    if (section.upExist()) registerAdditionalSection(section)
+fun registerAdditionalSection(section: Section) {
+    val upwardSection = SectionRepository.findByUpward(section.upwardStation)
+    SectionRepository.delete(section.line, section.upwardStation, upwardSection.downwardStation)
+    SectionRepository.add(Section(
+        line = section.line,
+        upwardStation = section.downwardStation,
+        downwardStation = upwardSection.downwardStation))
 }
 
-fun registerAdditionalSection(section: Section) {
-    val downwardStationName = SectionRepository.findDownwardNameByUpwardName(section.upwardStation.name)
-    val downwardStation = StationRepository.findByName(downwardStationName)
-    SectionRepository.deleteSection(section.line.name, section.upwardStation.name, downwardStationName)
-    val additionalSection = Section(section.line, section.downwardStation, downwardStation, DEFAULT_TIME, DEFAULT_DISTANCE)
-    SectionRepository.addSection(additionalSection)
+fun changeTerminalStation(section: Section) {
+    SectionRepository.sections().filter {
+        it.line.name == section.line.name &&
+                it.downwardStation.name == section.upwardStation.name
+    }
+        .map { it.downwardStation.isDownwardTerminal = false }
+    section.downwardStation.isDownwardTerminal = true
 }
+
+fun isDownwardTerminal(lineName: String, stationName: String): Boolean =
+    SectionRepository.findAll().any {
+        it.line.name == lineName
+                && it.downwardStation.name == stationName
+                && it.downwardStation.isDownwardTerminal
+    }

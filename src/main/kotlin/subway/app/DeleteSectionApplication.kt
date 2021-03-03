@@ -42,7 +42,7 @@ fun biConnectedSection(upwardStationName: String, downwardStationName: String, l
         val distanceSum = getDistanceSum(upwardStationName, downwardStationName, lineName)
         val timeSum = getTimeSum(upwardStationName, downwardStationName, lineName)
         val section = Section(newLine, newUpwardStation, newDownwardStation, timeSum, distanceSum)
-        SectionRepository.addSection(section)
+        SectionRepository.add(section)
     }
 }
 

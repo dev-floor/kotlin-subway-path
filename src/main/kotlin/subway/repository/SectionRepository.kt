@@ -1,5 +1,6 @@
 package subway.repository
 
+import subway.domain.Line
 import subway.domain.Section
 import subway.domain.Station
 
@@ -15,8 +16,7 @@ object SectionRepository {
 
     fun sections() = sections.toList()
 
-    fun addSection(section: Section) {
-        changeTerminalStation(section)
+    fun add(section: Section) {
         firstSection(section)
 
         sections.add(section)
@@ -33,30 +33,15 @@ object SectionRepository {
         }
     }
 
-    fun changeTerminalStation(section: Section) {
+    fun findAll() = sections()
 
-        if (isDownwardTerminal(section.line.name, section.upwardStation.name)) {
-            sections().filter {
-                it.line.name == section.line.name &&
-                    it.downwardStation.name == section.upwardStation.name
-            }
-                .map { it.downwardStation.isDownwardTerminal = false }
-            section.downwardStation.isDownwardTerminal = true
-        }
-    }
+    fun findByUpward(station: Station) = sections().first { it.upwardStation.name == station.name }
 
-    private fun isDownwardTerminal(lineName: String, stationName: String): Boolean = sections()
-        .any {
-            it.line.name == lineName &&
-                it.downwardStation.name == stationName &&
-                it.downwardStation.isDownwardTerminal
-        }
+    fun existsByDownward(line: Line, station: Station): Boolean =
+        sections().any { it.downwardStation.name == station.name && it.line.name == line.name }
 
-    fun existsByDownward(lineName: String, station: Station): Boolean =
-        sections().any { it.downwardStation.name == station.name && it.line.name == lineName }
-
-    fun existsByUpward(lineName: String, station: Station): Boolean =
-        sections().any { it.upwardStation.name == station.name && it.line.name == lineName }
+    fun existsByUpward(line: Line, station: Station): Boolean =
+        sections().any { it.upwardStation.name == station.name && it.line.name == line.name }
 
 
     fun existDownwardByName(lineName: String, stationName: String): Boolean = sections()
@@ -74,6 +59,11 @@ object SectionRepository {
 
     fun existStationInSection(name: String) = sections()
         .any { it.downwardStation.name == name || it.upwardStation.name == name }
+
+    fun delete(line: Line, upward: Station, downward: Station) =
+        sections.removeIf { it.line.name == line.name
+                && it.upwardStation.name == upward.name
+                && it.downwardStation.name == downward.name}
 
     fun deleteSection(lineName: String, upwardName: String, downwardName: String) = sections
         .removeIf {

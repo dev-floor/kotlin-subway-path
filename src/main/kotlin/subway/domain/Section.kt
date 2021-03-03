@@ -6,8 +6,8 @@ class Section(
     val line: Line,
     val upwardStation: Station,
     val downwardStation: Station,
-    var time: Int,
-    var distance: Int
+    var time: Int = 3,
+    var distance: Int = 2
 ) {
 
     private fun downExist() = SectionRepository.existDownwardByName(line.name, downwardStation.name)
