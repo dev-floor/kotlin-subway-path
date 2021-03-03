@@ -50,9 +50,9 @@ fun checkTerminalStation(upwardStationName: String, downwardStationName: String,
     val downwardStation = StationRepository.findByName(downwardStationName)
     val upwardSection = SectionRepository.findSectionByDownwardName(lineName, upwardStationName)
 
-    if (downwardStation.downwardTerminal) {
-        downwardStation.downwardTerminal = false
-        upwardSection.downwardStation.downwardTerminal = true
+    if (downwardStation.isDownwardTerminal) {
+        downwardStation.isDownwardTerminal = false
+        upwardSection.downwardStation.isDownwardTerminal = true
     }
 }
 

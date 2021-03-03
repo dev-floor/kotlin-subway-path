@@ -28,27 +28,28 @@ object SectionRepository {
             !existDownwardByName(section.line.name, section.upwardStation.name) &&
             !existUpwardByName(section.line.name, section.downwardStation.name)
         ) {
-            section.upwardStation.upwardTerminal = true
-            section.downwardStation.downwardTerminal = true
+            section.upwardStation.isUpwardTerminal = true
+            section.downwardStation.isDownwardTerminal = true
         }
     }
 
     fun changeTerminalStation(section: Section) {
-        if (downwardTerminal(section.line.name, section.upwardStation.name)) {
+
+        if (isDownwardTerminal(section.line.name, section.upwardStation.name)) {
             sections().filter {
                 it.line.name == section.line.name &&
                     it.downwardStation.name == section.upwardStation.name
             }
-                .map { it.downwardStation.downwardTerminal = false }
-            section.downwardStation.downwardTerminal = true
+                .map { it.downwardStation.isDownwardTerminal = false }
+            section.downwardStation.isDownwardTerminal = true
         }
     }
 
-    private fun downwardTerminal(lineName: String, stationName: String): Boolean = sections()
+    private fun isDownwardTerminal(lineName: String, stationName: String): Boolean = sections()
         .any {
             it.line.name == lineName &&
                 it.downwardStation.name == stationName &&
-                it.downwardStation.downwardTerminal
+                it.downwardStation.isDownwardTerminal
         }
 
     fun existsByDownward(lineName: String, station: Station): Boolean =
@@ -65,7 +66,7 @@ object SectionRepository {
         .any { it.upwardStation.name == stationName && it.line.name == lineName }
 
     private fun findUpwardTerminalSection(lineName: String): Section = sections()
-        .first { it.line.name == lineName && it.upwardStation.upwardTerminal }
+        .first { it.line.name == lineName && it.upwardStation.isUpwardTerminal }
 
     fun findDownwardNameByUpwardName(name: String): String = sections()
         .filter { it.upwardStation.name == name }

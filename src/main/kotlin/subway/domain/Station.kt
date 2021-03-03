@@ -2,14 +2,15 @@ package subway.domain
 
 import subway.repository.StationRepository.existsByName
 
-class Station(val name: String) {
+class Station(
+    val name: String,
+    var isUpwardTerminal: Boolean = false,
+    var isDownwardTerminal: Boolean = false
+) {
 
     init {
         require(STATION_NAME_MAX_LENGTH <= name.length)
     }
-
-    var upwardTerminal = false
-    var downwardTerminal = false
 
     fun validStationToRegister() = !existsByName(this.name)
 
