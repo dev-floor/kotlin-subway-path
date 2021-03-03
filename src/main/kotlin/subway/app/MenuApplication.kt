@@ -3,10 +3,13 @@ package subway.app
 import subway.domain.Line
 import subway.domain.Section
 import subway.domain.Station
+import subway.view.getDownwardNameOfSectionToDelete
 import subway.view.getDownwardNameOfSectionToRegister
+import subway.view.getLineNameOfSectionToDelete
 import subway.view.getLineNameOfSectionToRegister
 import subway.view.getSectionDistance
 import subway.view.getSectionTime
+import subway.view.getUpwardNameOfSectionToDelete
 import subway.view.getUpwardNameOfSectionToRegister
 import subway.view.infoMessage
 import subway.view.selectNumber
@@ -18,6 +21,7 @@ import subway.view.showAllStations
 import subway.view.showCheckPath
 import subway.view.showMainPage
 import subway.view.showWholeTrack
+import subway.view.succeedDeleteSection
 import subway.view.succeedRegisterSection
 
 const val MENU_ONE = 1
@@ -92,8 +96,15 @@ fun adminSection() {
             infoMessage()
             succeedRegisterSection()
         }
-
-        MENU_TWO -> deleteSection()
+        MENU_TWO -> {
+            DeleteSection(
+                line = Line(getLineNameOfSectionToDelete()),
+                upwardStation = Station(getUpwardNameOfSectionToDelete()),
+                downwardStation = Station(getDownwardNameOfSectionToDelete())
+            ).delete()
+            infoMessage()
+            succeedDeleteSection()
+        }
     }
 }
 
