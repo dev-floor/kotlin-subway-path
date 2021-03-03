@@ -6,7 +6,7 @@ import subway.repository.SectionRepository
 class RegisterSection(val section: Section) {
     fun register() {
         // Additional section
-        if(SectionRepository.existsByUpward(section.line, section.upwardStation))
+        if (SectionRepository.existsByUpward(section.line, section.upwardStation))
             registerAdditionalSection(section)
 
         SectionRepository.add(section)
@@ -19,25 +19,29 @@ class RegisterSection(val section: Section) {
     private fun registerAdditionalSection(section: Section) {
         val upwardSection = SectionRepository.findByUpward(section.upwardStation)
         SectionRepository.delete(section.line, section.upwardStation, upwardSection.downwardStation)
-        SectionRepository.add(Section(
-            line = section.line,
-            upwardStation = section.downwardStation,
-            downwardStation = upwardSection.downwardStation))
+        SectionRepository.add(
+            Section(
+                line = section.line,
+                upwardStation = section.downwardStation,
+                downwardStation = upwardSection.downwardStation
+            )
+        )
     }
 
     private fun changeTerminalStation(section: Section) =
         SectionRepository.findAll().filter {
             it.line.name == section.line.name &&
-                    it.downwardStation.name == section.upwardStation.name
+                it.downwardStation.name == section.upwardStation.name
         }
-            .map { it.downwardStation.isDownwardTerminal = false
+            .map {
+                it.downwardStation.isDownwardTerminal = false
                 section.downwardStation.isDownwardTerminal = true
             }
 
     private fun isDownwardTerminal(lineName: String, stationName: String): Boolean =
         SectionRepository.findAll().any {
-            it.line.name == lineName
-                    && it.downwardStation.name == stationName
-                    && it.downwardStation.isDownwardTerminal
+            it.line.name == lineName &&
+                it.downwardStation.name == stationName &&
+                it.downwardStation.isDownwardTerminal
         }
 }

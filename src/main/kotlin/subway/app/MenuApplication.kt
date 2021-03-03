@@ -3,7 +3,22 @@ package subway.app
 import subway.domain.Line
 import subway.domain.Section
 import subway.domain.Station
-import subway.view.*
+import subway.view.getDownwardNameOfSectionToRegister
+import subway.view.getLineNameOfSectionToRegister
+import subway.view.getSectionDistance
+import subway.view.getSectionTime
+import subway.view.getUpwardNameOfSectionToRegister
+import subway.view.infoMessage
+import subway.view.selectNumber
+import subway.view.showAdminLine
+import subway.view.showAdminSection
+import subway.view.showAdminStation
+import subway.view.showAllLines
+import subway.view.showAllStations
+import subway.view.showCheckPath
+import subway.view.showMainPage
+import subway.view.showWholeTrack
+import subway.view.succeedRegisterSection
 
 const val MENU_ONE = 1
 const val MENU_TWO = 2
@@ -64,14 +79,16 @@ fun adminSection() {
     if (select == BACK) return
 
     when (select.toInt()) {
-        MENU_ONE ->{
-            RegisterSection(Section(
-                line = Line(getLineNameOfSectionToRegister()),
-                upwardStation = Station(getUpwardNameOfSectionToRegister()),
-                downwardStation = Station(getDownwardNameOfSectionToRegister()),
-                distance = getSectionDistance(),
-                time = getSectionTime()
-            )).register()
+        MENU_ONE -> {
+            RegisterSection(
+                Section(
+                    line = Line(getLineNameOfSectionToRegister()),
+                    upwardStation = Station(getUpwardNameOfSectionToRegister()),
+                    downwardStation = Station(getDownwardNameOfSectionToRegister()),
+                    distance = getSectionDistance(),
+                    time = getSectionTime()
+                )
+            ).register()
             infoMessage()
             succeedRegisterSection()
         }

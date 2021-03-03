@@ -15,7 +15,9 @@ class Section(
         require(StationRepository.existsByName(upwardStation.name))
         require(StationRepository.existsByName(downwardStation.name))
         require(LineRepository.existsByName(line.name))
-        require(SectionRepository.existsByUpward(line, upwardStation)
-                    && SectionRepository.existsByDownward(line, downwardStation))
+        require(
+            SectionRepository.existsByUpward(line, upwardStation) &&
+                SectionRepository.existsByDownward(line, downwardStation)
+        )
     }
 }

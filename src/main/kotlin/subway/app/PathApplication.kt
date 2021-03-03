@@ -20,7 +20,7 @@ fun shortestPath() {
 
     stations.map { graph.addVertex(it.name) }
     sections.map {
-            graph.setEdgeWeight(graph.addEdge(it.upwardStation.name, it.downwardStation.name), it.distance.toDouble())
+        graph.setEdgeWeight(graph.addEdge(it.upwardStation.name, it.downwardStation.name), it.distance.toDouble())
     }
 
     val result = DijkstraShortestPath(graph).getPath(departure.name, destination.name).vertexList

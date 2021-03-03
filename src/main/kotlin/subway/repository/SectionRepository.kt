@@ -43,7 +43,6 @@ object SectionRepository {
     fun existsByUpward(line: Line, station: Station): Boolean =
         sections().any { it.upwardStation.name == station.name && it.line.name == line.name }
 
-
     fun existDownwardByName(lineName: String, stationName: String): Boolean = sections()
         .any { it.downwardStation.name == stationName && it.line.name == lineName }
 
@@ -61,9 +60,11 @@ object SectionRepository {
         .any { it.downwardStation.name == name || it.upwardStation.name == name }
 
     fun delete(line: Line, upward: Station, downward: Station) =
-        sections.removeIf { it.line.name == line.name
-                && it.upwardStation.name == upward.name
-                && it.downwardStation.name == downward.name}
+        sections.removeIf {
+            it.line.name == line.name &&
+                it.upwardStation.name == upward.name &&
+                it.downwardStation.name == downward.name
+        }
 
     fun deleteSection(lineName: String, upwardName: String, downwardName: String) = sections
         .removeIf {
