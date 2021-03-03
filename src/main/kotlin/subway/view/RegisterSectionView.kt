@@ -17,14 +17,14 @@ fun getDownwardNameOfSectionToRegister(): String {
     return readLine()!!
 }
 
-fun getSectionDistance(): Int {
+fun getSectionDistance(): Int? {
     println("\n## 구간 거리(km)를 입력하세요.")
-    return readLine()!!.toInt()
+    return readLine()?.toInt()
 }
 
-fun getSectionTime(): Int {
+fun getSectionTime(): Int? {
     println("\n## 소요 시간(분)을 입력하세요.")
-    return readLine()!!.toInt()
+    return readLine()?.toInt()
 }
 
 fun succeedRegisterSection() = println("구간이 등록되었습니다.")
