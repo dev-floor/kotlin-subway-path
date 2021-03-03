@@ -15,7 +15,7 @@ class RegisterSection(
         require(LineRepository.existsByName(section.line.name))
         require(
             SectionRepository.existsByUpward(section.line, section.upwardStation) &&
-                    SectionRepository.existsByDownward(section.line, section.downwardStation)
+                SectionRepository.existsByDownward(section.line, section.downwardStation)
         )
     }
 

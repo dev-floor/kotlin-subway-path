@@ -6,5 +6,4 @@ data class Section(
     val downwardStation: Station,
     var time: Int? = 3,
     var distance: Int? = 2
-) {
-}
+)

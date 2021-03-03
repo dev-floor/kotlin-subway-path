@@ -23,7 +23,10 @@ fun registerStation() {
 fun deleteStation() {
     val name = getStationNameToDelete()
 
-    require(!SectionRepository.existStationInSection(name))
+    require(
+        !SectionRepository.findAll()
+            .any { it.downwardStation.name == name || it.upwardStation.name == name }
+    )
     StationRepository.deleteByName(name)
 
     infoMessage()

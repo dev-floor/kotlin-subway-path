@@ -20,10 +20,10 @@ object SectionRepository {
     fun findAll() = sections()
 
     fun findByUpward(line: Line, station: Station) =
-        sections().first { it.upwardStation.name == station.name && it.line.name == line.name  }
+        sections().first { it.upwardStation.name == station.name && it.line.name == line.name }
 
     fun findByDownward(line: Line, station: Station) =
-        sections().first { it.downwardStation.name == station.name && it.line.name == line.name  }
+        sections().first { it.downwardStation.name == station.name && it.line.name == line.name }
 
     fun existsByDownward(line: Line, station: Station): Boolean =
         sections().any { it.downwardStation.name == station.name && it.line.name == line.name }
@@ -34,18 +34,12 @@ object SectionRepository {
     private fun findUpwardTerminalSection(lineName: String): Section = sections()
         .first { it.line.name == lineName && it.upwardStation.isUpwardTerminal }
 
-    fun existStationInSection(name: String) = sections()
-        .any { it.downwardStation.name == name || it.upwardStation.name == name }
-
     fun delete(line: Line, upward: Station, downward: Station) =
         sections.removeIf {
             it.line.name == line.name &&
                 it.upwardStation.name == upward.name &&
                 it.downwardStation.name == downward.name
         }
-
-    fun continuousStation(upwardName: String, downwardName: String) = sections()
-        .any { it.downwardStation.name == downwardName && it.upwardStation.name == upwardName }
 
     fun allSectionsInLine(name: String, printMessage: MutableList<String>): List<String> {
         var section = findUpwardTerminalSection(name)
@@ -64,5 +58,4 @@ object SectionRepository {
 
     private fun findByUpwardStation(lineName: String, station: Station): Section = sections()
         .first { it.line.name == lineName && it.upwardStation.name == station.name }
-
 }
