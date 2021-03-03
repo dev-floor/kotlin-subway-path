@@ -14,7 +14,7 @@ object SectionRepository {
 
     private val sections = mutableListOf<Section>()
 
-    fun sections() = sections.toList()
+    private fun sections() = sections.toList()
 
     fun add(section: Section) {
         firstSection(section)

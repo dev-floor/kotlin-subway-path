@@ -3,9 +3,7 @@ package subway.app
 import subway.domain.Line
 import subway.domain.Section
 import subway.domain.Station
-import subway.repository.LineRepository
 import subway.repository.SectionRepository
-import subway.repository.StationRepository
 import subway.view.getDownwardNameOfSectionToRegister
 import subway.view.getLineNameOfSectionToRegister
 import subway.view.getSectionDistance
@@ -22,11 +20,6 @@ fun registerSection() {
     val time = getSectionTime()
 
     val section = Section(line, Station(upwardStationName), Station(downwardStationName), distance, time)
-
-    require(StationRepository.existsByName(upwardStationName))
-    require(StationRepository.existsByName(downwardStationName))
-    require(LineRepository.existsByName(line.name))
-    require(section.validSectionToRegister())
 
     // Additional section
     if(SectionRepository.existsByUpward(line, section.upwardStation))
@@ -52,7 +45,7 @@ fun registerAdditionalSection(section: Section) {
 }
 
 fun changeTerminalStation(section: Section) {
-    SectionRepository.sections().filter {
+    SectionRepository.findAll().filter {
         it.line.name == section.line.name &&
                 it.downwardStation.name == section.upwardStation.name
     }
