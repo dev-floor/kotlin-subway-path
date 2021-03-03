@@ -24,6 +24,7 @@ class RegisterSection(
         if (repository.existsByUpward(section.line, section.upwardStation))
             registerAdditionalSection(section)
 
+        checkFirstSection(section)
         repository.add(section)
 
         // terminal change
@@ -59,4 +60,17 @@ class RegisterSection(
                 it.downwardStation.isDownwardTerminal = false
                 section.downwardStation.isDownwardTerminal = true
             }
+
+    companion object {
+        fun checkFirstSection(section: Section) {
+            if (!SectionRepository.existsByDownward(section.line, section.downwardStation) &&
+                !SectionRepository.existsByUpward(section.line, section.upwardStation) &&
+                !SectionRepository.existsByDownward(section.line, section.upwardStation) &&
+                !SectionRepository.existsByUpward(section.line, section.downwardStation)
+            ) {
+                section.upwardStation.isUpwardTerminal = true
+                section.downwardStation.isDownwardTerminal = true
+            }
+        }
+    }
 }

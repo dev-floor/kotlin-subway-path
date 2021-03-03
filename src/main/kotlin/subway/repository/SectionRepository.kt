@@ -11,27 +11,11 @@ const val MINUTE = "분"
 const val SEPARATOR_DISTANCE_AND_TIME = " / "
 
 object SectionRepository {
-
     private val sections = mutableListOf<Section>()
 
     private fun sections() = sections.toList()
 
-    fun add(section: Section) {
-        firstSection(section)
-
-        sections.add(section)
-    }
-
-    private fun firstSection(section: Section) {
-        if (!existDownwardByName(section.line.name, section.downwardStation.name) &&
-            !existUpwardByName(section.line.name, section.upwardStation.name) &&
-            !existDownwardByName(section.line.name, section.upwardStation.name) &&
-            !existUpwardByName(section.line.name, section.downwardStation.name)
-        ) {
-            section.upwardStation.isUpwardTerminal = true
-            section.downwardStation.isDownwardTerminal = true
-        }
-    }
+    fun add(section: Section) = sections.add(section)
 
     fun findAll() = sections()
 
@@ -47,15 +31,8 @@ object SectionRepository {
     fun existsByUpward(line: Line, station: Station): Boolean =
         sections().any { it.upwardStation.name == station.name && it.line.name == line.name }
 
-    fun existDownwardByName(lineName: String, stationName: String): Boolean = sections()
-        .any { it.downwardStation.name == stationName && it.line.name == lineName }
-
-    fun existUpwardByName(lineName: String, stationName: String): Boolean = sections()
-        .any { it.upwardStation.name == stationName && it.line.name == lineName }
-
     private fun findUpwardTerminalSection(lineName: String): Section = sections()
         .first { it.line.name == lineName && it.upwardStation.isUpwardTerminal }
-
 
     fun existStationInSection(name: String) = sections()
         .any { it.downwardStation.name == name || it.upwardStation.name == name }
@@ -75,7 +52,7 @@ object SectionRepository {
         while (true) {
             printMessage.add(section.upwardStation.name)
             printMessage.add(distanceAndTime(section))
-            if (!existUpwardByName(section.line.name, section.downwardStation.name)) break
+            if (!existsByUpward(section.line, section.downwardStation)) break
             section = findByUpwardStation(section.line.name, section.downwardStation)
         }
         printMessage.add(section.downwardStation.name)

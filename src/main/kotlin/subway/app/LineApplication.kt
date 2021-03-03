@@ -32,6 +32,7 @@ fun registerLine() {
     require(StationRepository.existsByName(downwardStationName)) // { errorMessage() }
 
     LineRepository.add(line)
+    RegisterSection.checkFirstSection(section)
     SectionRepository.add(section)
 
     infoMessage()

@@ -30,11 +30,14 @@ fun initLine() {
 }
 
 fun initSection() {
-    SectionRepository.add(Section(Line("2호선"), Station("교대역"), Station("강남역"), 3, 2))
-    SectionRepository.add(Section(Line("2호선"), Station("강남역"), Station("역삼역"), 3, 2))
-    SectionRepository.add(Section(Line("3호선"), Station("교대역"), Station("남부터미널역"), 2, 3))
+    SectionRepository.add(Section(Line("2호선"), Station("교대역", true), Station("강남역"), 3, 2))
+    SectionRepository.add(Section(Line("2호선"), Station("강남역"),
+        Station("역삼역", isUpwardTerminal = false, isDownwardTerminal = true), 3, 2))
+    SectionRepository.add(Section(Line("3호선"), Station("교대역", true), Station("남부터미널역"), 2, 3))
     SectionRepository.add(Section(Line("3호선"), Station("남부터미널역"), Station("양재역"), 5, 6))
-    SectionRepository.add(Section(Line("3호선"), Station("양재역"), Station("매봉역"), 1, 1))
-    SectionRepository.add(Section(Line("신분당선"), Station("강남역"), Station("양재역"), 8, 2))
-    SectionRepository.add(Section(Line("신분당선"), Station("양재역"), Station("양재시민의숲역"), 3, 10))
+    SectionRepository.add(Section(Line("3호선"),
+        Station("양재역"), Station("매봉역", isUpwardTerminal = false, isDownwardTerminal = true), 1, 1))
+    SectionRepository.add(Section(Line("신분당선"), Station("강남역", true), Station("양재역"), 8, 2))
+    SectionRepository.add(Section(Line("신분당선"), Station("양재역"),
+        Station("양재시민의숲역", isUpwardTerminal = false, isDownwardTerminal = true), 3, 10))
 }
