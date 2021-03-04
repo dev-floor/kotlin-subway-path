@@ -40,8 +40,8 @@ class DeleteSectionService(
         repository.delete(line, upwardStation, downwardStation)
     }
 
-    private fun biConnectedSection(upwardStation: Station, downwardStation: Station, line: Line)
-        = repository.add(
+    private fun biConnectedSection(upwardStation: Station, downwardStation: Station, line: Line) =
+        repository.add(
             Section(
                 line = LineRepository.findByName(line.name),
                 upwardStation = upwardStation,

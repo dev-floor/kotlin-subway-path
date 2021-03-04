@@ -19,7 +19,7 @@ fun shortestPath(): Pair<Pair<Double, Int>, Any> {
 
     stations.map { graph.addVertex(it.name) }
     sections.map {
-            graph.setEdgeWeight(
+        graph.setEdgeWeight(
             graph.addEdge(it.upwardStation.name, it.downwardStation.name)
                 .apply { subWeight = it.time!! },
             it.distance!!.toDouble()
