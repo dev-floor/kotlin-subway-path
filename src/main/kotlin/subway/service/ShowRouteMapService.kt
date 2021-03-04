@@ -4,20 +4,17 @@ import subway.repository.LineRepository
 import subway.repository.SectionRepository
 
 class ShowRouteMapService {
-    fun routeMap(): List<Any> {
-        val routes: MutableList<Any> = mutableListOf()
+    fun routeMap(): List<List<Any>> {
+        val routes: MutableList<List<Any>> = mutableListOf()
 
         LineRepository.findAll().map { it ->
-            routes.add(it.name)
-            allSectionsInLine(it.name).map {
-                routes.add(it)
-            }
+            routes.add(allSectionsInLine(it.name))
         }
         return routes.toList()
     }
 
     private fun allSectionsInLine(name: String): List<Any> {
-        val route: MutableList<Any> = mutableListOf()
+        val route: MutableList<Any> = mutableListOf(name)
         var section = SectionRepository.findAll()
             .first { it.line.name == name && it.upwardStation.isUpwardTerminal }
         while (true) {
