@@ -15,7 +15,7 @@ fun shortestPath() {
     val departure = StationRepository.findByName(getDeparture())
     val destination = StationRepository.findByName(getDestination())
 
-    val stations = StationRepository.stations()
+    val stations = StationRepository.findAll()
     val sections = SectionRepository.findAll()
 
     stations.map { graph.addVertex(it.name) }

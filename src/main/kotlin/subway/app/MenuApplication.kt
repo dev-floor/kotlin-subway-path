@@ -9,6 +9,7 @@ import subway.service.DeleteStationService
 import subway.service.RegisterLineService
 import subway.service.RegisterSectionService
 import subway.service.RegisterStationService
+import subway.service.ShowRouteMapService
 import subway.view.getDistance
 import subway.view.getDownwardNameOfSectionToDelete
 import subway.view.getDownwardNameOfSectionToRegister
@@ -34,7 +35,7 @@ import subway.view.showAllLines
 import subway.view.showAllStations
 import subway.view.showCheckPath
 import subway.view.showMainPage
-import subway.view.showWholeTrack
+import subway.view.showRouteMap
 import subway.view.succeedDeleteLine
 import subway.view.succeedDeleteSection
 import subway.view.succeedDeleteStation
@@ -64,10 +65,14 @@ fun startApp() {
             MENU_ONE -> adminStation()
             MENU_TWO -> adminLine()
             MENU_THREE -> adminSection()
-            MENU_FOUR -> showWholeTrack()
+            MENU_FOUR -> routeMap()
             MENU_FIVE -> checkPath()
         }
     }
+}
+
+fun routeMap() {
+    showRouteMap(ShowRouteMapService().routeMap())
 }
 
 fun adminStation() {
@@ -119,7 +124,6 @@ fun adminLine() {
             succeedDeleteLine()
         }
         MENU_THREE -> showAllLines()
-        MENU_FOUR -> showWholeTrack()
     }
 }
 

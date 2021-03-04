@@ -1,7 +1,6 @@
 package subway.view
 
-import subway.repository.LineRepository
-import subway.repository.SEPARATOR_EACH_LINE
+import subway.service.ShowRouteMapService.Companion.SEPARATOR_EACH_LINE
 
 const val INFO_MESSAGE = "\n[INFO] "
 const val ERROR_MESSAGE = "\n[ERROR] "
@@ -17,10 +16,9 @@ fun selectNumber(): String {
     return readLine()!!
 }
 
-fun showWholeTrack() {
-    val wholeTrack = LineRepository.allLinesInfo()
+fun showRouteMap(routeMap: List<String>) {
     print("\n ## 지하철 노선도")
-    wholeTrack
+    routeMap
         .forEach {
             if (it !== SEPARATOR_EACH_LINE)
                 print(INFO_MESSAGE)
