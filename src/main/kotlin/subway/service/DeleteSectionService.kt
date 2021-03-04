@@ -40,19 +40,21 @@ class DeleteSectionService(
         repository.delete(line, upwardStation, downwardStation)
     }
 
-    private fun biConnectedSection(upwardStation: Station, downwardStation: Station, line: Line) {
-        val downwardSection = repository.findByUpward(line, downwardStation)
-        val upwardSection = repository.findByDownward(line, downwardStation)
-        repository.add(
+    private fun biConnectedSection(upwardStation: Station, downwardStation: Station, line: Line)
+        = repository.add(
             Section(
                 line = LineRepository.findByName(line.name),
                 upwardStation = upwardStation,
                 downwardStation = repository.findByUpward(line, upwardStation).downwardStation,
-                distance = downwardSection.distance!! + upwardSection.distance!!,
-                time = downwardSection.time!! + upwardSection.time!!
-            )
+            ).let {
+                val downwardSection = repository.findByUpward(line, downwardStation)
+                val upwardSection = repository.findByDownward(line, downwardStation)
+                it.distance = downwardSection.distance!! + upwardSection.distance!!
+                it.time = downwardSection.time!! + upwardSection.time!!
+
+                it
+            }
         )
-    }
 
     companion object {
         const val MIN_STATION_COUNT_IN_SECTION = 1
