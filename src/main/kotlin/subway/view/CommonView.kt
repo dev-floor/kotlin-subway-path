@@ -1,7 +1,5 @@
 package subway.view
 
-import subway.service.ShowRouteMapService.Companion.SEPARATOR_EACH_LINE
-
 const val INFO_MESSAGE = "\n[INFO] "
 const val ERROR_MESSAGE = "\n[ERROR] "
 
@@ -14,14 +12,4 @@ fun errorMessage() = print(ERROR_MESSAGE)
 fun selectNumber(): String {
     println("\n## 원하는 기능을 선택하세요.")
     return readLine()!!
-}
-
-fun showRouteMap(routeMap: List<String>) {
-    print("\n ## 지하철 노선도")
-    routeMap
-        .forEach {
-            if (it !== SEPARATOR_EACH_LINE)
-                print(INFO_MESSAGE)
-            print(it)
-        }
 }
