@@ -3,20 +3,28 @@ package subway.app
 import subway.domain.Line
 import subway.domain.Section
 import subway.domain.Station
+import subway.service.DeleteLineService
 import subway.service.DeleteSectionService
 import subway.service.DeleteStationService
+import subway.service.RegisterLineService
 import subway.service.RegisterSectionService
 import subway.service.RegisterStationService
+import subway.view.getDistance
 import subway.view.getDownwardNameOfSectionToDelete
 import subway.view.getDownwardNameOfSectionToRegister
+import subway.view.getDownwardStationName
 import subway.view.getLineNameOfSectionToDelete
 import subway.view.getLineNameOfSectionToRegister
+import subway.view.getLineNameToDelete
+import subway.view.getLineNameToRegister
 import subway.view.getSectionDistance
 import subway.view.getSectionTime
 import subway.view.getStationNameToDelete
 import subway.view.getStationNameToRegister
+import subway.view.getTime
 import subway.view.getUpwardNameOfSectionToDelete
 import subway.view.getUpwardNameOfSectionToRegister
+import subway.view.getUpwardStationName
 import subway.view.infoMessage
 import subway.view.selectNumber
 import subway.view.showAdminLine
@@ -27,8 +35,10 @@ import subway.view.showAllStations
 import subway.view.showCheckPath
 import subway.view.showMainPage
 import subway.view.showWholeTrack
+import subway.view.succeedDeleteLine
 import subway.view.succeedDeleteSection
 import subway.view.succeedDeleteStation
+import subway.view.succeedRegisterLine
 import subway.view.succeedRegisterSection
 import subway.view.succeedRegisterStation
 
@@ -88,8 +98,26 @@ fun adminLine() {
     if (select == BACK) return
 
     when (select.toInt()) {
-        MENU_ONE -> registerLine()
-        MENU_TWO -> deleteLine()
+        MENU_ONE -> {
+            val line = Line(getLineNameToRegister())
+            RegisterLineService(line).register()
+            RegisterSectionService(
+                Section(
+                    line = line,
+                    upwardStation = Station(getUpwardStationName()),
+                    downwardStation = Station(getDownwardStationName()),
+                    distance = getDistance(),
+                    time = getTime()
+                )
+            ).register()
+            infoMessage()
+            succeedRegisterLine()
+        }
+        MENU_TWO -> {
+            DeleteLineService(getLineNameToDelete()).delete()
+            infoMessage()
+            succeedDeleteLine()
+        }
         MENU_THREE -> showAllLines()
         MENU_FOUR -> showWholeTrack()
     }
