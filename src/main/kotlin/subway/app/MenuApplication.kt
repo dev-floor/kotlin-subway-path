@@ -9,6 +9,7 @@ import subway.service.DeleteStationService
 import subway.service.RegisterLineService
 import subway.service.RegisterSectionService
 import subway.service.RegisterStationService
+import subway.service.AllContentsService
 import subway.service.ShowRouteMapService
 import subway.view.getDistance
 import subway.view.getDownwardNameOfSectionToDelete
@@ -93,7 +94,7 @@ fun adminStation() {
             infoMessage()
             succeedDeleteStation()
         }
-        MENU_THREE -> showAllStations()
+        MENU_THREE -> showAllStations(AllContentsService().getStations())
     }
 }
 
@@ -123,7 +124,7 @@ fun adminLine() {
             infoMessage()
             succeedDeleteLine()
         }
-        MENU_THREE -> showAllLines()
+        MENU_THREE -> showAllLines(AllContentsService().getLines())
     }
 }
 

@@ -1,7 +1,6 @@
 package subway.view
 
 const val SEPARATOR_LINE_WITH_STATION = "---"
-const val SEPARATOR_EACH_LINE = "\n"
 const val KILOMETER = "km"
 const val MINUTE = "분"
 const val STATION = "선"
@@ -34,6 +33,6 @@ fun showRouteMap(routeMap: List<List<Any>>) {
                     }
                 }
             }
-            print(SEPARATOR_EACH_LINE)
+            println()
         }
 }

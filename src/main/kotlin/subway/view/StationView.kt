@@ -1,7 +1,5 @@
 package subway.view
 
-import subway.repository.StationRepository
-
 fun showAdminStation() = println("\n## 역 관리 화면\n1. 역 등록\n2. 역 삭제\n3. 역 조회\nB. 돌아가기")
 
 fun getStationNameToRegister(): String {
@@ -18,11 +16,11 @@ fun getStationNameToDelete(): String {
 
 fun succeedDeleteStation() = println("지하철 역이 삭제되었습니다.")
 
-fun showAllStations() {
+fun showAllStations(stationNames: List<Any>) {
     print("\n## 역 목록")
-    StationRepository.findAll().map {
+    stationNames.forEach {
         infoMessage()
-        print(it.name)
+        print(it)
     }
     println()
 }

@@ -13,6 +13,20 @@ class DeleteSectionService(
     val downwardStation: Station,
     val repository: SectionRepository = SectionRepository
 ) {
+    init {
+        require(
+            repository.findAll()
+                .count { it.line.name == line.name } > MIN_STATION_COUNT_IN_SECTION
+        )
+        require(
+            repository.findAll()
+                .any {
+                    it.upwardStation.name == upwardStation.name &&
+                            it.downwardStation.name == downwardStation.name
+                }
+        )
+    }
+
     fun delete() {
         if (existsByUpward(line, downwardStation))
             biConnectedSection(upwardStation, downwardStation, line)
@@ -37,20 +51,6 @@ class DeleteSectionService(
                 distance = downwardSection.distance!! + upwardSection.distance!!,
                 time = downwardSection.time!! + upwardSection.time!!
             )
-        )
-    }
-
-    init {
-        require(
-            repository.findAll()
-                .count { it.line.name == line.name } > MIN_STATION_COUNT_IN_SECTION
-        )
-        require(
-            repository.findAll()
-                .any {
-                    it.upwardStation.name == upwardStation.name &&
-                        it.downwardStation.name == downwardStation.name
-                }
         )
     }
 

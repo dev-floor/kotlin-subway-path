@@ -1,7 +1,5 @@
 package subway.view
 
-import subway.repository.LineRepository
-
 fun showAdminLine() = println("\n## 노선 관리 화면\n1. 노선 등록\n2. 노선 삭제\n3. 노선 조회\nB. 돌아가기")
 
 fun getLineNameToRegister(): String {
@@ -38,12 +36,12 @@ fun getLineNameToDelete(): String {
 
 fun succeedDeleteLine() = println("지하철 노선이 삭제되었습니다.")
 
-fun showAllLines() {
+fun showAllLines(lineNames: List<Any>) {
     print("\n## 노선 목록")
-    LineRepository.findAll()
-        .map {
+    lineNames
+        .forEach {
             infoMessage()
-            print(it.name)
+            print(it)
         }
     println()
 }
