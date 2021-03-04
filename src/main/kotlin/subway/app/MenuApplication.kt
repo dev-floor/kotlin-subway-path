@@ -165,7 +165,9 @@ fun checkPath() {
     if (select == BACK) return
 
     when (select.toInt()) {
-        MENU_ONE -> shortestPath()
+        MENU_ONE -> {
+            shortestPath()
+        }
         MENU_TWO -> minimumTime()
     }
 }
