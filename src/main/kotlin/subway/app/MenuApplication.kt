@@ -11,6 +11,8 @@ import subway.service.RegisterLineService
 import subway.service.RegisterSectionService
 import subway.service.RegisterStationService
 import subway.service.RouteMapService
+import subway.view.getDeparture
+import subway.view.getDestination
 import subway.view.getDistance
 import subway.view.getDownwardNameOfSectionToDelete
 import subway.view.getDownwardNameOfSectionToRegister
@@ -34,9 +36,10 @@ import subway.view.showAdminSection
 import subway.view.showAdminStation
 import subway.view.showAllLines
 import subway.view.showAllStations
-import subway.view.showCheckPath
 import subway.view.showMainPage
+import subway.view.showPathResult
 import subway.view.showRouteMap
+import subway.view.showSelectPath
 import subway.view.succeedDeleteLine
 import subway.view.succeedDeleteSection
 import subway.view.succeedDeleteStation
@@ -67,7 +70,7 @@ fun startApp() {
             MENU_TWO -> adminLine()
             MENU_THREE -> adminSection()
             MENU_FOUR -> routeMap()
-            MENU_FIVE -> checkPath()
+            MENU_FIVE -> path()
         }
     }
 }
@@ -159,15 +162,14 @@ fun adminSection() {
     }
 }
 
-fun checkPath() {
-    showCheckPath()
+fun path() {
+    showSelectPath()
     select = selectNumber()
     if (select == BACK) return
 
-    when (select.toInt()) {
-        MENU_ONE -> {
-            shortestPath()
-        }
-        MENU_TWO -> minimumTime()
-    }
+    showPathResult(PathService(
+        departure = getDeparture(),
+        destination = getDestination(),
+    ).path(select.toInt()))
 }
+
