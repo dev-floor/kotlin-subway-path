@@ -5,7 +5,7 @@ import subway.repository.StationRepository
 
 class RegisterStationService(val station: Station) {
     init {
-        require(station.validStationToRegister())
+        require(!StationRepository.existsByName(station.name))
     }
 
     fun register() = StationRepository.add(station)
