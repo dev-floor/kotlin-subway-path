@@ -6,6 +6,7 @@ import subway.domain.Station
 import subway.repository.LineRepository
 import subway.repository.SectionRepository
 import subway.repository.StationRepository
+import subway.service.RegisterSection
 import subway.view.errorMessage
 import subway.view.getDistance
 import subway.view.getDownwardStationName

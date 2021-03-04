@@ -1,11 +1,11 @@
-package subway.app
+package subway.service
 
 import subway.domain.Section
 import subway.repository.LineRepository
 import subway.repository.SectionRepository
 import subway.repository.StationRepository
 
-class RegisterSection(
+class RegisterSectionService(
     val section: Section,
     val repository: SectionRepository = SectionRepository
 ) {
