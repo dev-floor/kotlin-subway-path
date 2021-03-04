@@ -22,7 +22,7 @@ class DeleteSectionService(
             repository.findAll()
                 .any {
                     it.upwardStation.name == upwardStation.name &&
-                            it.downwardStation.name == downwardStation.name
+                        it.downwardStation.name == downwardStation.name
                 }
         )
     }

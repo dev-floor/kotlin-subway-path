@@ -3,14 +3,14 @@ package subway.app
 import subway.domain.Line
 import subway.domain.Section
 import subway.domain.Station
+import subway.service.AllContentsService
 import subway.service.DeleteLineService
 import subway.service.DeleteSectionService
 import subway.service.DeleteStationService
 import subway.service.RegisterLineService
 import subway.service.RegisterSectionService
 import subway.service.RegisterStationService
-import subway.service.AllContentsService
-import subway.service.ShowRouteMapService
+import subway.service.RouteMapService
 import subway.view.getDistance
 import subway.view.getDownwardNameOfSectionToDelete
 import subway.view.getDownwardNameOfSectionToRegister
@@ -73,7 +73,7 @@ fun startApp() {
 }
 
 fun routeMap() {
-    showRouteMap(ShowRouteMapService().routeMap())
+    showRouteMap(RouteMapService().routeMap())
 }
 
 fun adminStation() {
