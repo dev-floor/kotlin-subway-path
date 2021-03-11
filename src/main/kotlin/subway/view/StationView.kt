@@ -16,7 +16,7 @@ fun getStationNameToDelete(): String {
 
 fun succeedDeleteStation() = println("지하철 역이 삭제되었습니다.")
 
-fun showAllStations(stationNames: List<Any>) {
+fun showAllStations(stationNames: List<String>) {
     print("\n## 역 목록")
     stationNames.forEach {
         infoMessage()
