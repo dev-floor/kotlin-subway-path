@@ -15,7 +15,7 @@ import subway.view.succeedRegisterStation
 
 fun adminStation() {
     showAdminStation()
-    select = selectNumber()
+    val select = selectNumber()
     if (select == BACK) return
 
     when (select.toInt()) {

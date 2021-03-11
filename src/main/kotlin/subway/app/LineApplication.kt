@@ -22,7 +22,7 @@ import subway.view.succeedRegisterLine
 
 fun adminLine() {
     showAdminLine()
-    select = selectNumber()
+    val select = selectNumber()
     if (select == BACK) return
 
     when (select.toInt()) {

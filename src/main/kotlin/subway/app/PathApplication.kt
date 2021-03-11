@@ -9,7 +9,7 @@ import subway.view.showSelectPath
 
 fun path() {
     showSelectPath()
-    select = selectNumber()
+    val select = selectNumber()
     if (select == BACK) return
 
     showPathResult(
