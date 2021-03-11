@@ -42,7 +42,7 @@ fun adminLine() {
             succeedRegisterLine()
         }
         MENU_TWO -> {
-            DeleteLineService(getLineNameToDelete()).delete()
+            DeleteLineService().delete(getLineNameToDelete())
             infoMessage()
             succeedDeleteLine()
         }

@@ -6,8 +6,7 @@ import subway.repository.SectionRepository
 import subway.repository.StationRepository
 
 class RegisterSectionService(
-    val section: Section,
-    val repository: SectionRepository = SectionRepository
+    private val section: Section,
 ) {
     init {
         require(StationRepository.existsByName(section.upwardStation.name))
@@ -21,14 +20,14 @@ class RegisterSectionService(
 
     fun register() {
         // Additional section
-        if (repository.existsByUpward(section.line, section.upwardStation))
+        if (SectionRepository.existsByUpward(section.line, section.upwardStation))
             registerAdditionalSection(section)
 
         checkFirstSection(section)
-        repository.add(section)
+        SectionRepository.add(section)
 
         // terminal change
-        if (repository.findAll()
+        if (SectionRepository.findAll()
             .any {
                 it.line.name == section.line.name &&
                     it.downwardStation.name == section.upwardStation.name &&
@@ -39,9 +38,9 @@ class RegisterSectionService(
     }
 
     private fun registerAdditionalSection(section: Section) =
-        repository.findByUpward(section.line, section.upwardStation).let {
-            repository.delete(section.line, section.upwardStation, it.downwardStation)
-            repository.add(
+        SectionRepository.findByUpward(section.line, section.upwardStation).let {
+            SectionRepository.delete(section.line, section.upwardStation, it.downwardStation)
+            SectionRepository.add(
                 Section(
                     line = section.line,
                     upwardStation = section.downwardStation,
@@ -51,7 +50,7 @@ class RegisterSectionService(
         }
 
     private fun changeTerminalStation(section: Section) =
-        repository.findAll()
+        SectionRepository.findAll()
             .filter {
                 it.line.name == section.line.name &&
                     it.downwardStation.name == section.upwardStation.name

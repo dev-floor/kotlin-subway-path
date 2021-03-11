@@ -11,15 +11,14 @@ class DeleteSectionService(
     val line: Line,
     val upwardStation: Station,
     val downwardStation: Station,
-    val repository: SectionRepository = SectionRepository
 ) {
     init {
         require(
-            repository.findAll()
+            SectionRepository.findAll()
                 .count { it.line.name == line.name } > MIN_STATION_COUNT_IN_SECTION
         )
         require(
-            repository.findAll()
+            SectionRepository.findAll()
                 .any {
                     it.upwardStation.name == upwardStation.name &&
                         it.downwardStation.name == downwardStation.name
@@ -33,22 +32,22 @@ class DeleteSectionService(
 
         if (downwardStation.isDownwardTerminal) {
             downwardStation.isDownwardTerminal = false
-            repository.findByDownward(line, upwardStation)
+            SectionRepository.findByDownward(line, upwardStation)
                 .downwardStation.isDownwardTerminal = true
         }
 
-        repository.delete(line, upwardStation, downwardStation)
+        SectionRepository.delete(line, upwardStation, downwardStation)
     }
 
     private fun biConnectedSection(upwardStation: Station, downwardStation: Station, line: Line) =
-        repository.add(
+        SectionRepository.add(
             Section(
                 line = LineRepository.findByName(line.name),
                 upwardStation = upwardStation,
-                downwardStation = repository.findByUpward(line, upwardStation).downwardStation,
+                downwardStation = SectionRepository.findByUpward(line, upwardStation).downwardStation,
             ).let {
-                val downwardSection = repository.findByUpward(line, downwardStation)
-                val upwardSection = repository.findByDownward(line, downwardStation)
+                val downwardSection = SectionRepository.findByUpward(line, downwardStation)
+                val upwardSection = SectionRepository.findByDownward(line, downwardStation)
                 it.distance = downwardSection.distance!! + upwardSection.distance!!
                 it.time = downwardSection.time!! + upwardSection.time!!
 
