@@ -1,8 +1,6 @@
 package subway.repository
 
-import subway.domain.Line
 import subway.domain.Section
-import subway.domain.Station
 
 object SectionRepository {
     private val sections = mutableListOf<Section>()
@@ -13,22 +11,22 @@ object SectionRepository {
 
     fun findAll() = sections()
 
-    fun findByLineNameAndUpwardName(line: Line, station: Station) = sections()
-        .first { it.upwardStation.name == station.name && it.line.name == line.name }
+    fun findByLineNameAndUpwardName(lineName: String, stationName: String) = sections()
+        .first { it.upwardStation.match(stationName) && it.line.match(lineName) }
 
-    fun findByLineNameAndDownwardName(line: Line, station: Station) = sections()
-        .first { it.downwardStation.name == station.name && it.line.name == line.name }
+    fun findByLineNameAndDownwardName(lineName: String, stationName: String) = sections()
+        .first { it.downwardStation.match(stationName) && it.line.match(lineName) }
 
-    fun existsByLineNameAndDownwardName(line: Line, station: Station): Boolean = sections()
-        .any { it.downwardStation.name == station.name && it.line.name == line.name }
+    fun existsByLineNameAndDownwardName(lineName: String, stationName: String): Boolean = sections()
+        .any { it.downwardStation.match(stationName) && it.line.match(lineName) }
 
-    fun existsByLineNameAndUpwardName(line: Line, station: Station): Boolean = sections()
-        .any { it.upwardStation.name == station.name && it.line.name == line.name }
+    fun existsByLineNameAndUpwardName(lineName: String, stationName: String): Boolean = sections()
+        .any { it.upwardStation.match(stationName) && it.line.match(lineName) }
 
-    fun delete(line: Line, upward: Station, downward: Station) = sections
+    fun delete(lineName: String, upwardName: String, downwardName: String) = sections
         .removeIf {
-            it.line.name == line.name &&
-                it.upwardStation.name == upward.name &&
-                it.downwardStation.name == downward.name
+            it.line.match(lineName) &&
+                it.upwardStation.match(upwardName) &&
+                it.downwardStation.match(downwardName)
         }
 }

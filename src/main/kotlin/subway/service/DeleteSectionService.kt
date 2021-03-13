@@ -27,16 +27,16 @@ class DeleteSectionService(
     }
 
     fun delete() {
-        if (existsByLineNameAndUpwardName(line, downwardStation))
+        if (existsByLineNameAndUpwardName(line.name, downwardStation.name))
             biConnectedSection(upwardStation, downwardStation, line)
 
         if (downwardStation.isDownwardTerminal) {
             downwardStation.isDownwardTerminal = false
-            SectionRepository.findByLineNameAndDownwardName(line, upwardStation)
+            SectionRepository.findByLineNameAndDownwardName(line.name, upwardStation.name)
                 .downwardStation.isDownwardTerminal = true
         }
 
-        SectionRepository.delete(line, upwardStation, downwardStation)
+        SectionRepository.delete(line.name, upwardStation.name, downwardStation.name)
     }
 
     private fun biConnectedSection(upwardStation: Station, downwardStation: Station, line: Line) =
@@ -44,10 +44,10 @@ class DeleteSectionService(
             Section(
                 line = LineRepository.findByName(line.name),
                 upwardStation = upwardStation,
-                downwardStation = SectionRepository.findByLineNameAndUpwardName(line, upwardStation).downwardStation,
+                downwardStation = SectionRepository.findByLineNameAndUpwardName(line.name, upwardStation.name).downwardStation,
             ).let {
-                val downwardSection = SectionRepository.findByLineNameAndUpwardName(line, downwardStation)
-                val upwardSection = SectionRepository.findByLineNameAndDownwardName(line, downwardStation)
+                val downwardSection = SectionRepository.findByLineNameAndUpwardName(line.name, downwardStation.name)
+                val upwardSection = SectionRepository.findByLineNameAndDownwardName(line.name, downwardStation.name)
                 it.distance = downwardSection.distance!! + upwardSection.distance!!
                 it.time = downwardSection.time!! + upwardSection.time!!
 
