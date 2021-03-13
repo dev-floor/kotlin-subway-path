@@ -1,9 +1,9 @@
 package subway.app
 
 import subway.service.RouteMapService
-import subway.view.selectNumber
-import subway.view.showMainPage
-import subway.view.showRouteMap
+import subway.view.inputSelect
+import subway.view.mainPage
+import subway.view.routeMap
 
 const val MENU_ONE = 1
 const val MENU_TWO = 2
@@ -16,8 +16,8 @@ const val BACK = "B"
 
 fun startApp() {
     while (true) {
-        showMainPage()
-        val select = selectNumber()
+        mainPage()
+        val select = inputSelect()
 
         if (select == QUIT) break
 
@@ -25,7 +25,7 @@ fun startApp() {
             MENU_ONE -> adminStation()
             MENU_TWO -> adminLine()
             MENU_THREE -> adminSection()
-            MENU_FOUR -> showRouteMap(RouteMapService().routeMap())
+            MENU_FOUR -> routeMap(RouteMapService().routeMap())
             MENU_FIVE -> path()
         }
     }

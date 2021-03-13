@@ -1,21 +1,21 @@
 package subway.app
 
 import subway.service.PathService
-import subway.view.getDeparture
-import subway.view.getDestination
-import subway.view.selectNumber
-import subway.view.showPathResult
-import subway.view.showSelectPath
+import subway.view.inputDeparture
+import subway.view.inputDestination
+import subway.view.inputSelect
+import subway.view.pathPage
+import subway.view.pathResult
 
 fun path() {
-    showSelectPath()
-    val select = selectNumber()
+    pathPage()
+    val select = inputSelect()
     if (select == BACK) return
 
-    showPathResult(
+    pathResult(
         PathService(
-            departure = getDeparture(),
-            destination = getDestination(),
+            departure = inputDeparture(),
+            destination = inputDestination(),
         ).path(select.toInt())
     )
 }

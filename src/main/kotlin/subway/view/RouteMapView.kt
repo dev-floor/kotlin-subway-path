@@ -6,7 +6,7 @@ const val MINUTE = "분"
 const val STATION = "선"
 const val SEPARATOR_DISTANCE_AND_TIME = " / "
 
-fun showRouteMap(routeMap: List<List<Any>>) {
+fun routeMap(routeMap: List<List<Any>>) {
     print("\n## 지하철 노선도")
     var isDistance = false
     var needsInfo = true
