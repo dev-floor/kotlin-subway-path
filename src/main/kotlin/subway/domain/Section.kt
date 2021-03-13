@@ -1,6 +1,6 @@
 package subway.domain
 
-data class Section(
+class Section(
     val line: Line,
     val upwardStation: Station,
     val downwardStation: Station,

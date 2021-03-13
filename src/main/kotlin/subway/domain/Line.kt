@@ -1,6 +1,6 @@
 package subway.domain
 
-data class Line(val name: String) {
+class Line(val name: String) {
     init {
         require(LINE_NAME_MAX_LENGTH <= name.length)
     }

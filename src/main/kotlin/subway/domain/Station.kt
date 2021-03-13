@@ -1,6 +1,6 @@
 package subway.domain
 
-data class Station(
+class Station(
     val name: String,
     var isUpwardTerminal: Boolean = false,
     var isDownwardTerminal: Boolean = false
