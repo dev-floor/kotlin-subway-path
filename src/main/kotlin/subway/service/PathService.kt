@@ -14,7 +14,7 @@ class PathService(
         WeightedMultigraph<String, WeightedEdge>(WeightedEdge::class.java)
 ) {
     fun path(select: Int): Path { // 1: Distance, 2: Time
-        getGraph(graph, select)
+        getGraph(select)
 
         DijkstraShortestPath(graph).getPath(departure, destination).let { it ->
             return Path(
@@ -26,7 +26,6 @@ class PathService(
     }
 
     private fun getGraph(
-        graph: WeightedMultigraph<String, WeightedEdge>,
         select: Int
     ) {
         val stations = StationRepository.findAll()
@@ -36,8 +35,8 @@ class PathService(
         sections.map {
             setGraphEdge(
                 edge = graph.addEdge(it.upwardStation.name, it.downwardStation.name),
-                weight = if (select == 1) it.distance!! else it.time!!,
-                subWeight = if (select == 1) it.time!! else it.distance!!
+                weight = if (select == DISTANCE) it.distance!! else it.time!!,
+                subWeight = if (select == DISTANCE) it.time!! else it.distance!!
             )
         }
     }
@@ -49,5 +48,9 @@ class PathService(
     ) {
         edge.subWeight = subWeight
         graph.setEdgeWeight(edge, weight.toDouble())
+    }
+
+    companion object  {
+        const val DISTANCE = 1
     }
 }
