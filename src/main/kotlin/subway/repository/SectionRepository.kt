@@ -13,20 +13,20 @@ object SectionRepository {
 
     fun findAll() = sections()
 
-    fun findByUpward(line: Line, station: Station) =
-        sections().first { it.upwardStation.name == station.name && it.line.name == line.name }
+    fun findByLineNameAndUpwardName(line: Line, station: Station) = sections()
+        .first { it.upwardStation.name == station.name && it.line.name == line.name }
 
-    fun findByDownward(line: Line, station: Station) =
-        sections().first { it.downwardStation.name == station.name && it.line.name == line.name }
+    fun findByLineNameAndDownwardName(line: Line, station: Station) = sections()
+        .first { it.downwardStation.name == station.name && it.line.name == line.name }
 
-    fun existsByDownward(line: Line, station: Station): Boolean =
-        sections().any { it.downwardStation.name == station.name && it.line.name == line.name }
+    fun existsByLineNameAndDownwardName(line: Line, station: Station): Boolean = sections()
+        .any { it.downwardStation.name == station.name && it.line.name == line.name }
 
-    fun existsByUpward(line: Line, station: Station): Boolean =
-        sections().any { it.upwardStation.name == station.name && it.line.name == line.name }
+    fun existsByLineNameAndUpwardName(line: Line, station: Station): Boolean = sections()
+        .any { it.upwardStation.name == station.name && it.line.name == line.name }
 
-    fun delete(line: Line, upward: Station, downward: Station) =
-        sections.removeIf {
+    fun delete(line: Line, upward: Station, downward: Station) = sections
+        .removeIf {
             it.line.name == line.name &&
                 it.upwardStation.name == upward.name &&
                 it.downwardStation.name == downward.name

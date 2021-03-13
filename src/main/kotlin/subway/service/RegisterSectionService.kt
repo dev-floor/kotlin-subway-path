@@ -13,14 +13,14 @@ class RegisterSectionService(
         require(StationRepository.existsByName(section.downwardStation.name))
         require(LineRepository.existsByName(section.line.name))
         require(
-            SectionRepository.existsByUpward(section.line, section.upwardStation) &&
-                SectionRepository.existsByDownward(section.line, section.downwardStation)
+            SectionRepository.existsByLineNameAndUpwardName(section.line, section.upwardStation) &&
+                SectionRepository.existsByLineNameAndDownwardName(section.line, section.downwardStation)
         )
     }
 
     fun register() {
         // Additional section
-        if (SectionRepository.existsByUpward(section.line, section.upwardStation))
+        if (SectionRepository.existsByLineNameAndUpwardName(section.line, section.upwardStation))
             registerAdditionalSection(section)
 
         checkFirstSection(section)
@@ -38,7 +38,7 @@ class RegisterSectionService(
     }
 
     private fun registerAdditionalSection(section: Section) =
-        SectionRepository.findByUpward(section.line, section.upwardStation).let {
+        SectionRepository.findByLineNameAndUpwardName(section.line, section.upwardStation).let {
             SectionRepository.delete(section.line, section.upwardStation, it.downwardStation)
             SectionRepository.add(
                 Section(
@@ -61,10 +61,10 @@ class RegisterSectionService(
             }
 
     private fun checkFirstSection(section: Section) {
-        if (!SectionRepository.existsByDownward(section.line, section.downwardStation) &&
-            !SectionRepository.existsByUpward(section.line, section.upwardStation) &&
-            !SectionRepository.existsByDownward(section.line, section.upwardStation) &&
-            !SectionRepository.existsByUpward(section.line, section.downwardStation)
+        if (!SectionRepository.existsByLineNameAndDownwardName(section.line, section.downwardStation) &&
+            !SectionRepository.existsByLineNameAndUpwardName(section.line, section.upwardStation) &&
+            !SectionRepository.existsByLineNameAndDownwardName(section.line, section.upwardStation) &&
+            !SectionRepository.existsByLineNameAndUpwardName(section.line, section.downwardStation)
         ) {
             section.upwardStation.isUpwardTerminal = true
             section.downwardStation.isDownwardTerminal = true

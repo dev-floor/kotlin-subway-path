@@ -5,7 +5,7 @@ import subway.domain.Section
 import subway.domain.Station
 import subway.repository.LineRepository
 import subway.repository.SectionRepository
-import subway.repository.SectionRepository.existsByUpward
+import subway.repository.SectionRepository.existsByLineNameAndUpwardName
 
 class DeleteSectionService(
     val line: Line,
@@ -27,12 +27,12 @@ class DeleteSectionService(
     }
 
     fun delete() {
-        if (existsByUpward(line, downwardStation))
+        if (existsByLineNameAndUpwardName(line, downwardStation))
             biConnectedSection(upwardStation, downwardStation, line)
 
         if (downwardStation.isDownwardTerminal) {
             downwardStation.isDownwardTerminal = false
-            SectionRepository.findByDownward(line, upwardStation)
+            SectionRepository.findByLineNameAndDownwardName(line, upwardStation)
                 .downwardStation.isDownwardTerminal = true
         }
 
@@ -44,10 +44,10 @@ class DeleteSectionService(
             Section(
                 line = LineRepository.findByName(line.name),
                 upwardStation = upwardStation,
-                downwardStation = SectionRepository.findByUpward(line, upwardStation).downwardStation,
+                downwardStation = SectionRepository.findByLineNameAndUpwardName(line, upwardStation).downwardStation,
             ).let {
-                val downwardSection = SectionRepository.findByUpward(line, downwardStation)
-                val upwardSection = SectionRepository.findByDownward(line, downwardStation)
+                val downwardSection = SectionRepository.findByLineNameAndUpwardName(line, downwardStation)
+                val upwardSection = SectionRepository.findByLineNameAndDownwardName(line, downwardStation)
                 it.distance = downwardSection.distance!! + upwardSection.distance!!
                 it.time = downwardSection.time!! + upwardSection.time!!
 
