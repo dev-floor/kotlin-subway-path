@@ -6,17 +6,17 @@ import subway.domain.Station
 import subway.service.DeleteSectionService
 import subway.service.RegisterSectionService
 import subway.view.deletedSection
+import subway.view.infoMessage
+import subway.view.inputDownwardNameOfSectionToDelete
 import subway.view.inputDownwardNameOfSectionToRegister
+import subway.view.inputLineNameOfSectionToDelete
 import subway.view.inputLineNameOfSectionToRegister
 import subway.view.inputSectionDistance
 import subway.view.inputSectionTime
-import subway.view.inputUpwardNameOfSectionToRegister
-import subway.view.infoMessage
-import subway.view.inputDownwardNameOfSectionToDelete
-import subway.view.inputLineNameOfSectionToDelete
-import subway.view.inputUpwardNameOfSectionToDelete
-import subway.view.registeredSection
 import subway.view.inputSelect
+import subway.view.inputUpwardNameOfSectionToDelete
+import subway.view.inputUpwardNameOfSectionToRegister
+import subway.view.registeredSection
 import subway.view.sectionPage
 
 fun adminSection() {

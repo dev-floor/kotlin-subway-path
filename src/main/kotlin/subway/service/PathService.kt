@@ -50,7 +50,7 @@ class PathService(
         graph.setEdgeWeight(edge, weight.toDouble())
     }
 
-    companion object  {
+    companion object {
         const val DISTANCE = 1
     }
 }

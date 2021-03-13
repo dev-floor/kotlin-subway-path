@@ -14,11 +14,11 @@ import subway.view.inputDistance
 import subway.view.inputDownwardStationName
 import subway.view.inputLineNameToDelete
 import subway.view.inputLineNameToRegister
+import subway.view.inputSelect
 import subway.view.inputTime
 import subway.view.inputUpwardStationName
 import subway.view.linePage
 import subway.view.registeredLine
-import subway.view.inputSelect
 
 fun adminLine() {
     linePage()

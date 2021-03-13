@@ -4,14 +4,14 @@ import subway.domain.Station
 import subway.service.AllContentsService
 import subway.service.DeleteStationService
 import subway.service.RegisterStationService
-import subway.view.stationPage
 import subway.view.allStations
 import subway.view.deletedStation
 import subway.view.infoMessage
+import subway.view.inputSelect
 import subway.view.inputStationNameToDelete
 import subway.view.inputStationNameToRegister
 import subway.view.registeredStation
-import subway.view.inputSelect
+import subway.view.stationPage
 
 fun adminStation() {
     stationPage()
