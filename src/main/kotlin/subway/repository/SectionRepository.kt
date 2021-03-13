@@ -12,21 +12,23 @@ object SectionRepository {
     fun findAll() = sections()
 
     fun findByLineNameAndUpwardName(lineName: String, stationName: String) = sections()
-        .first { it.upwardStation.match(stationName) && it.line.match(lineName) }
+        .first { it.matchLineAndUpward(lineName, stationName) }
 
     fun findByLineNameAndDownwardName(lineName: String, stationName: String) = sections()
-        .first { it.downwardStation.match(stationName) && it.line.match(lineName) }
+        .first { it.matchLineAndDownward(lineName, stationName) }
 
     fun existsByLineNameAndDownwardName(lineName: String, stationName: String): Boolean = sections()
-        .any { it.downwardStation.match(stationName) && it.line.match(lineName) }
+        .any { it.matchLineAndDownward(lineName, stationName) }
 
     fun existsByLineNameAndUpwardName(lineName: String, stationName: String): Boolean = sections()
-        .any { it.upwardStation.match(stationName) && it.line.match(lineName) }
+        .any { it.matchLineAndUpward(lineName, stationName) }
 
     fun delete(lineName: String, upwardName: String, downwardName: String) = sections
         .removeIf {
-            it.line.match(lineName) &&
-                it.upwardStation.match(upwardName) &&
-                it.downwardStation.match(downwardName)
+            it.match(
+                lineName = lineName,
+                upwardName = upwardName,
+                downwardName = downwardName
+            )
         }
 }
