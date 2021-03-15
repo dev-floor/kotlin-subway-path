@@ -5,47 +5,47 @@ import subway.domain.Section
 import subway.domain.Station
 import subway.service.DeleteSectionService
 import subway.service.RegisterSectionService
-import subway.view.getDownwardNameOfSectionToDelete
-import subway.view.getDownwardNameOfSectionToRegister
-import subway.view.getLineNameOfSectionToDelete
-import subway.view.getLineNameOfSectionToRegister
-import subway.view.getSectionDistance
-import subway.view.getSectionTime
-import subway.view.getUpwardNameOfSectionToDelete
-import subway.view.getUpwardNameOfSectionToRegister
+import subway.view.deletedSection
 import subway.view.infoMessage
-import subway.view.selectNumber
-import subway.view.showAdminSection
-import subway.view.succeedDeleteSection
-import subway.view.succeedRegisterSection
+import subway.view.inputDownwardNameOfSectionToDelete
+import subway.view.inputDownwardNameOfSectionToRegister
+import subway.view.inputLineNameOfSectionToDelete
+import subway.view.inputLineNameOfSectionToRegister
+import subway.view.inputSectionDistance
+import subway.view.inputSectionTime
+import subway.view.inputSelect
+import subway.view.inputUpwardNameOfSectionToDelete
+import subway.view.inputUpwardNameOfSectionToRegister
+import subway.view.registeredSection
+import subway.view.sectionPage
 
 fun adminSection() {
-    showAdminSection()
-    val select = selectNumber()
+    sectionPage()
+    val select = inputSelect()
     if (select == BACK) return
 
     when (select.toInt()) {
         MENU_ONE -> {
             RegisterSectionService(
                 Section(
-                    line = Line(getLineNameOfSectionToRegister()),
-                    upwardStation = Station(getUpwardNameOfSectionToRegister()),
-                    downwardStation = Station(getDownwardNameOfSectionToRegister()),
-                    distance = getSectionDistance(),
-                    time = getSectionTime()
+                    line = Line(inputLineNameOfSectionToRegister()),
+                    upwardStation = Station(inputUpwardNameOfSectionToRegister()),
+                    downwardStation = Station(inputDownwardNameOfSectionToRegister()),
+                    distance = inputSectionDistance(),
+                    time = inputSectionTime()
                 )
             ).register()
             infoMessage()
-            succeedRegisterSection()
+            registeredSection()
         }
         MENU_TWO -> {
             DeleteSectionService(
-                line = Line(getLineNameOfSectionToDelete()),
-                upwardStation = Station(getUpwardNameOfSectionToDelete()),
-                downwardStation = Station(getDownwardNameOfSectionToDelete())
+                line = Line(inputLineNameOfSectionToDelete()),
+                upwardStation = Station(inputUpwardNameOfSectionToDelete()),
+                downwardStation = Station(inputDownwardNameOfSectionToDelete())
             ).delete()
             infoMessage()
-            succeedDeleteSection()
+            deletedSection()
         }
     }
 }

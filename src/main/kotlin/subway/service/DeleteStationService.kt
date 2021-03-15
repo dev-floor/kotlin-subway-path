@@ -6,8 +6,8 @@ import subway.repository.StationRepository
 class DeleteStationService(val name: String) {
     init {
         require(
-            !SectionRepository.findAll()
-                .any { it.downwardStation.name == name || it.upwardStation.name == name }
+            SectionRepository.findAll()
+                .none { it.matchUpward(name) || it.matchDownward(name) }
         )
     }
 

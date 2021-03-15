@@ -9,11 +9,11 @@ object LineRepository {
 
     fun add(line: Line) = lines.add(line)
 
-    fun deleteByName(name: String) = lines.removeIf { it.name == name }
+    fun deleteByName(name: String) = lines.removeIf { it.match(name) }
 
-    fun existsByName(name: String): Boolean = lines().any { it.name == name }
+    fun existsByName(name: String): Boolean = lines().any { it.match(name) }
 
-    fun findByName(name: String) = lines().first { it.name == name }
+    fun findByName(name: String) = lines().first { it.match(name) }
 
     fun findAll() = lines()
 }

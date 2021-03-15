@@ -21,8 +21,8 @@ class RouteMapService {
             route.add(section.upwardStation.name)
             route.add(section.distance!!)
             route.add(section.time!!)
-            if (!SectionRepository.existsByUpward(section.line, section.downwardStation)) break
-            section = SectionRepository.findByUpward(section.line, section.downwardStation)
+            if (!SectionRepository.existsByLineNameAndUpwardName(section.line.name, section.downwardStation.name)) break
+            section = SectionRepository.findByLineNameAndUpwardName(section.line.name, section.downwardStation.name)
         }
         route.add(section.downwardStation.name)
         return route

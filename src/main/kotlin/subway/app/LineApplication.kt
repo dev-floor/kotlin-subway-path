@@ -7,45 +7,45 @@ import subway.service.AllContentsService
 import subway.service.DeleteLineService
 import subway.service.RegisterLineService
 import subway.service.RegisterSectionService
-import subway.view.getDistance
-import subway.view.getDownwardStationName
-import subway.view.getLineNameToDelete
-import subway.view.getLineNameToRegister
-import subway.view.getTime
-import subway.view.getUpwardStationName
+import subway.view.allLines
+import subway.view.deletedLine
 import subway.view.infoMessage
-import subway.view.selectNumber
-import subway.view.showAdminLine
-import subway.view.showAllLines
-import subway.view.succeedDeleteLine
-import subway.view.succeedRegisterLine
+import subway.view.inputDistance
+import subway.view.inputDownwardStationName
+import subway.view.inputLineNameToDelete
+import subway.view.inputLineNameToRegister
+import subway.view.inputSelect
+import subway.view.inputTime
+import subway.view.inputUpwardStationName
+import subway.view.linePage
+import subway.view.registeredLine
 
 fun adminLine() {
-    showAdminLine()
-    val select = selectNumber()
+    linePage()
+    val select = inputSelect()
     if (select == BACK) return
 
     when (select.toInt()) {
         MENU_ONE -> {
-            val line = Line(getLineNameToRegister())
+            val line = Line(inputLineNameToRegister())
             RegisterLineService(line).register()
             RegisterSectionService(
                 Section(
                     line = line,
-                    upwardStation = Station(getUpwardStationName()),
-                    downwardStation = Station(getDownwardStationName()),
-                    distance = getDistance(),
-                    time = getTime()
+                    upwardStation = Station(inputUpwardStationName()),
+                    downwardStation = Station(inputDownwardStationName()),
+                    distance = inputDistance(),
+                    time = inputTime()
                 )
             ).register()
             infoMessage()
-            succeedRegisterLine()
+            registeredLine()
         }
         MENU_TWO -> {
-            DeleteLineService().delete(getLineNameToDelete())
+            DeleteLineService().delete(inputLineNameToDelete())
             infoMessage()
-            succeedDeleteLine()
+            deletedLine()
         }
-        MENU_THREE -> showAllLines(AllContentsService().getLines())
+        MENU_THREE -> allLines(AllContentsService().getLines())
     }
 }

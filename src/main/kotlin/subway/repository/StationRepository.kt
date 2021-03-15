@@ -9,9 +9,9 @@ object StationRepository {
 
     fun add(station: Station) = stations.add(station)
 
-    fun existsByName(name: String): Boolean = stations().any { it.name == name }
+    fun existsByName(name: String): Boolean = stations().any { it.match(name) }
 
-    fun deleteByName(name: String) = stations.removeIf { it.name == name }
+    fun deleteByName(name: String) = stations.removeIf { it.match(name) }
 
     fun findAll() = stations()
 }
