@@ -39,11 +39,10 @@ fun adminSection() {
             registeredSection()
         }
         MENU_TWO -> {
-            DeleteSectionService(
+            DeleteSectionService.delete(
                 line = Line(inputLineNameOfSectionToDelete()),
                 upwardStation = Station(inputUpwardNameOfSectionToDelete()),
-                downwardStation = Station(inputDownwardNameOfSectionToDelete())
-            ).delete()
+                downwardStation = Station(inputDownwardNameOfSectionToDelete()))
             infoMessage()
             deletedSection()
         }
