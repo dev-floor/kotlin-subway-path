@@ -29,7 +29,7 @@ object DeleteSectionService {
         )
     }
 
-    private fun biConnectedSection(upwardStation: Station, downwardStation: Station, line: Line) =
+    private fun applyToChangedSection(upwardStation: Station, downwardStation: Station, line: Line) =
         SectionRepository.add(
             Section(
                 line = LineRepository.findByName(line.name),
@@ -53,7 +53,7 @@ object DeleteSectionService {
         validateToDelete(line.name, upwardStation.name, downwardStation.name)
 
         if (existsByLineNameAndUpwardName(line.name, downwardStation.name))
-            biConnectedSection(upwardStation, downwardStation, line)
+            applyToChangedSection(upwardStation, downwardStation, line)
 
         if (downwardStation.isDownwardTerminal) {
             downwardStation.isDownwardTerminal = false
