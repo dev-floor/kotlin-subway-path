@@ -42,7 +42,8 @@ fun adminSection() {
             DeleteSectionService.delete(
                 line = Line(inputLineNameOfSectionToDelete()),
                 upwardStation = Station(inputUpwardNameOfSectionToDelete()),
-                downwardStation = Station(inputDownwardNameOfSectionToDelete()))
+                downwardStation = Station(inputDownwardNameOfSectionToDelete())
+            )
             infoMessage()
             deletedSection()
         }
