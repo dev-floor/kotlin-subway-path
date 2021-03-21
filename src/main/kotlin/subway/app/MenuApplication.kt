@@ -25,7 +25,7 @@ fun startApp() {
             MENU_ONE -> adminStation()
             MENU_TWO -> adminLine()
             MENU_THREE -> adminSection()
-            MENU_FOUR -> routeMap(RouteMapService().routeMap())
+            MENU_FOUR -> routeMap(RouteMapService.routeMap())
             MENU_FIVE -> path()
         }
     }
