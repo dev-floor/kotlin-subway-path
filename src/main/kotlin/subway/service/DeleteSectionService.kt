@@ -35,13 +35,11 @@ object DeleteSectionService {
                 line = LineRepository.findByName(line.name),
                 upwardStation = upwardStation,
                 downwardStation = SectionRepository.findByLineNameAndUpwardName(line.name, upwardStation.name).downwardStation,
-            ).let {
+            ).apply {
                 val downwardSection = SectionRepository.findByLineNameAndUpwardName(line.name, downwardStation.name)
                 val upwardSection = SectionRepository.findByLineNameAndDownwardName(line.name, downwardStation.name)
-                it.distance = downwardSection.distance!! + upwardSection.distance!!
-                it.time = downwardSection.time!! + upwardSection.time!!
-
-                it
+                distance = downwardSection.distance!! + upwardSection.distance!!
+                time = downwardSection.time!! + upwardSection.time!!
             }
         )
 

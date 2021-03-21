@@ -38,13 +38,13 @@ class RegisterSectionService(
     }
 
     private fun registerAdditionalSection(section: Section) =
-        SectionRepository.findByLineNameAndUpwardName(section.line.name, section.upwardStation.name).let {
-            SectionRepository.delete(section.line.name, section.upwardStation.name, it.downwardStation.name)
+        SectionRepository.findByLineNameAndUpwardName(section.line.name, section.upwardStation.name).apply {
+            SectionRepository.delete(section.line.name, section.upwardStation.name, downwardStation.name)
             SectionRepository.add(
                 Section(
                     line = section.line,
                     upwardStation = section.downwardStation,
-                    downwardStation = it.downwardStation
+                    downwardStation = downwardStation
                 )
             )
         }

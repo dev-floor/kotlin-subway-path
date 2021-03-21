@@ -16,11 +16,11 @@ class PathService(
     fun path(select: Int): Path { // 1: Distance, 2: Time
         getGraph(select)
 
-        DijkstraShortestPath(graph).getPath(departure, destination).let { it ->
+        DijkstraShortestPath(graph).getPath(departure, destination).apply {
             return Path(
-                distance = it.weight.toInt(),
-                time = it.edgeList.map { it.subWeight }.sum(),
-                route = it.vertexList
+                distance = weight.toInt(),
+                time = edgeList.map { it.subWeight }.sum(),
+                route = vertexList
             )
         }
     }
