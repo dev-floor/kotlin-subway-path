@@ -26,8 +26,7 @@ fun adminStation() {
             registeredStation()
         }
         MENU_TWO -> {
-            val name = inputStationNameToDelete()
-            DeleteStationService(name).delete()
+            DeleteStationService.delete(inputStationNameToDelete())
             infoMessage()
             deletedStation()
         }

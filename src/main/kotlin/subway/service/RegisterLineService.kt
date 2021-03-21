@@ -5,11 +5,11 @@ import subway.repository.LineRepository
 import subway.view.errorMessage
 
 object RegisterLineService {
-    private fun validate(lineName: String) = require(!LineRepository.existsByName(lineName)) { errorMessage() }
+    private fun validate(name: String) = require(!LineRepository.existsByName(name)) { errorMessage() }
 
-    fun register(lineName: String): Line {
-        validate(lineName)
-        return Line(lineName).also {
+    fun register(name: String): Line {
+        validate(name)
+        return Line(name).also {
             LineRepository.add(it)
         }
     }
