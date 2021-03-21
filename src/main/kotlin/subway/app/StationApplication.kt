@@ -20,8 +20,7 @@ fun adminStation() {
 
     when (select.toInt()) {
         MENU_ONE -> {
-            val name = inputStationNameToRegister()
-            RegisterStationService(Station(name)).register()
+            RegisterStationService.register(inputStationNameToRegister())
             infoMessage()
             registeredStation()
         }
