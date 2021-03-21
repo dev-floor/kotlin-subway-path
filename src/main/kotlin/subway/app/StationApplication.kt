@@ -31,6 +31,6 @@ fun adminStation() {
             infoMessage()
             deletedStation()
         }
-        MENU_THREE -> allStations(AllContentsService().getStations())
+        MENU_THREE -> allStations(AllContentsService.getStations())
     }
 }

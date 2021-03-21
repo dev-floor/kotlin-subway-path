@@ -42,10 +42,10 @@ fun adminLine() {
             registeredLine()
         }
         MENU_TWO -> {
-            DeleteLineService().delete(inputLineNameToDelete())
+            DeleteLineService.delete(inputLineNameToDelete())
             infoMessage()
             deletedLine()
         }
-        MENU_THREE -> allLines(AllContentsService().getLines())
+        MENU_THREE -> allLines(AllContentsService.getLines())
     }
 }
