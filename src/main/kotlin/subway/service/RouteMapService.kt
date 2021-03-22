@@ -3,7 +3,7 @@ package subway.service
 import subway.repository.LineRepository
 import subway.repository.SectionRepository
 
-class RouteMapService {
+object RouteMapService {
     fun routeMap(): List<List<Any>> {
         val routes: MutableList<List<Any>> = mutableListOf()
 

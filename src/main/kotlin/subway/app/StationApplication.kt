@@ -20,17 +20,15 @@ fun adminStation() {
 
     when (select.toInt()) {
         MENU_ONE -> {
-            val name = inputStationNameToRegister()
-            RegisterStationService(Station(name)).register()
+            RegisterStationService.register(inputStationNameToRegister())
             infoMessage()
             registeredStation()
         }
         MENU_TWO -> {
-            val name = inputStationNameToDelete()
-            DeleteStationService(name).delete()
+            DeleteStationService.delete(inputStationNameToDelete())
             infoMessage()
             deletedStation()
         }
-        MENU_THREE -> allStations(AllContentsService().getStations())
+        MENU_THREE -> allStations(AllContentsService.getStations())
     }
 }

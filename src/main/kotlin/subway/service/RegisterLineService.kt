@@ -4,10 +4,13 @@ import subway.domain.Line
 import subway.repository.LineRepository
 import subway.view.errorMessage
 
-class RegisterLineService(val line: Line) {
-    init {
-        require(!LineRepository.existsByName(line.name)) { errorMessage() }
-    }
+object RegisterLineService {
+    private fun validate(name: String) = require(!LineRepository.existsByName(name)) { errorMessage() }
 
-    fun register() = LineRepository.add(line)
+    fun register(name: String): Line {
+        validate(name)
+        return Line(name).also {
+            LineRepository.add(it)
+        }
+    }
 }

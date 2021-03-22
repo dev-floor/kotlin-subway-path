@@ -2,6 +2,6 @@ package subway.service
 
 import subway.repository.LineRepository
 
-class DeleteLineService {
+object DeleteLineService {
     fun delete(name: String) = LineRepository.deleteByName(name)
 }

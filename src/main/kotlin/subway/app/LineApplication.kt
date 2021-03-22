@@ -27,25 +27,25 @@ fun adminLine() {
 
     when (select.toInt()) {
         MENU_ONE -> {
-            val line = Line(inputLineNameToRegister())
-            RegisterLineService(line).register()
-            RegisterSectionService(
-                Section(
-                    line = line,
-                    upwardStation = Station(inputUpwardStationName()),
-                    downwardStation = Station(inputDownwardStationName()),
-                    distance = inputDistance(),
-                    time = inputTime()
-                )
-            ).register()
+            RegisterLineService.register(inputLineNameToRegister()).let {
+                RegisterSectionService(
+                    Section(
+                        line = it,
+                        upwardStation = Station(inputUpwardStationName()),
+                        downwardStation = Station(inputDownwardStationName()),
+                        distance = inputDistance(),
+                        time = inputTime()
+                    )
+                ).register()
+            }
             infoMessage()
             registeredLine()
         }
         MENU_TWO -> {
-            DeleteLineService().delete(inputLineNameToDelete())
+            DeleteLineService.delete(inputLineNameToDelete())
             infoMessage()
             deletedLine()
         }
-        MENU_THREE -> allLines(AllContentsService().getLines())
+        MENU_THREE -> allLines(AllContentsService.getLines())
     }
 }
