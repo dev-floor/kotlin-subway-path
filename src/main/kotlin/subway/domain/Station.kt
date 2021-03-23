@@ -13,5 +13,15 @@ class Station(
 
     companion object {
         const val STATION_NAME_MAX_LENGTH = 2
+
+        fun toEntity(
+            name: String,
+            isUpwardTerminal: Boolean = false,
+            isDownwardTerminal: Boolean = false
+        ) = Station(
+            name,
+            isUpwardTerminal,
+            isDownwardTerminal
+        )
     }
 }

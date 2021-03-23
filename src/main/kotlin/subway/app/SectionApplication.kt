@@ -1,10 +1,9 @@
 package subway.app
 
 import subway.domain.Line
-import subway.domain.Section
 import subway.domain.Station
-import subway.service.DeleteSectionService
-import subway.service.RegisterSectionService
+import subway.dto.SectionRequest
+import subway.service.SectionService
 import subway.view.deletedSection
 import subway.view.infoMessage
 import subway.view.inputDownwardNameOfSectionToDelete
@@ -26,8 +25,8 @@ fun adminSection() {
 
     when (select.toInt()) {
         MENU_ONE -> {
-            RegisterSectionService.register(
-                Section(
+            SectionService.register(
+                SectionRequest(
                     line = Line(inputLineNameOfSectionToRegister()),
                     upwardStation = Station(inputUpwardNameOfSectionToRegister()),
                     downwardStation = Station(inputDownwardNameOfSectionToRegister()),
@@ -39,10 +38,12 @@ fun adminSection() {
             registeredSection()
         }
         MENU_TWO -> {
-            DeleteSectionService.delete(
-                line = Line(inputLineNameOfSectionToDelete()),
-                upwardStation = Station(inputUpwardNameOfSectionToDelete()),
-                downwardStation = Station(inputDownwardNameOfSectionToDelete())
+            SectionService.delete(
+                SectionRequest(
+                    line = Line(inputLineNameOfSectionToDelete()),
+                    upwardStation = Station(inputUpwardNameOfSectionToDelete()),
+                    downwardStation = Station(inputDownwardNameOfSectionToDelete())
+                )
             )
             infoMessage()
             deletedSection()

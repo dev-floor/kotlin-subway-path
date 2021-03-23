@@ -9,5 +9,7 @@ class Line(val name: String) {
 
     companion object {
         const val LINE_NAME_MAX_LENGTH = 2
+
+        fun toEntity(name: String) = Line(name)
     }
 }

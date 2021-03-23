@@ -7,7 +7,7 @@ class Section(
     var time: Int? = TIME_DEFAULT,
     var distance: Int? = DISTANCE_DEFAULT
 ) {
-    fun match(lineName: String, upwardName: String, downwardName: String) =
+    fun match(lineName: String, upwardName: String, downwardName: String): Boolean =
         this.line.match(lineName) &&
             this.upwardStation.match(upwardName) &&
             this.downwardStation.match(downwardName)
@@ -25,5 +25,19 @@ class Section(
     companion object {
         const val TIME_DEFAULT = 3
         const val DISTANCE_DEFAULT = 2
+
+        fun toEntity(
+            line: Line,
+            upwardStation: Station,
+            downwardStation: Station,
+            time: Int? = TIME_DEFAULT,
+            distance: Int? = DISTANCE_DEFAULT
+        ) = Section(
+            line,
+            upwardStation,
+            downwardStation,
+            time,
+            distance
+        )
     }
 }

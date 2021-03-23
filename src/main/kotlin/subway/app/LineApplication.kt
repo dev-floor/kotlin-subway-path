@@ -1,9 +1,9 @@
 package subway.app
 
-import subway.domain.Section
 import subway.domain.Station
+import subway.dto.SectionRequest
 import subway.service.LineService
-import subway.service.RegisterSectionService
+import subway.service.SectionService
 import subway.view.allLines
 import subway.view.deletedLine
 import subway.view.infoMessage
@@ -25,8 +25,8 @@ fun adminLine() {
     when (select.toInt()) {
         MENU_ONE -> {
             LineService.register(inputLineNameToRegister()).let {
-                RegisterSectionService.register(
-                    Section(
+                SectionService.register(
+                    SectionRequest(
                         line = it,
                         upwardStation = Station(inputUpwardStationName()),
                         downwardStation = Station(inputDownwardStationName()),

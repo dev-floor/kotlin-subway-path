@@ -1,13 +1,26 @@
 package subway.service
 
+import subway.domain.Line
 import subway.domain.Section
+import subway.domain.Station
+import subway.dto.SectionRequest
 import subway.repository.LineRepository
 import subway.repository.SectionRepository
 import subway.repository.StationRepository
 
-object RegisterSectionService {
+object SectionService {
 
-    fun register(section: Section) {
+    private const val MIN_STATION_COUNT_IN_SECTION = 1
+
+    fun register(sectionRequest: SectionRequest) {
+        val section = Section.toEntity(
+            line = sectionRequest.line,
+            upwardStation = sectionRequest.upwardStation,
+            downwardStation = sectionRequest.downwardStation,
+            time = sectionRequest.time,
+            distance = sectionRequest.distance
+        )
+
         validate(section)
 
         // Additional section
@@ -27,6 +40,57 @@ object RegisterSectionService {
         )
             changeTerminalStation(section)
     }
+
+    fun delete(sectionRequest: SectionRequest) {
+        val line = Line.toEntity(sectionRequest.line.name)
+        val upwardStation = Station.toEntity(sectionRequest.upwardStation.name)
+        val downwardStation = Station.toEntity(sectionRequest.downwardStation.name)
+
+        validateToDelete(line.name, upwardStation.name, downwardStation.name)
+
+        if (SectionRepository.existsByLineNameAndUpwardName(line.name, downwardStation.name))
+            applyToChangedSection(upwardStation, downwardStation, line)
+
+        if (downwardStation.isDownwardTerminal) {
+            downwardStation.isDownwardTerminal = false
+            SectionRepository.findByLineNameAndDownwardName(line.name, upwardStation.name)
+                .downwardStation.isDownwardTerminal = true
+        }
+
+        SectionRepository.delete(line.name, upwardStation.name, downwardStation.name)
+    }
+
+    private fun validateToDelete(
+        lineName: String,
+        upwardStationName: String,
+        downwardStationName: String
+    ) {
+        require(
+            SectionRepository.findAll()
+                .count { it.line.name == lineName } > MIN_STATION_COUNT_IN_SECTION
+        )
+        require(
+            SectionRepository.findAll()
+                .any {
+                    it.upwardStation.name == upwardStationName &&
+                        it.downwardStation.name == downwardStationName
+                }
+        )
+    }
+
+    private fun applyToChangedSection(upwardStation: Station, downwardStation: Station, line: Line) =
+        SectionRepository.add(
+            Section(
+                line = LineRepository.findByName(line.name),
+                upwardStation = upwardStation,
+                downwardStation = SectionRepository.findByLineNameAndUpwardName(line.name, upwardStation.name).downwardStation,
+            ).apply {
+                val downwardSection = SectionRepository.findByLineNameAndUpwardName(line.name, downwardStation.name)
+                val upwardSection = SectionRepository.findByLineNameAndDownwardName(line.name, downwardStation.name)
+                distance = downwardSection.distance!! + upwardSection.distance!!
+                time = downwardSection.time!! + upwardSection.time!!
+            }
+        )
 
     private fun validate(section: Section) {
         require(StationRepository.existsByName(section.upwardStation.name))
