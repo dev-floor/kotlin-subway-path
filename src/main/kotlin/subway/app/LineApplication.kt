@@ -2,9 +2,7 @@ package subway.app
 
 import subway.domain.Section
 import subway.domain.Station
-import subway.service.AllContentsService
-import subway.service.DeleteLineService
-import subway.service.RegisterLineService
+import subway.service.LineService
 import subway.service.RegisterSectionService
 import subway.view.allLines
 import subway.view.deletedLine
@@ -26,7 +24,7 @@ fun adminLine() {
 
     when (select.toInt()) {
         MENU_ONE -> {
-            RegisterLineService.register(inputLineNameToRegister()).let {
+            LineService.register(inputLineNameToRegister()).let {
                 RegisterSectionService.register(
                     Section(
                         line = it,
@@ -41,10 +39,11 @@ fun adminLine() {
             registeredLine()
         }
         MENU_TWO -> {
-            DeleteLineService.delete(inputLineNameToDelete())
+            LineService.delete(inputLineNameToDelete())
             infoMessage()
             deletedLine()
         }
-        MENU_THREE -> allLines(AllContentsService.getLines())
+
+        MENU_THREE -> allLines(LineService.getLines())
     }
 }

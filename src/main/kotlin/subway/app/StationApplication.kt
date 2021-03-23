@@ -1,6 +1,5 @@
 package subway.app
 
-import subway.service.AllContentsService
 import subway.service.StationService
 import subway.view.allStations
 import subway.view.deletedStation
@@ -27,6 +26,6 @@ fun adminStation() {
             infoMessage()
             deletedStation()
         }
-        MENU_THREE -> allStations(AllContentsService.getStations())
+        MENU_THREE -> allStations(StationService.getStations())
     }
 }

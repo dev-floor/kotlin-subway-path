@@ -18,4 +18,6 @@ object StationService {
         )
         StationRepository.deleteByName(name)
     }
+
+    fun getStations(): List<String> = StationRepository.findAll().map { it.name }
 }
