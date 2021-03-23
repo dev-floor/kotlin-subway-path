@@ -24,11 +24,5 @@ object SectionRepository {
         .any { it.matchLineAndUpward(lineName, stationName) }
 
     fun delete(lineName: String, upwardName: String, downwardName: String) = sections
-        .removeIf {
-            it.match(
-                lineName = lineName,
-                upwardName = upwardName,
-                downwardName = downwardName
-            )
-        }
+        .removeIf { it.match(lineName, upwardName, downwardName) }
 }

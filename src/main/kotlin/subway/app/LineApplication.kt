@@ -1,7 +1,6 @@
 package subway.app
 
-import subway.domain.Station
-import subway.dto.SectionRequest
+import subway.dto.SectionRegisterRequest
 import subway.service.LineService
 import subway.service.SectionService
 import subway.view.allLines
@@ -26,10 +25,10 @@ fun adminLine() {
         MENU_ONE -> {
             LineService.register(inputLineNameToRegister()).let {
                 SectionService.register(
-                    SectionRequest(
-                        line = it,
-                        upwardStation = Station(inputUpwardStationName()),
-                        downwardStation = Station(inputDownwardStationName()),
+                    SectionRegisterRequest(
+                        lineName = it,
+                        upwardStationName = inputUpwardStationName(),
+                        downwardStationName = inputDownwardStationName(),
                         distance = inputDistance(),
                         time = inputTime()
                     )

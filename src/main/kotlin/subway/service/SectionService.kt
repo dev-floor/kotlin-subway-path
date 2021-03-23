@@ -3,7 +3,8 @@ package subway.service
 import subway.domain.Line
 import subway.domain.Section
 import subway.domain.Station
-import subway.dto.SectionRequest
+import subway.dto.SectionDeleteRequest
+import subway.dto.SectionRegisterRequest
 import subway.repository.LineRepository
 import subway.repository.SectionRepository
 import subway.repository.StationRepository
@@ -12,13 +13,13 @@ object SectionService {
 
     private const val MIN_STATION_COUNT_IN_SECTION = 1
 
-    fun register(sectionRequest: SectionRequest) {
+    fun register(request: SectionRegisterRequest) {
         val section = Section.toEntity(
-            line = sectionRequest.line,
-            upwardStation = sectionRequest.upwardStation,
-            downwardStation = sectionRequest.downwardStation,
-            time = sectionRequest.time,
-            distance = sectionRequest.distance
+            line = Line.toEntity(request.lineName),
+            upwardStation = Station.toEntity(request.upwardStationName),
+            downwardStation = Station.toEntity(request.downwardStationName),
+            time = request.time,
+            distance = request.distance
         )
 
         validate(section)
@@ -41,10 +42,10 @@ object SectionService {
             changeTerminalStation(section)
     }
 
-    fun delete(sectionRequest: SectionRequest) {
-        val line = Line.toEntity(sectionRequest.line.name)
-        val upwardStation = Station.toEntity(sectionRequest.upwardStation.name)
-        val downwardStation = Station.toEntity(sectionRequest.downwardStation.name)
+    fun delete(request: SectionDeleteRequest) {
+        val line = Line.toEntity(request.lineName)
+        val upwardStation = Station.toEntity(request.upwardStationName)
+        val downwardStation = Station.toEntity(request.downwardStationName)
 
         validateToDelete(line.name, upwardStation.name, downwardStation.name)
 

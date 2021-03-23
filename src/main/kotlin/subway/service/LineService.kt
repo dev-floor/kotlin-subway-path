@@ -6,11 +6,11 @@ import subway.view.errorMessage
 
 object LineService {
 
-    fun register(name: String): Line {
+    fun register(name: String): String {
         require(!LineRepository.existsByName(name)) { errorMessage() }
         return Line(name).also {
             LineRepository.add(it)
-        }
+        }.name
     }
 
     fun delete(name: String) = LineRepository.deleteByName(name)
