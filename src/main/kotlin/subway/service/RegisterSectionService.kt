@@ -5,20 +5,11 @@ import subway.repository.LineRepository
 import subway.repository.SectionRepository
 import subway.repository.StationRepository
 
-class RegisterSectionService(
-    private val section: Section,
-) {
-    init {
-        require(StationRepository.existsByName(section.upwardStation.name))
-        require(StationRepository.existsByName(section.downwardStation.name))
-        require(LineRepository.existsByName(section.line.name))
-        require(
-            SectionRepository.existsByLineNameAndUpwardName(section.line.name, section.upwardStation.name) &&
-                SectionRepository.existsByLineNameAndDownwardName(section.line.name, section.downwardStation.name)
-        )
-    }
+object RegisterSectionService {
 
-    fun register() {
+    fun register(section: Section) {
+        validate(section)
+
         // Additional section
         if (SectionRepository.existsByLineNameAndUpwardName(section.line.name, section.upwardStation.name))
             registerAdditionalSection(section)
@@ -35,6 +26,16 @@ class RegisterSectionService(
             }
         )
             changeTerminalStation(section)
+    }
+
+    private fun validate(section: Section) {
+        require(StationRepository.existsByName(section.upwardStation.name))
+        require(StationRepository.existsByName(section.downwardStation.name))
+        require(LineRepository.existsByName(section.line.name))
+        require(
+            SectionRepository.existsByLineNameAndUpwardName(section.line.name, section.upwardStation.name) &&
+                SectionRepository.existsByLineNameAndDownwardName(section.line.name, section.downwardStation.name)
+        )
     }
 
     private fun registerAdditionalSection(section: Section) =

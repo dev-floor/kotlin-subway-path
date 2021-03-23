@@ -26,7 +26,7 @@ fun adminSection() {
 
     when (select.toInt()) {
         MENU_ONE -> {
-            RegisterSectionService(
+            RegisterSectionService.register(
                 Section(
                     line = Line(inputLineNameOfSectionToRegister()),
                     upwardStation = Station(inputUpwardNameOfSectionToRegister()),
@@ -34,7 +34,7 @@ fun adminSection() {
                     distance = inputSectionDistance(),
                     time = inputSectionTime()
                 )
-            ).register()
+            )
             infoMessage()
             registeredSection()
         }

@@ -1,6 +1,5 @@
 package subway.app
 
-import subway.domain.Line
 import subway.domain.Section
 import subway.domain.Station
 import subway.service.AllContentsService
@@ -28,7 +27,7 @@ fun adminLine() {
     when (select.toInt()) {
         MENU_ONE -> {
             RegisterLineService.register(inputLineNameToRegister()).let {
-                RegisterSectionService(
+                RegisterSectionService.register(
                     Section(
                         line = it,
                         upwardStation = Station(inputUpwardStationName()),
@@ -36,7 +35,7 @@ fun adminLine() {
                         distance = inputDistance(),
                         time = inputTime()
                     )
-                ).register()
+                )
             }
             infoMessage()
             registeredLine()
