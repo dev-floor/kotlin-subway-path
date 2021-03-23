@@ -1,4 +1,4 @@
-package subway.domain.dto
+package subway.dto
 
 data class PathRequest(
     val departure: String,

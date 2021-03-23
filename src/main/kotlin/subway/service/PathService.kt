@@ -3,8 +3,8 @@ package subway.service
 import org.jgrapht.alg.shortestpath.DijkstraShortestPath
 import org.jgrapht.graph.WeightedMultigraph
 import subway.domain.WeightedEdge
-import subway.domain.dto.PathRequest
-import subway.domain.dto.PathResponse
+import subway.dto.PathRequest
+import subway.dto.PathResponse
 import subway.repository.SectionRepository
 import subway.repository.StationRepository
 

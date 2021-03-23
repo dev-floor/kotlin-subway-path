@@ -1,6 +1,6 @@
 package subway.app
 
-import subway.domain.dto.PathRequest
+import subway.dto.PathRequest
 import subway.service.PathService
 import subway.view.inputDeparture
 import subway.view.inputDestination

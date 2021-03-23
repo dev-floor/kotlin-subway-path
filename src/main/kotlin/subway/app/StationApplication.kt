@@ -1,8 +1,7 @@
 package subway.app
 
 import subway.service.AllContentsService
-import subway.service.DeleteStationService
-import subway.service.RegisterStationService
+import subway.service.StationService
 import subway.view.allStations
 import subway.view.deletedStation
 import subway.view.infoMessage
@@ -19,12 +18,12 @@ fun adminStation() {
 
     when (select.toInt()) {
         MENU_ONE -> {
-            RegisterStationService.register(inputStationNameToRegister())
+            StationService.register(inputStationNameToRegister())
             infoMessage()
             registeredStation()
         }
         MENU_TWO -> {
-            DeleteStationService.delete(inputStationNameToDelete())
+            StationService.delete(inputStationNameToDelete())
             infoMessage()
             deletedStation()
         }

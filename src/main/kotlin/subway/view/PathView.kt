@@ -1,6 +1,6 @@
 package subway.view
 
-import subway.domain.dto.PathResponse
+import subway.dto.PathResponse
 
 const val DISTANCE = "총 거리: "
 const val TIME = "총 소요 시간: "
