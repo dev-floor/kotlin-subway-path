@@ -13,9 +13,10 @@ fun path() {
     if (select == BACK) return
 
     pathResult(
-        PathService(
+        PathService.path(
             departure = inputDeparture(),
             destination = inputDestination(),
-        ).path(select.toInt())
+            select.toInt()
+        )
     )
 }

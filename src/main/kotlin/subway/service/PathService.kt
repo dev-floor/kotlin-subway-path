@@ -7,13 +7,17 @@ import subway.domain.dto.Path
 import subway.repository.SectionRepository
 import subway.repository.StationRepository
 
-class PathService(
-    private val departure: String,
-    private val destination: String,
+object PathService {
+    private const val DISTANCE = 1
+
     private val graph: WeightedMultigraph<String, WeightedEdge> =
         WeightedMultigraph<String, WeightedEdge>(WeightedEdge::class.java)
-) {
-    fun path(select: Int): Path { // 1: Distance, 2: Time
+
+    fun path(
+        departure: String,
+        destination: String,
+        select: Int
+    ): Path { // 1: Distance, 2: Time
         getGraph(select)
 
         DijkstraShortestPath(graph).getPath(departure, destination).apply {
@@ -48,9 +52,5 @@ class PathService(
     ) {
         edge.subWeight = subWeight
         graph.setEdgeWeight(edge, weight.toDouble())
-    }
-
-    companion object {
-        const val DISTANCE = 1
     }
 }
