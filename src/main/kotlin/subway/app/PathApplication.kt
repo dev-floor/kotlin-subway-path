@@ -1,5 +1,6 @@
 package subway.app
 
+import subway.domain.dto.PathRequest
 import subway.service.PathService
 import subway.view.inputDeparture
 import subway.view.inputDestination
@@ -14,8 +15,10 @@ fun path() {
 
     pathResult(
         PathService.path(
-            departure = inputDeparture(),
-            destination = inputDestination(),
+            PathRequest(
+                departure = inputDeparture(),
+                destination = inputDestination()
+            ),
             select.toInt()
         )
     )

@@ -3,7 +3,8 @@ package subway.service
 import org.jgrapht.alg.shortestpath.DijkstraShortestPath
 import org.jgrapht.graph.WeightedMultigraph
 import subway.domain.WeightedEdge
-import subway.domain.dto.Path
+import subway.domain.dto.PathRequest
+import subway.domain.dto.PathResponse
 import subway.repository.SectionRepository
 import subway.repository.StationRepository
 
@@ -14,14 +15,16 @@ object PathService {
         WeightedMultigraph<String, WeightedEdge>(WeightedEdge::class.java)
 
     fun path(
-        departure: String,
-        destination: String,
+        pathRequest: PathRequest,
         select: Int
-    ): Path { // 1: Distance, 2: Time
+    ): PathResponse { // 1: Distance, 2: Time
         getGraph(select)
 
-        DijkstraShortestPath(graph).getPath(departure, destination).apply {
-            return Path(
+        DijkstraShortestPath(graph).getPath(
+            pathRequest.departure,
+            pathRequest.destination
+        ).apply {
+            return PathResponse(
                 distance = weight.toInt(),
                 time = edgeList.map { it.subWeight }.sum(),
                 route = vertexList

@@ -1,6 +1,6 @@
 package subway.view
 
-import subway.domain.dto.Path
+import subway.domain.dto.PathResponse
 
 const val DISTANCE = "총 거리: "
 const val TIME = "총 소요 시간: "
@@ -17,13 +17,13 @@ fun inputDestination(): String {
     return readLine()!!
 }
 
-fun pathResult(path: Path) {
+fun pathResult(pathResponse: PathResponse) {
     print("$INFO_MESSAGE$SEPARATOR_LINE_WITH_STATION")
-    print("$INFO_MESSAGE$DISTANCE${path.distance}$KILOMETER")
-    print("$INFO_MESSAGE$TIME${path.time}$MINUTE")
+    print("$INFO_MESSAGE$DISTANCE${pathResponse.distance}$KILOMETER")
+    print("$INFO_MESSAGE$TIME${pathResponse.time}$MINUTE")
     print("$INFO_MESSAGE$SEPARATOR_LINE_WITH_STATION")
 
-    path.route.forEach {
+    pathResponse.route.forEach {
         print("$INFO_MESSAGE$it")
     }
     println()
