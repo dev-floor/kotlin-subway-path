@@ -1,7 +1,7 @@
 package subway.dto
 
 data class PathResponse(
-    val time: Int = 0,
-    val distance: Int = 0,
-    val route: List<String> = listOf()
+    val time: Int,
+    val distance: Int,
+    val route: List<String>
 )
